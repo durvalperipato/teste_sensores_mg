@@ -1,0 +1,1254 @@
+define(['dart_sdk', 'packages/image/src/formats/psd/layer_data/psd_layer_section_divider.dart', 'packages/image/src/formats/psd/effect/psd_effect.dart', 'packages/image/src/formats/psd/psd_channel.dart', 'packages/image/src/image_exception.dart', 'packages/image/src/formats/psd/psd_mask.dart', 'packages/image/src/formats/psd/psd_blending_ranges.dart', 'packages/image/src/util/input_buffer.dart', 'packages/image/src/formats/psd/effect/psd_drop_shadow_effect.dart', 'packages/image/src/formats/psd/effect/psd_inner_shadow_effect.dart', 'packages/image/src/formats/psd/effect/psd_outer_glow_effect.dart', 'packages/image/src/formats/psd/effect/psd_inner_glow_effect.dart', 'packages/image/src/formats/psd/effect/psd_bevel_effect.dart', 'packages/image/src/formats/psd/effect/psd_solid_fill_effect.dart', 'packages/image/src/image.dart', 'packages/image/src/formats/psd/psd_image_resource.dart', 'packages/image/src/color.dart', 'packages/image/src/formats/decode_info.dart'], (function load__packages__image__src__formats__psd__psd_layer_dart(dart_sdk, packages__image__src__formats__psd__layer_data__psd_layer_section_divider$46dart, packages__image__src__formats__psd__effect__psd_effect$46dart, packages__image__src__formats__psd__psd_channel$46dart, packages__image__src__image_exception$46dart, packages__image__src__formats__psd__psd_mask$46dart, packages__image__src__formats__psd__psd_blending_ranges$46dart, packages__image__src__util__input_buffer$46dart, packages__image__src__formats__psd__effect__psd_drop_shadow_effect$46dart, packages__image__src__formats__psd__effect__psd_inner_shadow_effect$46dart, packages__image__src__formats__psd__effect__psd_outer_glow_effect$46dart, packages__image__src__formats__psd__effect__psd_inner_glow_effect$46dart, packages__image__src__formats__psd__effect__psd_bevel_effect$46dart, packages__image__src__formats__psd__effect__psd_solid_fill_effect$46dart, packages__image__src__image$46dart, packages__image__src__formats__psd__psd_image_resource$46dart, packages__image__src__color$46dart, packages__image__src__formats__decode_info$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _js_helper = dart_sdk._js_helper;
+  const _interceptors = dart_sdk._interceptors;
+  const math = dart_sdk.math;
+  const _native_typed_data = dart_sdk._native_typed_data;
+  const typed_data = dart_sdk.typed_data;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const psd_layer_data = packages__image__src__formats__psd__layer_data__psd_layer_section_divider$46dart.src__formats__psd__psd_layer_data;
+  const psd_layer_additional_data = packages__image__src__formats__psd__layer_data__psd_layer_section_divider$46dart.src__formats__psd__layer_data__psd_layer_additional_data;
+  const psd_layer_section_divider = packages__image__src__formats__psd__layer_data__psd_layer_section_divider$46dart.src__formats__psd__layer_data__psd_layer_section_divider;
+  const psd_effect = packages__image__src__formats__psd__effect__psd_effect$46dart.src__formats__psd__effect__psd_effect;
+  const psd_channel = packages__image__src__formats__psd__psd_channel$46dart.src__formats__psd__psd_channel;
+  const image_exception = packages__image__src__image_exception$46dart.src__image_exception;
+  const psd_mask = packages__image__src__formats__psd__psd_mask$46dart.src__formats__psd__psd_mask;
+  const psd_blending_ranges = packages__image__src__formats__psd__psd_blending_ranges$46dart.src__formats__psd__psd_blending_ranges;
+  const input_buffer = packages__image__src__util__input_buffer$46dart.src__util__input_buffer;
+  const psd_drop_shadow_effect = packages__image__src__formats__psd__effect__psd_drop_shadow_effect$46dart.src__formats__psd__effect__psd_drop_shadow_effect;
+  const psd_inner_shadow_effect = packages__image__src__formats__psd__effect__psd_inner_shadow_effect$46dart.src__formats__psd__effect__psd_inner_shadow_effect;
+  const psd_outer_glow_effect = packages__image__src__formats__psd__effect__psd_outer_glow_effect$46dart.src__formats__psd__effect__psd_outer_glow_effect;
+  const psd_inner_glow_effect = packages__image__src__formats__psd__effect__psd_inner_glow_effect$46dart.src__formats__psd__effect__psd_inner_glow_effect;
+  const psd_bevel_effect = packages__image__src__formats__psd__effect__psd_bevel_effect$46dart.src__formats__psd__effect__psd_bevel_effect;
+  const psd_solid_fill_effect = packages__image__src__formats__psd__effect__psd_solid_fill_effect$46dart.src__formats__psd__effect__psd_solid_fill_effect;
+  const image = packages__image__src__image$46dart.src__image;
+  const psd_image_resource = packages__image__src__formats__psd__psd_image_resource$46dart.src__formats__psd__psd_image_resource;
+  const color = packages__image__src__color$46dart.src__color;
+  const decode_info = packages__image__src__formats__decode_info$46dart.src__formats__decode_info;
+  var psd_layer = Object.create(dart.library);
+  var psd_image = Object.create(dart.library);
+  var $add = dartx.add;
+  var $toRadixString = dartx.toRadixString;
+  var $modulo = dartx['%'];
+  var $_set = dartx._set;
+  var $_get = dartx._get;
+  var $containsKey = dartx.containsKey;
+  var $length = dartx.length;
+  var $toInt = dartx.toInt;
+  var $rightShift = dartx['>>'];
+  var $clamp = dartx.clamp;
+  var $round = dartx.round;
+  var $abs = dartx.abs;
+  var $truncate = dartx.truncate;
+  var StringL = () => (StringL = dart.constFn(dart.legacy(core.String)))();
+  var PsdLayerDataL = () => (PsdLayerDataL = dart.constFn(dart.legacy(psd_layer_data.PsdLayerData)))();
+  var IdentityMapOfStringL$PsdLayerDataL = () => (IdentityMapOfStringL$PsdLayerDataL = dart.constFn(_js_helper.IdentityMap$(StringL(), PsdLayerDataL())))();
+  var PsdLayerL = () => (PsdLayerL = dart.constFn(dart.legacy(psd_layer.PsdLayer)))();
+  var JSArrayOfPsdLayerL = () => (JSArrayOfPsdLayerL = dart.constFn(_interceptors.JSArray$(PsdLayerL())))();
+  var PsdEffectL = () => (PsdEffectL = dart.constFn(dart.legacy(psd_effect.PsdEffect)))();
+  var JSArrayOfPsdEffectL = () => (JSArrayOfPsdEffectL = dart.constFn(_interceptors.JSArray$(PsdEffectL())))();
+  var PsdChannelL = () => (PsdChannelL = dart.constFn(dart.legacy(psd_channel.PsdChannel)))();
+  var JSArrayOfPsdChannelL = () => (JSArrayOfPsdChannelL = dart.constFn(_interceptors.JSArray$(PsdChannelL())))();
+  var PsdLayerAdditionalDataL = () => (PsdLayerAdditionalDataL = dart.constFn(dart.legacy(psd_layer_additional_data.PsdLayerAdditionalData)))();
+  var intL = () => (intL = dart.constFn(dart.legacy(core.int)))();
+  var JSArrayOfintL = () => (JSArrayOfintL = dart.constFn(_interceptors.JSArray$(intL())))();
+  var PsdLayerSectionDividerL = () => (PsdLayerSectionDividerL = dart.constFn(dart.legacy(psd_layer_section_divider.PsdLayerSectionDivider)))();
+  var PsdImageResourceL = () => (PsdImageResourceL = dart.constFn(dart.legacy(psd_image_resource.PsdImageResource)))();
+  var IdentityMapOfintL$PsdImageResourceL = () => (IdentityMapOfintL$PsdImageResourceL = dart.constFn(_js_helper.IdentityMap$(intL(), PsdImageResourceL())))();
+  var IdentityMapOfintL$PsdChannelL = () => (IdentityMapOfintL$PsdChannelL = dart.constFn(_js_helper.IdentityMap$(intL(), PsdChannelL())))();
+  const CT = Object.create(null);
+  var L1 = "package:image/src/formats/psd/psd_layer.dart";
+  var L0 = "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.19/lib/src/formats/psd/psd_layer.dart";
+  var L2 = "package:image/src/formats/psd/psd_image.dart";
+  var top = dart.privateName(psd_layer, "PsdLayer.top");
+  var left = dart.privateName(psd_layer, "PsdLayer.left");
+  var bottom = dart.privateName(psd_layer, "PsdLayer.bottom");
+  var right = dart.privateName(psd_layer, "PsdLayer.right");
+  var width = dart.privateName(psd_layer, "PsdLayer.width");
+  var height = dart.privateName(psd_layer, "PsdLayer.height");
+  var blendMode = dart.privateName(psd_layer, "PsdLayer.blendMode");
+  var opacity = dart.privateName(psd_layer, "PsdLayer.opacity");
+  var clipping = dart.privateName(psd_layer, "PsdLayer.clipping");
+  var flags = dart.privateName(psd_layer, "PsdLayer.flags");
+  var compression = dart.privateName(psd_layer, "PsdLayer.compression");
+  var name = dart.privateName(psd_layer, "PsdLayer.name");
+  var channels = dart.privateName(psd_layer, "PsdLayer.channels");
+  var mask = dart.privateName(psd_layer, "PsdLayer.mask");
+  var blendingRanges = dart.privateName(psd_layer, "PsdLayer.blendingRanges");
+  var additionalData = dart.privateName(psd_layer, "PsdLayer.additionalData");
+  var children = dart.privateName(psd_layer, "PsdLayer.children");
+  var parent = dart.privateName(psd_layer, "PsdLayer.parent");
+  var layerImage = dart.privateName(psd_layer, "PsdLayer.layerImage");
+  var effects = dart.privateName(psd_layer, "PsdLayer.effects");
+  psd_layer.PsdLayer = class PsdLayer extends core.Object {
+    get top() {
+      return this[top];
+    }
+    set top(value) {
+      this[top] = value;
+    }
+    get left() {
+      return this[left];
+    }
+    set left(value) {
+      this[left] = value;
+    }
+    get bottom() {
+      return this[bottom];
+    }
+    set bottom(value) {
+      this[bottom] = value;
+    }
+    get right() {
+      return this[right];
+    }
+    set right(value) {
+      this[right] = value;
+    }
+    get width() {
+      return this[width];
+    }
+    set width(value) {
+      this[width] = value;
+    }
+    get height() {
+      return this[height];
+    }
+    set height(value) {
+      this[height] = value;
+    }
+    get blendMode() {
+      return this[blendMode];
+    }
+    set blendMode(value) {
+      this[blendMode] = value;
+    }
+    get opacity() {
+      return this[opacity];
+    }
+    set opacity(value) {
+      this[opacity] = value;
+    }
+    get clipping() {
+      return this[clipping];
+    }
+    set clipping(value) {
+      this[clipping] = value;
+    }
+    get flags() {
+      return this[flags];
+    }
+    set flags(value) {
+      this[flags] = value;
+    }
+    get compression() {
+      return this[compression];
+    }
+    set compression(value) {
+      this[compression] = value;
+    }
+    get name() {
+      return this[name];
+    }
+    set name(value) {
+      this[name] = value;
+    }
+    get channels() {
+      return this[channels];
+    }
+    set channels(value) {
+      this[channels] = value;
+    }
+    get mask() {
+      return this[mask];
+    }
+    set mask(value) {
+      this[mask] = value;
+    }
+    get blendingRanges() {
+      return this[blendingRanges];
+    }
+    set blendingRanges(value) {
+      this[blendingRanges] = value;
+    }
+    get additionalData() {
+      return this[additionalData];
+    }
+    set additionalData(value) {
+      this[additionalData] = value;
+    }
+    get children() {
+      return this[children];
+    }
+    set children(value) {
+      this[children] = value;
+    }
+    get parent() {
+      return this[parent];
+    }
+    set parent(value) {
+      this[parent] = value;
+    }
+    get layerImage() {
+      return this[layerImage];
+    }
+    set layerImage(value) {
+      this[layerImage] = value;
+    }
+    get effects() {
+      return this[effects];
+    }
+    set effects(value) {
+      this[effects] = value;
+    }
+    isVisible() {
+      return (dart.notNull(this.flags) & 2) === 0;
+    }
+    type() {
+      if (dart.test(this.additionalData[$containsKey]("lsct"))) {
+        let section = PsdLayerSectionDividerL().as(this.additionalData[$_get]("lsct"));
+        return section.type;
+      }
+      return 0;
+    }
+    getChannel(id) {
+      for (let i = 0; i < dart.notNull(this.channels[$length]); i = i + 1) {
+        if (this.channels[$_get](i).id == id) {
+          return this.channels[$_get](i);
+        }
+      }
+      return null;
+    }
+    readImageData(input, psd) {
+      for (let i = 0; i < dart.notNull(this.channels[$length]); i = i + 1) {
+        this.channels[$_get](i).readPlane(input, this.width, this.height, psd.depth);
+      }
+      this.layerImage = psd_image.PsdImage.createImageFromChannels(psd.colorMode, psd.depth, this.width, this.height, this.channels);
+    }
+  };
+  (psd_layer.PsdLayer.new = function(input = null) {
+    this[top] = null;
+    this[left] = null;
+    this[bottom] = null;
+    this[right] = null;
+    this[width] = null;
+    this[height] = null;
+    this[blendMode] = null;
+    this[opacity] = null;
+    this[clipping] = null;
+    this[flags] = null;
+    this[compression] = null;
+    this[name] = null;
+    this[channels] = null;
+    this[mask] = null;
+    this[blendingRanges] = null;
+    this[additionalData] = new (IdentityMapOfStringL$PsdLayerDataL()).new();
+    this[children] = JSArrayOfPsdLayerL().of([]);
+    this[parent] = null;
+    this[layerImage] = null;
+    this[effects] = JSArrayOfPsdEffectL().of([]);
+    if (input == null) {
+      return;
+    }
+    this.top = input.readInt32();
+    this.left = input.readInt32();
+    this.bottom = input.readInt32();
+    this.right = input.readInt32();
+    this.width = dart.notNull(this.right) - dart.notNull(this.left);
+    this.height = dart.notNull(this.bottom) - dart.notNull(this.top);
+    this.channels = JSArrayOfPsdChannelL().of([]);
+    let numChannels = input.readUint16();
+    for (let i = 0; i < dart.notNull(numChannels); i = i + 1) {
+      let id = input.readInt16();
+      let len = input.readUint32();
+      this.channels[$add](new psd_channel.PsdChannel.new(id, len));
+    }
+    let sig = input.readUint32();
+    if (sig !== 943868237) {
+      dart.throw(new image_exception.ImageException.new("Invalid PSD layer signature: " + sig[$toRadixString](16)));
+    }
+    this.blendMode = input.readUint32();
+    this.opacity = input.readByte();
+    this.clipping = input.readByte();
+    this.flags = input.readByte();
+    let filler = input.readByte();
+    if (filler !== 0) {
+      dart.throw(new image_exception.ImageException.new("Invalid PSD layer data"));
+    }
+    let len = input.readUint32();
+    let extra = input.readBytes(len);
+    if (dart.notNull(len) > 0) {
+      len = extra.readUint32();
+      if (!(len === 0 || len === 20 || len === 36)) dart.assertFailed(null, L0, 120, 14, "len == 0 || len == 20 || len == 36");
+      if (dart.notNull(len) > 0) {
+        let maskData = extra.readBytes(len);
+        this.mask = new psd_mask.PsdMask.new(maskData);
+      }
+      len = extra.readUint32();
+      if (dart.notNull(len) > 0) {
+        let data = extra.readBytes(len);
+        this.blendingRanges = new psd_blending_ranges.PsdBlendingRanges.new(data);
+      }
+      len = extra.readByte();
+      this.name = extra.readString(len);
+      let padding = 4 - len[$modulo](4) - 1;
+      if (padding > 0) {
+        extra.skip(padding);
+      }
+      while (!dart.test(extra.isEOS)) {
+        let sig = extra.readUint32();
+        if (sig !== 943868237) {
+          dart.throw(new image_exception.ImageException.new("PSD invalid signature for layer additional " + "data: " + sig[$toRadixString](16)));
+        }
+        let tag = extra.readString(4);
+        len = extra.readUint32();
+        let data = extra.readBytes(len);
+        if ((dart.notNull(len) & 1) === 1) {
+          extra.skip(1);
+        }
+        this.additionalData[$_set](tag, psd_layer_data.PsdLayerData.new(tag, data));
+        if (tag === "lrFX") {
+          let fxData = PsdLayerAdditionalDataL().as(this.additionalData[$_get]("lrFX"));
+          let data = new input_buffer.InputBuffer.from(fxData.data);
+          data.readUint16();
+          let numFx = data.readUint16();
+          for (let j = 0; j < dart.notNull(numFx); j = j + 1) {
+            data.readString(4);
+            let fxTag = data.readString(4);
+            let size = data.readUint32();
+            if (fxTag === "dsdw") {
+              let fx = new psd_drop_shadow_effect.PsdDropShadowEffect.new();
+              this.effects[$add](fx);
+              fx.version = data.readUint32();
+              fx.blur = data.readUint32();
+              fx.intensity = data.readUint32();
+              fx.angle = data.readUint32();
+              fx.distance = data.readUint32();
+              fx.color = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.blendMode = data.readString(8);
+              fx.enabled = data.readByte() !== 0;
+              fx.globalAngle = data.readByte() !== 0;
+              fx.opacity = data.readByte();
+              fx.nativeColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+            } else if (fxTag === "isdw") {
+              let fx = new psd_inner_shadow_effect.PsdInnerShadowEffect.new();
+              this.effects[$add](fx);
+              fx.version = data.readUint32();
+              fx.blur = data.readUint32();
+              fx.intensity = data.readUint32();
+              fx.angle = data.readUint32();
+              fx.distance = data.readUint32();
+              fx.color = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.blendMode = data.readString(8);
+              fx.enabled = data.readByte() !== 0;
+              fx.globalAngle = data.readByte() !== 0;
+              fx.opacity = data.readByte();
+              fx.nativeColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+            } else if (fxTag === "oglw") {
+              let fx = new psd_outer_glow_effect.PsdOuterGlowEffect.new();
+              this.effects[$add](fx);
+              fx.version = data.readUint32();
+              fx.blur = data.readUint32();
+              fx.intensity = data.readUint32();
+              fx.color = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.blendMode = data.readString(8);
+              fx.enabled = data.readByte() !== 0;
+              fx.opacity = data.readByte();
+              if (fx.version === 2) {
+                fx.nativeColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              }
+            } else if (fxTag === "iglw") {
+              let fx = new psd_inner_glow_effect.PsdInnerGlowEffect.new();
+              this.effects[$add](fx);
+              fx.version = data.readUint32();
+              fx.blur = data.readUint32();
+              fx.intensity = data.readUint32();
+              fx.color = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.blendMode = data.readString(8);
+              fx.enabled = data.readByte() !== 0;
+              fx.opacity = data.readByte();
+              if (fx.version === 2) {
+                fx.invert = data.readByte() !== 0;
+                fx.nativeColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              }
+            } else if (fxTag === "bevl") {
+              let fx = new psd_bevel_effect.PsdBevelEffect.new();
+              this.effects[$add](fx);
+              fx.version = data.readUint32();
+              fx.angle = data.readUint32();
+              fx.strength = data.readUint32();
+              fx.blur = data.readUint32();
+              fx.highlightBlendMode = data.readString(8);
+              fx.shadowBlendMode = data.readString(8);
+              fx.highlightColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.shadowColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.bevelStyle = data.readByte();
+              fx.highlightOpacity = data.readByte();
+              fx.shadowOpacity = data.readByte();
+              fx.enabled = data.readByte() !== 0;
+              fx.globalAngle = data.readByte() !== 0;
+              fx.upOrDown = data.readByte();
+              if (fx.version === 2) {
+                fx.realHighlightColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+                fx.realShadowColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              }
+            } else if (fxTag === "sofi") {
+              let fx = new psd_solid_fill_effect.PsdSolidFillEffect.new();
+              this.effects[$add](fx);
+              fx.version = data.readUint32();
+              fx.blendMode = data.readString(4);
+              fx.color = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+              fx.opacity = data.readByte();
+              fx.enabled = data.readByte() !== 0;
+              fx.nativeColor = JSArrayOfintL().of([data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16(), data.readUint16()]);
+            } else {
+              data.skip(size);
+            }
+          }
+        }
+      }
+    }
+  }).prototype = psd_layer.PsdLayer.prototype;
+  dart.addTypeTests(psd_layer.PsdLayer);
+  dart.addTypeCaches(psd_layer.PsdLayer);
+  dart.setMethodSignature(psd_layer.PsdLayer, () => ({
+    __proto__: dart.getMethods(psd_layer.PsdLayer.__proto__),
+    isVisible: dart.fnType(dart.legacy(core.bool), []),
+    type: dart.fnType(dart.legacy(core.int), []),
+    getChannel: dart.fnType(dart.legacy(psd_channel.PsdChannel), [dart.legacy(core.int)]),
+    readImageData: dart.fnType(dart.void, [dart.legacy(input_buffer.InputBuffer), dart.legacy(psd_image.PsdImage)])
+  }));
+  dart.setLibraryUri(psd_layer.PsdLayer, L1);
+  dart.setFieldSignature(psd_layer.PsdLayer, () => ({
+    __proto__: dart.getFields(psd_layer.PsdLayer.__proto__),
+    top: dart.fieldType(dart.legacy(core.int)),
+    left: dart.fieldType(dart.legacy(core.int)),
+    bottom: dart.fieldType(dart.legacy(core.int)),
+    right: dart.fieldType(dart.legacy(core.int)),
+    width: dart.fieldType(dart.legacy(core.int)),
+    height: dart.fieldType(dart.legacy(core.int)),
+    blendMode: dart.fieldType(dart.legacy(core.int)),
+    opacity: dart.fieldType(dart.legacy(core.int)),
+    clipping: dart.fieldType(dart.legacy(core.int)),
+    flags: dart.fieldType(dart.legacy(core.int)),
+    compression: dart.fieldType(dart.legacy(core.int)),
+    name: dart.fieldType(dart.legacy(core.String)),
+    channels: dart.fieldType(dart.legacy(core.List$(dart.legacy(psd_channel.PsdChannel)))),
+    mask: dart.fieldType(dart.legacy(psd_mask.PsdMask)),
+    blendingRanges: dart.fieldType(dart.legacy(psd_blending_ranges.PsdBlendingRanges)),
+    additionalData: dart.fieldType(dart.legacy(core.Map$(dart.legacy(core.String), dart.legacy(psd_layer_data.PsdLayerData)))),
+    children: dart.fieldType(dart.legacy(core.List$(dart.legacy(psd_layer.PsdLayer)))),
+    parent: dart.fieldType(dart.legacy(psd_layer.PsdLayer)),
+    layerImage: dart.fieldType(dart.legacy(image.Image)),
+    effects: dart.fieldType(dart.legacy(core.List$(dart.legacy(psd_effect.PsdEffect))))
+  }));
+  dart.defineLazy(psd_layer.PsdLayer, {
+    /*psd_layer.PsdLayer.SIGNATURE*/get SIGNATURE() {
+      return 943868237;
+    },
+    /*psd_layer.PsdLayer.BLEND_PASSTHROUGH*/get BLEND_PASSTHROUGH() {
+      return 1885434739;
+    },
+    /*psd_layer.PsdLayer.BLEND_NORMAL*/get BLEND_NORMAL() {
+      return 1852797549;
+    },
+    /*psd_layer.PsdLayer.BLEND_DISSOLVE*/get BLEND_DISSOLVE() {
+      return 1684632435;
+    },
+    /*psd_layer.PsdLayer.BLEND_DARKEN*/get BLEND_DARKEN() {
+      return 1684107883;
+    },
+    /*psd_layer.PsdLayer.BLEND_MULTIPLY*/get BLEND_MULTIPLY() {
+      return 1836411936;
+    },
+    /*psd_layer.PsdLayer.BLEND_COLOR_BURN*/get BLEND_COLOR_BURN() {
+      return 1768188278;
+    },
+    /*psd_layer.PsdLayer.BLEND_LINEAR_BURN*/get BLEND_LINEAR_BURN() {
+      return 1818391150;
+    },
+    /*psd_layer.PsdLayer.BLEND_DARKEN_COLOR*/get BLEND_DARKEN_COLOR() {
+      return 1684751212;
+    },
+    /*psd_layer.PsdLayer.BLEND_LIGHTEN*/get BLEND_LIGHTEN() {
+      return 1818850405;
+    },
+    /*psd_layer.PsdLayer.BLEND_SCREEN*/get BLEND_SCREEN() {
+      return 1935897198;
+    },
+    /*psd_layer.PsdLayer.BLEND_COLOR_DODGE*/get BLEND_COLOR_DODGE() {
+      return 1684633120;
+    },
+    /*psd_layer.PsdLayer.BLEND_LINEAR_DODGE*/get BLEND_LINEAR_DODGE() {
+      return 1818518631;
+    },
+    /*psd_layer.PsdLayer.BLEND_LIGHTER_COLOR*/get BLEND_LIGHTER_COLOR() {
+      return 1818706796;
+    },
+    /*psd_layer.PsdLayer.BLEND_OVERLAY*/get BLEND_OVERLAY() {
+      return 1870030194;
+    },
+    /*psd_layer.PsdLayer.BLEND_SOFT_LIGHT*/get BLEND_SOFT_LIGHT() {
+      return 1934387572;
+    },
+    /*psd_layer.PsdLayer.BLEND_HARD_LIGHT*/get BLEND_HARD_LIGHT() {
+      return 1749838196;
+    },
+    /*psd_layer.PsdLayer.BLEND_VIVID_LIGHT*/get BLEND_VIVID_LIGHT() {
+      return 1984719220;
+    },
+    /*psd_layer.PsdLayer.BLEND_LINEAR_LIGHT*/get BLEND_LINEAR_LIGHT() {
+      return 1816947060;
+    },
+    /*psd_layer.PsdLayer.BLEND_PIN_LIGHT*/get BLEND_PIN_LIGHT() {
+      return 1884055924;
+    },
+    /*psd_layer.PsdLayer.BLEND_HARD_MIX*/get BLEND_HARD_MIX() {
+      return 1749903736;
+    },
+    /*psd_layer.PsdLayer.BLEND_DIFFERENCE*/get BLEND_DIFFERENCE() {
+      return 1684629094;
+    },
+    /*psd_layer.PsdLayer.BLEND_EXCLUSION*/get BLEND_EXCLUSION() {
+      return 1936553316;
+    },
+    /*psd_layer.PsdLayer.BLEND_SUBTRACT*/get BLEND_SUBTRACT() {
+      return 1718842722;
+    },
+    /*psd_layer.PsdLayer.BLEND_DIVIDE*/get BLEND_DIVIDE() {
+      return 1717856630;
+    },
+    /*psd_layer.PsdLayer.BLEND_HUE*/get BLEND_HUE() {
+      return 1752524064;
+    },
+    /*psd_layer.PsdLayer.BLEND_SATURATION*/get BLEND_SATURATION() {
+      return 1935766560;
+    },
+    /*psd_layer.PsdLayer.BLEND_COLOR*/get BLEND_COLOR() {
+      return 1668246642;
+    },
+    /*psd_layer.PsdLayer.BLEND_LUMINOSITY*/get BLEND_LUMINOSITY() {
+      return 1819634976;
+    },
+    /*psd_layer.PsdLayer.FLAG_TRANSPARENCY_PROTECTED*/get FLAG_TRANSPARENCY_PROTECTED() {
+      return 1;
+    },
+    /*psd_layer.PsdLayer.FLAG_HIDDEN*/get FLAG_HIDDEN() {
+      return 2;
+    },
+    /*psd_layer.PsdLayer.FLAG_OBSOLETE*/get FLAG_OBSOLETE() {
+      return 4;
+    },
+    /*psd_layer.PsdLayer.FLAG_PHOTOSHOP_5*/get FLAG_PHOTOSHOP_5() {
+      return 8;
+    },
+    /*psd_layer.PsdLayer.FLAG_PIXEL_DATA_IRRELEVANT_TO_APPEARANCE*/get FLAG_PIXEL_DATA_IRRELEVANT_TO_APPEARANCE() {
+      return 16;
+    }
+  }, true);
+  var _input = dart.privateName(psd_image, "_input");
+  var _imageResourceData = dart.privateName(psd_image, "_imageResourceData");
+  var _layerAndMaskData = dart.privateName(psd_image, "_layerAndMaskData");
+  var _imageData = dart.privateName(psd_image, "_imageData");
+  var _readHeader = dart.privateName(psd_image, "_readHeader");
+  var _readColorModeData = dart.privateName(psd_image, "_readColorModeData");
+  var _readImageResources = dart.privateName(psd_image, "_readImageResources");
+  var _readLayerAndMaskData = dart.privateName(psd_image, "_readLayerAndMaskData");
+  var _readMergeImageData = dart.privateName(psd_image, "_readMergeImageData");
+  var _blend = dart.privateName(psd_image, "_blend");
+  var signature = dart.privateName(psd_image, "PsdImage.signature");
+  var version = dart.privateName(psd_image, "PsdImage.version");
+  var channels$ = dart.privateName(psd_image, "PsdImage.channels");
+  var depth = dart.privateName(psd_image, "PsdImage.depth");
+  var colorMode = dart.privateName(psd_image, "PsdImage.colorMode");
+  var layers = dart.privateName(psd_image, "PsdImage.layers");
+  var mergeImageChannels = dart.privateName(psd_image, "PsdImage.mergeImageChannels");
+  var mergedImage = dart.privateName(psd_image, "PsdImage.mergedImage");
+  var imageResources = dart.privateName(psd_image, "PsdImage.imageResources");
+  var hasAlpha = dart.privateName(psd_image, "PsdImage.hasAlpha");
+  psd_image.PsdImage = class PsdImage extends decode_info.DecodeInfo {
+    get signature() {
+      return this[signature];
+    }
+    set signature(value) {
+      this[signature] = value;
+    }
+    get version() {
+      return this[version];
+    }
+    set version(value) {
+      this[version] = value;
+    }
+    get channels() {
+      return this[channels$];
+    }
+    set channels(value) {
+      this[channels$] = value;
+    }
+    get depth() {
+      return this[depth];
+    }
+    set depth(value) {
+      this[depth] = value;
+    }
+    get colorMode() {
+      return this[colorMode];
+    }
+    set colorMode(value) {
+      this[colorMode] = value;
+    }
+    get layers() {
+      return this[layers];
+    }
+    set layers(value) {
+      this[layers] = value;
+    }
+    get mergeImageChannels() {
+      return this[mergeImageChannels];
+    }
+    set mergeImageChannels(value) {
+      this[mergeImageChannels] = value;
+    }
+    get mergedImage() {
+      return this[mergedImage];
+    }
+    set mergedImage(value) {
+      this[mergedImage] = value;
+    }
+    get imageResources() {
+      return this[imageResources];
+    }
+    set imageResources(value) {
+      super.imageResources = value;
+    }
+    get hasAlpha() {
+      return this[hasAlpha];
+    }
+    set hasAlpha(value) {
+      this[hasAlpha] = value;
+    }
+    get isValid() {
+      return this.signature === 943870035;
+    }
+    get numFrames() {
+      return 1;
+    }
+    decode() {
+      if (!dart.test(this.isValid) || this[_input] == null) {
+        return false;
+      }
+      this[_readColorModeData]();
+      this[_readImageResources]();
+      this[_readLayerAndMaskData]();
+      this[_readMergeImageData]();
+      this[_input] = null;
+      this[_imageResourceData] = null;
+      this[_layerAndMaskData] = null;
+      this[_imageData] = null;
+      return true;
+    }
+    decodeImage() {
+      if (!dart.test(this.decode())) {
+        return null;
+      }
+      return this.renderImage();
+    }
+    renderImage() {
+      let t0, t0$, t0$0, t0$1;
+      if (this.mergedImage != null) {
+        return this.mergedImage;
+      }
+      this.mergedImage = new image.Image.new(this.width, this.height);
+      this.mergedImage.fill(0);
+      let pixels = this.mergedImage.getBytes();
+      for (let li = 0; li < dart.notNull(this.layers[$length]); li = li + 1) {
+        let layer = this.layers[$_get](li);
+        if (!dart.test(layer.isVisible())) {
+          continue;
+        }
+        let opacity = dart.notNull(layer.opacity) / 255.0;
+        let blendMode = layer.blendMode;
+        let srcP = layer.layerImage.getBytes();
+        for (let y = 0, sy = layer.top, si = 0; y < dart.notNull(layer.height); y = y + 1, sy = dart.notNull(sy) + 1) {
+          let di = (dart.notNull(layer.top) + y) * dart.notNull(this.width) * 4 + dart.notNull(layer.left) * 4;
+          for (let x = 0, sx = layer.left; x < dart.notNull(layer.width); x = x + 1, sx = dart.notNull(sx) + 1) {
+            let br = srcP[$_get]((t0 = si, si = t0 + 1, t0));
+            let bg = srcP[$_get]((t0$ = si, si = t0$ + 1, t0$));
+            let bb = srcP[$_get]((t0$0 = si, si = t0$0 + 1, t0$0));
+            let ba = srcP[$_get]((t0$1 = si, si = t0$1 + 1, t0$1));
+            if (dart.notNull(sx) >= 0 && dart.notNull(sx) < dart.notNull(this.width) && dart.notNull(sy) >= 0 && dart.notNull(sy) < dart.notNull(this.height)) {
+              let ar = pixels[$_get](di);
+              let ag = pixels[$_get](di + 1);
+              let ab = pixels[$_get](di + 2);
+              let aa = pixels[$_get](di + 3);
+              this[_blend](ar, ag, ab, aa, br, bg, bb, ba, blendMode, opacity, pixels, di);
+            }
+            di = di + 4;
+          }
+        }
+      }
+      return this.mergedImage;
+    }
+    [_blend](ar, ag, ab, aa, br, bg, bb, ba, blendMode, opacity, pixels, di) {
+      let t0, t0$, t0$0, t0$1;
+      let r = br;
+      let g = bg;
+      let b = bb;
+      let a = ba;
+      let da = dart.notNull(ba) / 255.0 * dart.notNull(opacity);
+      switch (blendMode) {
+        case 1885434739:
+        {
+          r = ar;
+          g = ag;
+          b = ab;
+          a = aa;
+          break;
+        }
+        case 1852797549:
+        {
+          break;
+        }
+        case 1684632435:
+        {
+          break;
+        }
+        case 1684107883:
+        {
+          r = psd_image.PsdImage._blendDarken(ar, br);
+          g = psd_image.PsdImage._blendDarken(ag, bg);
+          b = psd_image.PsdImage._blendDarken(ab, bb);
+          break;
+        }
+        case 1836411936:
+        {
+          r = psd_image.PsdImage._blendMultiply(ar, br);
+          g = psd_image.PsdImage._blendMultiply(ag, bg);
+          b = psd_image.PsdImage._blendMultiply(ab, bb);
+          break;
+        }
+        case 1768188278:
+        {
+          r = psd_image.PsdImage._blendColorBurn(ar, br);
+          g = psd_image.PsdImage._blendColorBurn(ag, bg);
+          b = psd_image.PsdImage._blendColorBurn(ab, bb);
+          break;
+        }
+        case 1818391150:
+        {
+          r = psd_image.PsdImage._blendLinearBurn(ar, br);
+          g = psd_image.PsdImage._blendLinearBurn(ag, bg);
+          b = psd_image.PsdImage._blendLinearBurn(ab, bb);
+          break;
+        }
+        case 1684751212:
+        {
+          break;
+        }
+        case 1818850405:
+        {
+          r = psd_image.PsdImage._blendLighten(ar, br);
+          g = psd_image.PsdImage._blendLighten(ag, bg);
+          b = psd_image.PsdImage._blendLighten(ab, bb);
+          break;
+        }
+        case 1935897198:
+        {
+          r = psd_image.PsdImage._blendScreen(ar, br);
+          g = psd_image.PsdImage._blendScreen(ag, bg);
+          b = psd_image.PsdImage._blendScreen(ab, bb);
+          break;
+        }
+        case 1684633120:
+        {
+          r = psd_image.PsdImage._blendColorDodge(ar, br);
+          g = psd_image.PsdImage._blendColorDodge(ag, bg);
+          b = psd_image.PsdImage._blendColorDodge(ab, bb);
+          break;
+        }
+        case 1818518631:
+        {
+          r = psd_image.PsdImage._blendLinearDodge(ar, br);
+          g = psd_image.PsdImage._blendLinearDodge(ag, bg);
+          b = psd_image.PsdImage._blendLinearDodge(ab, bb);
+          break;
+        }
+        case 1818706796:
+        {
+          break;
+        }
+        case 1870030194:
+        {
+          r = psd_image.PsdImage._blendOverlay(ar, br, aa, ba);
+          g = psd_image.PsdImage._blendOverlay(ag, bg, aa, ba);
+          b = psd_image.PsdImage._blendOverlay(ab, bb, aa, ba);
+          break;
+        }
+        case 1934387572:
+        {
+          r = psd_image.PsdImage._blendSoftLight(ar, br);
+          g = psd_image.PsdImage._blendSoftLight(ag, bg);
+          b = psd_image.PsdImage._blendSoftLight(ab, bb);
+          break;
+        }
+        case 1749838196:
+        {
+          r = psd_image.PsdImage._blendHardLight(ar, br);
+          g = psd_image.PsdImage._blendHardLight(ag, bg);
+          b = psd_image.PsdImage._blendHardLight(ab, bb);
+          break;
+        }
+        case 1984719220:
+        {
+          r = psd_image.PsdImage._blendVividLight(ar, br);
+          g = psd_image.PsdImage._blendVividLight(ag, bg);
+          b = psd_image.PsdImage._blendVividLight(ab, bb);
+          break;
+        }
+        case 1816947060:
+        {
+          r = psd_image.PsdImage._blendLinearLight(ar, br);
+          g = psd_image.PsdImage._blendLinearLight(ag, bg);
+          b = psd_image.PsdImage._blendLinearLight(ab, bb);
+          break;
+        }
+        case 1884055924:
+        {
+          r = psd_image.PsdImage._blendPinLight(ar, br);
+          g = psd_image.PsdImage._blendPinLight(ag, bg);
+          b = psd_image.PsdImage._blendPinLight(ab, bb);
+          break;
+        }
+        case 1749903736:
+        {
+          r = psd_image.PsdImage._blendHardMix(ar, br);
+          g = psd_image.PsdImage._blendHardMix(ag, bg);
+          b = psd_image.PsdImage._blendHardMix(ab, bb);
+          break;
+        }
+        case 1684629094:
+        {
+          r = psd_image.PsdImage._blendDifference(ar, br);
+          g = psd_image.PsdImage._blendDifference(ag, bg);
+          b = psd_image.PsdImage._blendDifference(ab, bb);
+          break;
+        }
+        case 1936553316:
+        {
+          r = psd_image.PsdImage._blendExclusion(ar, br);
+          g = psd_image.PsdImage._blendExclusion(ag, bg);
+          b = psd_image.PsdImage._blendExclusion(ab, bb);
+          break;
+        }
+        case 1718842722:
+        {
+          break;
+        }
+        case 1717856630:
+        {
+          break;
+        }
+        case 1752524064:
+        {
+          break;
+        }
+        case 1935766560:
+        {
+          break;
+        }
+        case 1668246642:
+        {
+          break;
+        }
+        case 1819634976:
+        {
+          break;
+        }
+      }
+      r = (dart.notNull(ar) * (1.0 - da) + dart.notNull(r) * da)[$toInt]();
+      g = (dart.notNull(ag) * (1.0 - da) + dart.notNull(g) * da)[$toInt]();
+      b = (dart.notNull(ab) * (1.0 - da) + dart.notNull(b) * da)[$toInt]();
+      a = (dart.notNull(aa) * (1.0 - da) + dart.notNull(a) * da)[$toInt]();
+      pixels[$_set]((t0 = di, di = dart.notNull(t0) + 1, t0), r);
+      pixels[$_set]((t0$ = di, di = dart.notNull(t0$) + 1, t0$), g);
+      pixels[$_set]((t0$0 = di, di = dart.notNull(t0$0) + 1, t0$0), b);
+      pixels[$_set]((t0$1 = di, di = dart.notNull(t0$1) + 1, t0$1), a);
+    }
+    static _blendLighten(a, b) {
+      return math.max(intL(), a, b);
+    }
+    static _blendDarken(a, b) {
+      return math.min(intL(), a, b);
+    }
+    static _blendMultiply(a, b) {
+      return (dart.notNull(a) * dart.notNull(b))[$rightShift](8);
+    }
+    static _blendOverlay(a, b, aAlpha, bAlpha) {
+      let x = dart.notNull(a) / 255.0;
+      let y = dart.notNull(b) / 255.0;
+      let aa = dart.notNull(aAlpha) / 255.0;
+      let ba = dart.notNull(bAlpha) / 255.0;
+      let z = null;
+      if (2.0 * x < aa) {
+        z = 2.0 * y * x + y * (1.0 - aa) + x * (1.0 - ba);
+      } else {
+        z = ba * aa - 2.0 * (aa - x) * (ba - y) + y * (1.0 - aa) + x * (1.0 - ba);
+      }
+      return (dart.notNull(z) * 255.0)[$clamp](0, 255)[$toInt]();
+    }
+    static _blendColorBurn(a, b) {
+      if (b === 0) {
+        return 0;
+      }
+      let c = (255.0 * (1.0 - (1.0 - dart.notNull(a) / 255.0) / (dart.notNull(b) / 255.0)))[$toInt]();
+      return c[$clamp](0, 255)[$toInt]();
+    }
+    static _blendLinearBurn(a, b) {
+      return (dart.notNull(a) + dart.notNull(b) - 255)[$clamp](0, 255)[$toInt]();
+    }
+    static _blendScreen(a, b) {
+      return (255 - (255 - dart.notNull(b)) * (255 - dart.notNull(a)))[$clamp](0, 255)[$toInt]();
+    }
+    static _blendColorDodge(a, b) {
+      if (b === 255) {
+        return 255;
+      }
+      return (dart.notNull(a) / 255 / (1.0 - dart.notNull(b) / 255.0) * 255.0)[$clamp](0, 255)[$toInt]();
+    }
+    static _blendLinearDodge(a, b) {
+      return dart.notNull(b) + dart.notNull(a) > 255 ? 255 : dart.notNull(a) + dart.notNull(b);
+    }
+    static _blendSoftLight(a, b) {
+      let aa = dart.notNull(a) / 255.0;
+      let bb = dart.notNull(b) / 255.0;
+      return (255.0 * ((1.0 - bb) * bb * aa + bb * (1.0 - (1.0 - bb) * (1.0 - aa))))[$round]();
+    }
+    static _blendHardLight(bottom, top) {
+      let a = dart.notNull(top) / 255.0;
+      let b = dart.notNull(bottom) / 255.0;
+      if (b < 0.5) {
+        return (255.0 * 2.0 * a * b)[$round]();
+      } else {
+        return (255.0 * (1.0 - 2.0 * (1.0 - a) * (1.0 - b)))[$round]();
+      }
+    }
+    static _blendVividLight(bottom, top) {
+      if (dart.notNull(top) < 128) {
+        return psd_image.PsdImage._blendColorBurn(bottom, 2 * dart.notNull(top));
+      } else {
+        return psd_image.PsdImage._blendColorDodge(bottom, 2 * (dart.notNull(top) - 128));
+      }
+    }
+    static _blendLinearLight(bottom, top) {
+      if (dart.notNull(top) < 128) {
+        return psd_image.PsdImage._blendLinearBurn(bottom, 2 * dart.notNull(top));
+      } else {
+        return psd_image.PsdImage._blendLinearDodge(bottom, 2 * (dart.notNull(top) - 128));
+      }
+    }
+    static _blendPinLight(bottom, top) {
+      return dart.notNull(top) < 128 ? psd_image.PsdImage._blendDarken(bottom, 2 * dart.notNull(top)) : psd_image.PsdImage._blendLighten(bottom, 2 * (dart.notNull(top) - 128));
+    }
+    static _blendHardMix(bottom, top) {
+      return dart.notNull(top) < 255 - dart.notNull(bottom) ? 0 : 255;
+    }
+    static _blendDifference(bottom, top) {
+      return (dart.notNull(top) - dart.notNull(bottom))[$abs]();
+    }
+    static _blendExclusion(bottom, top) {
+      return (dart.notNull(top) + dart.notNull(bottom) - 2 * dart.notNull(top) * dart.notNull(bottom) / 255.0)[$round]();
+    }
+    [_readHeader]() {
+      this.signature = this[_input].readUint32();
+      this.version = this[_input].readUint16();
+      if (this.version !== 1) {
+        this.signature = 0;
+        return;
+      }
+      let padding = this[_input].readBytes(6);
+      for (let i = 0; i < 6; i = i + 1) {
+        if (padding._get(i) !== 0) {
+          this.signature = 0;
+          return;
+        }
+      }
+      this.channels = this[_input].readUint16();
+      this.height = this[_input].readUint32();
+      this.width = this[_input].readUint32();
+      this.depth = this[_input].readUint16();
+      this.colorMode = this[_input].readUint16();
+    }
+    [_readColorModeData]() {
+    }
+    [_readImageResources]() {
+      this[_imageResourceData].rewind();
+      while (!dart.test(this[_imageResourceData].isEOS)) {
+        let blockSignature = this[_imageResourceData].readUint32();
+        let blockId = this[_imageResourceData].readUint16();
+        let len = this[_imageResourceData].readByte();
+        let blockName = this[_imageResourceData].readString(len);
+        if ((dart.notNull(len) & 1) === 0) {
+          this[_imageResourceData].skip(1);
+        }
+        len = this[_imageResourceData].readUint32();
+        let blockData = this[_imageResourceData].readBytes(len);
+        if ((dart.notNull(len) & 1) === 1) {
+          this[_imageResourceData].skip(1);
+        }
+        if (blockSignature === 943868237) {
+          this.imageResources[$_set](blockId, new psd_image_resource.PsdImageResource.new(blockId, blockName, blockData));
+        }
+      }
+    }
+    [_readLayerAndMaskData]() {
+      this[_layerAndMaskData].rewind();
+      let len = this[_layerAndMaskData].readUint32();
+      if ((dart.notNull(len) & 1) !== 0) {
+        len = dart.notNull(len) + 1;
+      }
+      let layerData = this[_layerAndMaskData].readBytes(len);
+      this.layers = JSArrayOfPsdLayerL().of([]);
+      if (dart.notNull(len) > 0) {
+        let count = layerData.readInt16();
+        if (dart.notNull(count) < 0) {
+          this.hasAlpha = true;
+          count = -dart.notNull(count);
+        }
+        for (let i = 0; i < dart.notNull(count); i = i + 1) {
+          let layer = new psd_layer.PsdLayer.new(layerData);
+          this.layers[$add](layer);
+        }
+      }
+      for (let i = 0; i < dart.notNull(this.layers[$length]); i = i + 1) {
+        this.layers[$_get](i).readImageData(layerData, this);
+      }
+      len = this[_layerAndMaskData].readUint32();
+      let maskData = this[_layerAndMaskData].readBytes(len);
+      if (dart.notNull(len) > 0) {
+        maskData.readUint16();
+        maskData.readUint16();
+        maskData.readUint16();
+        maskData.readUint16();
+        maskData.readUint16();
+        maskData.readUint16();
+        maskData.readByte();
+      }
+    }
+    [_readMergeImageData]() {
+      this[_imageData].rewind();
+      let compression = this[_imageData].readUint16();
+      let lineLengths = null;
+      if (compression === 1) {
+        let numLines = dart.notNull(this.height) * dart.notNull(this.channels);
+        lineLengths = _native_typed_data.NativeUint16List.new(numLines);
+        for (let i = 0; i < numLines; i = i + 1) {
+          lineLengths[$_set](i, this[_imageData].readUint16());
+        }
+      }
+      this.mergeImageChannels = JSArrayOfPsdChannelL().of([]);
+      for (let i = 0; i < dart.notNull(this.channels); i = i + 1) {
+        this.mergeImageChannels[$add](new psd_channel.PsdChannel.read(this[_imageData], i === 3 ? -1 : i, this.width, this.height, this.depth, compression, lineLengths, i));
+      }
+      this.mergedImage = psd_image.PsdImage.createImageFromChannels(this.colorMode, this.depth, this.width, this.height, this.mergeImageChannels);
+    }
+    static _ch(data, si, ns) {
+      return ns === 1 ? data[$_get](si) : (dart.notNull(data[$_get](si)) << 8 | dart.notNull(data[$_get](dart.notNull(si) + 1))) >>> 8;
+    }
+    static createImageFromChannels(colorMode, bitDepth, width, height, channelList) {
+      let t0, t0$, t0$0, t0$1, t0$2, t0$3, t0$4, t0$5, t0$6, t0$7, t0$8, t0$9, t0$10, t0$11, t0$12, t0$13;
+      let output = new image.Image.new(width, height);
+      let pixels = output.getBytes();
+      let channels = new (IdentityMapOfintL$PsdChannelL()).new();
+      for (let ch of channelList) {
+        channels[$_set](ch.id, ch);
+      }
+      let numChannels = channelList[$length];
+      let ns = bitDepth === 8 ? 1 : bitDepth === 16 ? 2 : -1;
+      if (ns === -1) {
+        dart.throw(new image_exception.ImageException.new("PSD: unsupported bit depth: " + dart.str(bitDepth)));
+      }
+      let channel0 = channels[$_get](0);
+      let channel1 = channels[$_get](1);
+      let channel2 = channels[$_get](2);
+      let channel_1 = channels[$_get](-1);
+      for (let y = 0, di = 0, si = 0; y < dart.notNull(height); y = y + 1) {
+        for (let x = 0; x < dart.notNull(width); x = x + 1, si = si + ns) {
+          switch (colorMode) {
+            case 3:
+            {
+              let xi = di;
+              pixels[$_set]((t0 = di, di = t0 + 1, t0), psd_image.PsdImage._ch(channel0.data, si, ns));
+              pixels[$_set]((t0$ = di, di = t0$ + 1, t0$), psd_image.PsdImage._ch(channel1.data, si, ns));
+              pixels[$_set]((t0$0 = di, di = t0$0 + 1, t0$0), psd_image.PsdImage._ch(channel2.data, si, ns));
+              pixels[$_set]((t0$1 = di, di = t0$1 + 1, t0$1), dart.notNull(numChannels) >= 4 ? psd_image.PsdImage._ch(channel_1.data, si, ns) : 255);
+              let r = pixels[$_get](xi);
+              let g = pixels[$_get](xi + 1);
+              let b = pixels[$_get](xi + 2);
+              let a = pixels[$_get](xi + 3);
+              if (a !== 0) {
+                pixels[$_set](xi, ((dart.notNull(r) + dart.notNull(a) - 255) * 255 / dart.notNull(a))[$truncate]());
+                pixels[$_set](xi + 1, ((dart.notNull(g) + dart.notNull(a) - 255) * 255 / dart.notNull(a))[$truncate]());
+                pixels[$_set](xi + 2, ((dart.notNull(b) + dart.notNull(a) - 255) * 255 / dart.notNull(a))[$truncate]());
+              }
+              break;
+            }
+            case 9:
+            {
+              let L = (dart.notNull(psd_image.PsdImage._ch(channel0.data, si, ns)) * 100)[$rightShift](8);
+              let a = dart.notNull(psd_image.PsdImage._ch(channel1.data, si, ns)) - 128;
+              let b = dart.notNull(psd_image.PsdImage._ch(channel2.data, si, ns)) - 128;
+              let alpha = dart.notNull(numChannels) >= 4 ? psd_image.PsdImage._ch(channel_1.data, si, ns) : 255;
+              let rgb = color.labToRgb(L, a, b);
+              pixels[$_set]((t0$2 = di, di = t0$2 + 1, t0$2), rgb[$_get](0));
+              pixels[$_set]((t0$3 = di, di = t0$3 + 1, t0$3), rgb[$_get](1));
+              pixels[$_set]((t0$4 = di, di = t0$4 + 1, t0$4), rgb[$_get](2));
+              pixels[$_set]((t0$5 = di, di = t0$5 + 1, t0$5), alpha);
+              break;
+            }
+            case 1:
+            {
+              let gray = psd_image.PsdImage._ch(channel0.data, si, ns);
+              let alpha = dart.notNull(numChannels) >= 2 ? psd_image.PsdImage._ch(channel_1.data, si, ns) : 255;
+              pixels[$_set]((t0$6 = di, di = t0$6 + 1, t0$6), gray);
+              pixels[$_set]((t0$7 = di, di = t0$7 + 1, t0$7), gray);
+              pixels[$_set]((t0$8 = di, di = t0$8 + 1, t0$8), gray);
+              pixels[$_set]((t0$9 = di, di = t0$9 + 1, t0$9), alpha);
+              break;
+            }
+            case 4:
+            {
+              let c = psd_image.PsdImage._ch(channel0.data, si, ns);
+              let m = psd_image.PsdImage._ch(channel1.data, si, ns);
+              let y = psd_image.PsdImage._ch(channel2.data, si, ns);
+              let k = psd_image.PsdImage._ch(channels[$_get](numChannels === 4 ? -1 : 3).data, si, ns);
+              let alpha = dart.notNull(numChannels) >= 5 ? psd_image.PsdImage._ch(channel_1.data, si, ns) : 255;
+              let rgb = color.cmykToRgb(255 - dart.notNull(c), 255 - dart.notNull(m), 255 - dart.notNull(y), 255 - dart.notNull(k));
+              pixels[$_set]((t0$10 = di, di = t0$10 + 1, t0$10), rgb[$_get](0));
+              pixels[$_set]((t0$11 = di, di = t0$11 + 1, t0$11), rgb[$_get](1));
+              pixels[$_set]((t0$12 = di, di = t0$12 + 1, t0$12), rgb[$_get](2));
+              pixels[$_set]((t0$13 = di, di = t0$13 + 1, t0$13), alpha);
+              break;
+            }
+            default:
+            {
+              dart.throw(new image_exception.ImageException.new("Unhandled color mode: " + dart.str(colorMode)));
+            }
+          }
+        }
+      }
+      return output;
+    }
+  };
+  (psd_image.PsdImage.new = function(bytes) {
+    this[signature] = null;
+    this[version] = null;
+    this[channels$] = null;
+    this[depth] = null;
+    this[colorMode] = null;
+    this[layers] = null;
+    this[mergeImageChannels] = null;
+    this[mergedImage] = null;
+    this[imageResources] = new (IdentityMapOfintL$PsdImageResourceL()).new();
+    this[hasAlpha] = false;
+    this[_input] = null;
+    this[_imageResourceData] = null;
+    this[_layerAndMaskData] = null;
+    this[_imageData] = null;
+    psd_image.PsdImage.__proto__.new.call(this);
+    this[_input] = new input_buffer.InputBuffer.new(bytes, {bigEndian: true});
+    this[_readHeader]();
+    if (!dart.test(this.isValid)) {
+      return;
+    }
+    let len = this[_input].readUint32();
+    this[_input].readBytes(len);
+    len = this[_input].readUint32();
+    this[_imageResourceData] = this[_input].readBytes(len);
+    len = this[_input].readUint32();
+    this[_layerAndMaskData] = this[_input].readBytes(len);
+    this[_imageData] = this[_input].readBytes(this[_input].length);
+  }).prototype = psd_image.PsdImage.prototype;
+  dart.addTypeTests(psd_image.PsdImage);
+  dart.addTypeCaches(psd_image.PsdImage);
+  dart.setMethodSignature(psd_image.PsdImage, () => ({
+    __proto__: dart.getMethods(psd_image.PsdImage.__proto__),
+    decode: dart.fnType(dart.legacy(core.bool), []),
+    decodeImage: dart.fnType(dart.legacy(image.Image), []),
+    renderImage: dart.fnType(dart.legacy(image.Image), []),
+    [_blend]: dart.fnType(dart.void, [dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.int), dart.legacy(core.double), dart.legacy(typed_data.Uint8List), dart.legacy(core.int)]),
+    [_readHeader]: dart.fnType(dart.void, []),
+    [_readColorModeData]: dart.fnType(dart.void, []),
+    [_readImageResources]: dart.fnType(dart.void, []),
+    [_readLayerAndMaskData]: dart.fnType(dart.void, []),
+    [_readMergeImageData]: dart.fnType(dart.void, [])
+  }));
+  dart.setGetterSignature(psd_image.PsdImage, () => ({
+    __proto__: dart.getGetters(psd_image.PsdImage.__proto__),
+    isValid: dart.legacy(core.bool),
+    numFrames: dart.legacy(core.int)
+  }));
+  dart.setLibraryUri(psd_image.PsdImage, L2);
+  dart.setFieldSignature(psd_image.PsdImage, () => ({
+    __proto__: dart.getFields(psd_image.PsdImage.__proto__),
+    signature: dart.fieldType(dart.legacy(core.int)),
+    version: dart.fieldType(dart.legacy(core.int)),
+    channels: dart.fieldType(dart.legacy(core.int)),
+    depth: dart.fieldType(dart.legacy(core.int)),
+    colorMode: dart.fieldType(dart.legacy(core.int)),
+    layers: dart.fieldType(dart.legacy(core.List$(dart.legacy(psd_layer.PsdLayer)))),
+    mergeImageChannels: dart.fieldType(dart.legacy(core.List$(dart.legacy(psd_channel.PsdChannel)))),
+    mergedImage: dart.fieldType(dart.legacy(image.Image)),
+    imageResources: dart.finalFieldType(dart.legacy(core.Map$(dart.legacy(core.int), dart.legacy(psd_image_resource.PsdImageResource)))),
+    hasAlpha: dart.fieldType(dart.legacy(core.bool)),
+    [_input]: dart.fieldType(dart.legacy(input_buffer.InputBuffer)),
+    [_imageResourceData]: dart.fieldType(dart.legacy(input_buffer.InputBuffer)),
+    [_layerAndMaskData]: dart.fieldType(dart.legacy(input_buffer.InputBuffer)),
+    [_imageData]: dart.fieldType(dart.legacy(input_buffer.InputBuffer))
+  }));
+  dart.defineLazy(psd_image.PsdImage, {
+    /*psd_image.PsdImage.SIGNATURE*/get SIGNATURE() {
+      return 943870035;
+    },
+    /*psd_image.PsdImage.COLORMODE_BITMAP*/get COLORMODE_BITMAP() {
+      return 0;
+    },
+    /*psd_image.PsdImage.COLORMODE_GRAYSCALE*/get COLORMODE_GRAYSCALE() {
+      return 1;
+    },
+    /*psd_image.PsdImage.COLORMODE_INDEXED*/get COLORMODE_INDEXED() {
+      return 2;
+    },
+    /*psd_image.PsdImage.COLORMODE_RGB*/get COLORMODE_RGB() {
+      return 3;
+    },
+    /*psd_image.PsdImage.COLORMODE_CMYK*/get COLORMODE_CMYK() {
+      return 4;
+    },
+    /*psd_image.PsdImage.COLORMODE_MULTICHANNEL*/get COLORMODE_MULTICHANNEL() {
+      return 7;
+    },
+    /*psd_image.PsdImage.COLORMODE_DUOTONE*/get COLORMODE_DUOTONE() {
+      return 8;
+    },
+    /*psd_image.PsdImage.COLORMODE_LAB*/get COLORMODE_LAB() {
+      return 9;
+    },
+    /*psd_image.PsdImage.RESOURCE_BLOCK_SIGNATURE*/get RESOURCE_BLOCK_SIGNATURE() {
+      return 943868237;
+    }
+  }, true);
+  dart.trackLibraries("packages/image/src/formats/psd/psd_layer.dart", {
+    "package:image/src/formats/psd/psd_layer.dart": psd_layer,
+    "package:image/src/formats/psd/psd_image.dart": psd_image
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["psd_layer.dart","psd_image.dart"],"names":[],"mappings":"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","file":"../../../../../../../../../../packages/image/src/formats/psd/psd_layer.dart.lib.js"}');
+  // Exports:
+  return {
+    src__formats__psd__psd_layer: psd_layer,
+    src__formats__psd__psd_image: psd_image
+  };
+}));
+
+//# sourceMappingURL=psd_layer.dart.lib.js.map

@@ -1,0 +1,428 @@
+define(['dart_sdk', 'packages/archive/src/zlib/huffman_table.dart', 'packages/archive/src/util/input_stream.dart', 'packages/archive/src/util/output_stream.dart', 'packages/archive/src/util/archive_exception.dart'], (function load__packages__archive__src__zlib__inflate_dart(dart_sdk, packages__archive__src__zlib__huffman_table$46dart, packages__archive__src__util__input_stream$46dart, packages__archive__src__util__output_stream$46dart, packages__archive__src__util__archive_exception$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _native_typed_data = dart_sdk._native_typed_data;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const huffman_table = packages__archive__src__zlib__huffman_table$46dart.src__zlib__huffman_table;
+  const input_stream = packages__archive__src__util__input_stream$46dart.src__util__input_stream;
+  const output_stream$ = packages__archive__src__util__output_stream$46dart.src__util__output_stream;
+  const archive_exception = packages__archive__src__util__archive_exception$46dart.src__util__archive_exception;
+  var inflate = Object.create(dart.library);
+  var $length = dartx.length;
+  var $setRange = dartx.setRange;
+  var $rightShift = dartx['>>'];
+  var $leftShift = dartx['<<'];
+  var $_get = dartx._get;
+  var $_set = dartx._set;
+  var InputStreamL = () => (InputStreamL = dart.constFn(dart.legacy(input_stream.InputStream)))();
+  var OutputStreamL = () => (OutputStreamL = dart.constFn(dart.legacy(output_stream$.OutputStream)))();
+  var intL = () => (intL = dart.constFn(dart.legacy(core.int)))();
+  var ListOfintL = () => (ListOfintL = dart.constFn(core.List$(intL())))();
+  var ListLOfintL = () => (ListLOfintL = dart.constFn(dart.legacy(ListOfintL())))();
+  const CT = Object.create(null);
+  var L0 = "package:archive/src/zlib/inflate.dart";
+  dart.defineLazy(CT, {
+    get C0() {
+      return C0 = dart.constList([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8], intL());
+    },
+    get C1() {
+      return C1 = dart.constList([5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], intL());
+    },
+    get C2() {
+      return C2 = dart.constList([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15], intL());
+    },
+    get C3() {
+      return C3 = dart.constList([3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258], intL());
+    },
+    get C4() {
+      return C4 = dart.constList([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0], intL());
+    },
+    get C5() {
+      return C5 = dart.constList([1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577], intL());
+    },
+    get C6() {
+      return C6 = dart.constList([0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13], intL());
+    }
+  }, false);
+  var _bitBuffer = dart.privateName(inflate, "_bitBuffer");
+  var _bitBufferLen = dart.privateName(inflate, "_bitBufferLen");
+  var _blockPos = dart.privateName(inflate, "_blockPos");
+  var _fixedLiteralLengthTable = dart.privateName(inflate, "_fixedLiteralLengthTable");
+  var _fixedDistanceTable = dart.privateName(inflate, "_fixedDistanceTable");
+  var _inflate = dart.privateName(inflate, "_inflate");
+  var _parseBlock = dart.privateName(inflate, "_parseBlock");
+  var _readBits = dart.privateName(inflate, "_readBits");
+  var _parseUncompressedBlock = dart.privateName(inflate, "_parseUncompressedBlock");
+  var _parseFixedHuffmanBlock = dart.privateName(inflate, "_parseFixedHuffmanBlock");
+  var _parseDynamicHuffmanBlock = dart.privateName(inflate, "_parseDynamicHuffmanBlock");
+  var _readCodeByTable = dart.privateName(inflate, "_readCodeByTable");
+  var _decodeHuffman = dart.privateName(inflate, "_decodeHuffman");
+  var _decode = dart.privateName(inflate, "_decode");
+  var input$ = dart.privateName(inflate, "Inflate.input");
+  var output = dart.privateName(inflate, "Inflate.output");
+  var C0;
+  var C1;
+  var C2;
+  var C3;
+  var C4;
+  var C5;
+  var C6;
+  inflate.Inflate = class Inflate extends core.Object {
+    get input() {
+      return this[input$];
+    }
+    set input(value) {
+      this[input$] = value;
+    }
+    get output() {
+      return this[output];
+    }
+    set output(value) {
+      this[output] = value;
+    }
+    streamInput(bytes) {
+      if (InputStreamL().is(this.input)) {
+        let i = InputStreamL().as(this.input);
+        if (this.input != null) {
+          i.offset = this[_blockPos];
+        }
+        let inputLen = this.input == null ? 0 : this.input.length;
+        let newLen = dart.notNull(inputLen) + dart.notNull(bytes[$length]);
+        let newBytes = _native_typed_data.NativeUint8List.new(newLen);
+        if (this.input != null) {
+          newBytes[$setRange](0, this.input.length, i.buffer, i.offset);
+        }
+        newBytes[$setRange](inputLen, newLen, bytes, 0);
+        this.input = new input_stream.InputStream.new(newBytes);
+      } else {
+        this.input = new input_stream.InputStream.new(bytes);
+      }
+    }
+    inflateNext() {
+      this[_bitBuffer] = 0;
+      this[_bitBufferLen] = 0;
+      if (OutputStreamL().is(this.output)) {
+        dart.dsend(this.output, 'clear', []);
+      }
+      if (this.input == null || dart.test(this.input.isEOS)) {
+        return null;
+      }
+      try {
+        if (InputStreamL().is(this.input)) {
+          let i = InputStreamL().as(this.input);
+          this[_blockPos] = i.offset;
+        }
+        this[_parseBlock]();
+        this[_blockPos] = 0;
+      } catch (e$) {
+        let e = dart.getThrown(e$);
+        return null;
+      }
+      if (OutputStreamL().is(this.output)) {
+        return ListLOfintL().as(dart.dsend(this.output, 'getBytes', []));
+      }
+      return null;
+    }
+    getBytes() {
+      return ListLOfintL().as(dart.dsend(this.output, 'getBytes', []));
+    }
+    [_inflate]() {
+      this[_bitBuffer] = 0;
+      this[_bitBufferLen] = 0;
+      if (this.input == null) {
+        return;
+      }
+      while (!dart.test(this.input.isEOS)) {
+        let more = this[_parseBlock]();
+        if (!dart.test(more)) {
+          break;
+        }
+      }
+    }
+    [_parseBlock]() {
+      if (dart.test(this.input.isEOS)) {
+        return false;
+      }
+      let hdr = this[_readBits](3);
+      let bfinal = (dart.notNull(hdr) & 1) !== 0;
+      let btype = hdr[$rightShift](1);
+      switch (btype) {
+        case 0:
+        {
+          this[_parseUncompressedBlock]();
+          break;
+        }
+        case 1:
+        {
+          this[_parseFixedHuffmanBlock]();
+          break;
+        }
+        case 2:
+        {
+          this[_parseDynamicHuffmanBlock]();
+          break;
+        }
+        default:
+        {
+          dart.throw(new archive_exception.ArchiveException.new("unknown BTYPE: " + dart.str(btype)));
+        }
+      }
+      return !bfinal;
+    }
+    [_readBits](length) {
+      if (length === 0) {
+        return 0;
+      }
+      while (dart.notNull(this[_bitBufferLen]) < dart.notNull(length)) {
+        if (dart.test(this.input.isEOS)) {
+          dart.throw(new archive_exception.ArchiveException.new("input buffer is broken"));
+        }
+        let octet = this.input.readByte();
+        this[_bitBuffer] = (dart.notNull(this[_bitBuffer]) | octet[$leftShift](this[_bitBufferLen])) >>> 0;
+        this[_bitBufferLen] = dart.notNull(this[_bitBufferLen]) + 8;
+      }
+      let octet = (dart.notNull(this[_bitBuffer]) & (1)[$leftShift](length) - 1) >>> 0;
+      this[_bitBuffer] = this[_bitBuffer][$rightShift](length);
+      this[_bitBufferLen] = dart.notNull(this[_bitBufferLen]) - dart.notNull(length);
+      return octet;
+    }
+    [_readCodeByTable](table) {
+      let codeTable = table.table;
+      let maxCodeLength = table.maxCodeLength;
+      while (dart.notNull(this[_bitBufferLen]) < dart.notNull(maxCodeLength)) {
+        if (dart.test(this.input.isEOS)) {
+          break;
+        }
+        let octet = this.input.readByte();
+        this[_bitBuffer] = (dart.notNull(this[_bitBuffer]) | octet[$leftShift](this[_bitBufferLen])) >>> 0;
+        this[_bitBufferLen] = dart.notNull(this[_bitBufferLen]) + 8;
+      }
+      let codeWithLength = codeTable[$_get]((dart.notNull(this[_bitBuffer]) & (1)[$leftShift](maxCodeLength) - 1) >>> 0);
+      let codeLength = codeWithLength[$rightShift](16);
+      this[_bitBuffer] = this[_bitBuffer][$rightShift](codeLength);
+      this[_bitBufferLen] = dart.notNull(this[_bitBufferLen]) - codeLength;
+      return dart.notNull(codeWithLength) & 65535;
+    }
+    [_parseUncompressedBlock]() {
+      this[_bitBuffer] = 0;
+      this[_bitBufferLen] = 0;
+      let len = this[_readBits](16);
+      let nlen = (dart.notNull(this[_readBits](16)) ^ 65535) >>> 0;
+      if (len !== 0 && len !== nlen) {
+        dart.throw(new archive_exception.ArchiveException.new("Invalid uncompressed block header"));
+      }
+      if (dart.notNull(len) > dart.notNull(this.input.length)) {
+        dart.throw(new archive_exception.ArchiveException.new("Input buffer is broken"));
+      }
+      dart.dsend(this.output, 'writeInputStream', [this.input.readBytes(len)]);
+    }
+    [_parseFixedHuffmanBlock]() {
+      this[_decodeHuffman](this[_fixedLiteralLengthTable], this[_fixedDistanceTable]);
+    }
+    [_parseDynamicHuffmanBlock]() {
+      let numLitLengthCodes = dart.notNull(this[_readBits](5)) + 257;
+      let numDistanceCodes = dart.notNull(this[_readBits](5)) + 1;
+      let numCodeLengths = dart.notNull(this[_readBits](4)) + 4;
+      let codeLengths = _native_typed_data.NativeUint8List.new(inflate.Inflate._ORDER[$length]);
+      for (let i = 0; i < numCodeLengths; i = i + 1) {
+        codeLengths[$_set](inflate.Inflate._ORDER[$_get](i), this[_readBits](3));
+      }
+      let codeLengthsTable = new huffman_table.HuffmanTable.new(codeLengths);
+      let litlenLengths = _native_typed_data.NativeUint8List.new(numLitLengthCodes);
+      let distLengths = _native_typed_data.NativeUint8List.new(numDistanceCodes);
+      let litlen = this[_decode](numLitLengthCodes, codeLengthsTable, litlenLengths);
+      let dist = this[_decode](numDistanceCodes, codeLengthsTable, distLengths);
+      this[_decodeHuffman](new huffman_table.HuffmanTable.new(litlen), new huffman_table.HuffmanTable.new(dist));
+    }
+    [_decodeHuffman](litlen, dist) {
+      while (true) {
+        let code = this[_readCodeByTable](litlen);
+        if (dart.notNull(code) < 0 || dart.notNull(code) > 285) {
+          dart.throw(new archive_exception.ArchiveException.new("Invalid Huffman Code " + dart.str(code)));
+        }
+        if (code === 256) {
+          break;
+        }
+        if (dart.notNull(code) < 256) {
+          dart.dsend(this.output, 'writeByte', [dart.notNull(code) & 255]);
+          continue;
+        }
+        let ti = dart.notNull(code) - 257;
+        let codeLength = dart.notNull(inflate.Inflate._LENGTH_CODE_TABLE[$_get](ti)) + dart.notNull(this[_readBits](inflate.Inflate._LENGTH_EXTRA_TABLE[$_get](ti)));
+        let distCode = this[_readCodeByTable](dist);
+        if (dart.notNull(distCode) >= 0 && dart.notNull(distCode) <= 29) {
+          let distance = dart.notNull(inflate.Inflate._DIST_CODE_TABLE[$_get](distCode)) + dart.notNull(this[_readBits](inflate.Inflate._DIST_EXTRA_TABLE[$_get](distCode)));
+          while (codeLength > distance) {
+            dart.dsend(this.output, 'writeBytes', [dart.dsend(this.output, 'subset', [-distance])]);
+            codeLength = codeLength - distance;
+          }
+          if (codeLength === distance) {
+            dart.dsend(this.output, 'writeBytes', [dart.dsend(this.output, 'subset', [-distance])]);
+          } else {
+            dart.dsend(this.output, 'writeBytes', [dart.dsend(this.output, 'subset', [-distance, codeLength - distance])]);
+          }
+        } else {
+          dart.throw(new archive_exception.ArchiveException.new("Illegal unused distance symbol"));
+        }
+      }
+      while (dart.notNull(this[_bitBufferLen]) >= 8) {
+        this[_bitBufferLen] = dart.notNull(this[_bitBufferLen]) - 8;
+        this.input.rewind(1);
+      }
+    }
+    [_decode](num, table, lengths) {
+      let t1, t1$, t1$0, t1$1, t1$2, t1$3, t1$4;
+      let prev = 0;
+      let i = 0;
+      while (i < dart.notNull(num)) {
+        let code = this[_readCodeByTable](table);
+        switch (code) {
+          case 16:
+          {
+            let repeat = 3 + dart.notNull(this[_readBits](2));
+            while ((t1 = repeat, repeat = t1 - 1, t1) > 0) {
+              lengths[$_set]((t1$ = i, i = t1$ + 1, t1$), prev);
+            }
+            break;
+          }
+          case 17:
+          {
+            let repeat = 3 + dart.notNull(this[_readBits](3));
+            while ((t1$0 = repeat, repeat = t1$0 - 1, t1$0) > 0) {
+              lengths[$_set]((t1$1 = i, i = t1$1 + 1, t1$1), 0);
+            }
+            prev = 0;
+            break;
+          }
+          case 18:
+          {
+            let repeat = 11 + dart.notNull(this[_readBits](7));
+            while ((t1$2 = repeat, repeat = t1$2 - 1, t1$2) > 0) {
+              lengths[$_set]((t1$3 = i, i = t1$3 + 1, t1$3), 0);
+            }
+            prev = 0;
+            break;
+          }
+          default:
+          {
+            if (dart.notNull(code) < 0 || dart.notNull(code) > 15) {
+              dart.throw(new archive_exception.ArchiveException.new("Invalid Huffman Code: " + dart.str(code)));
+            }
+            lengths[$_set]((t1$4 = i, i = t1$4 + 1, t1$4), code);
+            prev = code;
+            break;
+          }
+        }
+      }
+      return lengths;
+    }
+  };
+  (inflate.Inflate.new = function(bytes, uncompressedSize = null) {
+    this[_bitBuffer] = 0;
+    this[_bitBufferLen] = 0;
+    this[_blockPos] = 0;
+    this[_fixedLiteralLengthTable] = new huffman_table.HuffmanTable.new(inflate.Inflate._FIXED_LITERAL_LENGTHS);
+    this[_fixedDistanceTable] = new huffman_table.HuffmanTable.new(inflate.Inflate._FIXED_DISTANCE_TABLE);
+    this[input$] = new input_stream.InputStream.new(bytes);
+    this[output] = new output_stream$.OutputStream.new({size: uncompressedSize});
+    this[_inflate]();
+  }).prototype = inflate.Inflate.prototype;
+  (inflate.Inflate.buffer = function(input, uncompressedSize = null) {
+    this[_bitBuffer] = 0;
+    this[_bitBufferLen] = 0;
+    this[_blockPos] = 0;
+    this[_fixedLiteralLengthTable] = new huffman_table.HuffmanTable.new(inflate.Inflate._FIXED_LITERAL_LENGTHS);
+    this[_fixedDistanceTable] = new huffman_table.HuffmanTable.new(inflate.Inflate._FIXED_DISTANCE_TABLE);
+    this[input$] = input;
+    this[output] = new output_stream$.OutputStream.new({size: uncompressedSize});
+    this[_inflate]();
+  }).prototype = inflate.Inflate.prototype;
+  (inflate.Inflate.stream = function(input = null, output_stream = null) {
+    let t0;
+    this[_bitBuffer] = 0;
+    this[_bitBufferLen] = 0;
+    this[_blockPos] = 0;
+    this[_fixedLiteralLengthTable] = new huffman_table.HuffmanTable.new(inflate.Inflate._FIXED_LITERAL_LENGTHS);
+    this[_fixedDistanceTable] = new huffman_table.HuffmanTable.new(inflate.Inflate._FIXED_DISTANCE_TABLE);
+    this[input$] = input;
+    this[output] = (t0 = output_stream, t0 == null ? new output_stream$.OutputStream.new() : t0);
+    this[_inflate]();
+  }).prototype = inflate.Inflate.prototype;
+  dart.addTypeTests(inflate.Inflate);
+  dart.addTypeCaches(inflate.Inflate);
+  dart.setMethodSignature(inflate.Inflate, () => ({
+    __proto__: dart.getMethods(inflate.Inflate.__proto__),
+    streamInput: dart.fnType(dart.void, [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    inflateNext: dart.fnType(dart.legacy(core.List$(dart.legacy(core.int))), []),
+    getBytes: dart.fnType(dart.legacy(core.List$(dart.legacy(core.int))), []),
+    [_inflate]: dart.fnType(dart.void, []),
+    [_parseBlock]: dart.fnType(dart.legacy(core.bool), []),
+    [_readBits]: dart.fnType(dart.legacy(core.int), [dart.legacy(core.int)]),
+    [_readCodeByTable]: dart.fnType(dart.legacy(core.int), [dart.legacy(huffman_table.HuffmanTable)]),
+    [_parseUncompressedBlock]: dart.fnType(dart.void, []),
+    [_parseFixedHuffmanBlock]: dart.fnType(dart.void, []),
+    [_parseDynamicHuffmanBlock]: dart.fnType(dart.void, []),
+    [_decodeHuffman]: dart.fnType(dart.void, [dart.legacy(huffman_table.HuffmanTable), dart.legacy(huffman_table.HuffmanTable)]),
+    [_decode]: dart.fnType(dart.legacy(core.List$(dart.legacy(core.int))), [dart.legacy(core.int), dart.legacy(huffman_table.HuffmanTable), dart.legacy(core.List$(dart.legacy(core.int)))])
+  }));
+  dart.setLibraryUri(inflate.Inflate, L0);
+  dart.setFieldSignature(inflate.Inflate, () => ({
+    __proto__: dart.getFields(inflate.Inflate.__proto__),
+    input: dart.fieldType(dart.legacy(input_stream.InputStreamBase)),
+    output: dart.fieldType(dart.dynamic),
+    [_bitBuffer]: dart.fieldType(dart.legacy(core.int)),
+    [_bitBufferLen]: dart.fieldType(dart.legacy(core.int)),
+    [_blockPos]: dart.fieldType(dart.legacy(core.int)),
+    [_fixedLiteralLengthTable]: dart.finalFieldType(dart.legacy(huffman_table.HuffmanTable)),
+    [_fixedDistanceTable]: dart.finalFieldType(dart.legacy(huffman_table.HuffmanTable))
+  }));
+  dart.defineLazy(inflate.Inflate, {
+    /*inflate.Inflate._BLOCK_UNCOMPRESSED*/get _BLOCK_UNCOMPRESSED() {
+      return 0;
+    },
+    /*inflate.Inflate._BLOCK_FIXED_HUFFMAN*/get _BLOCK_FIXED_HUFFMAN() {
+      return 1;
+    },
+    /*inflate.Inflate._BLOCK_DYNAMIC_HUFFMAN*/get _BLOCK_DYNAMIC_HUFFMAN() {
+      return 2;
+    },
+    /*inflate.Inflate._FIXED_LITERAL_LENGTHS*/get _FIXED_LITERAL_LENGTHS() {
+      return C0 || CT.C0;
+    },
+    /*inflate.Inflate._FIXED_DISTANCE_TABLE*/get _FIXED_DISTANCE_TABLE() {
+      return C1 || CT.C1;
+    },
+    /*inflate.Inflate._MAX_BACKWARD_LENGTH*/get _MAX_BACKWARD_LENGTH() {
+      return 32768;
+    },
+    /*inflate.Inflate._MAX_COPY_LENGTH*/get _MAX_COPY_LENGTH() {
+      return 258;
+    },
+    /*inflate.Inflate._ORDER*/get _ORDER() {
+      return C2 || CT.C2;
+    },
+    /*inflate.Inflate._LENGTH_CODE_TABLE*/get _LENGTH_CODE_TABLE() {
+      return C3 || CT.C3;
+    },
+    /*inflate.Inflate._LENGTH_EXTRA_TABLE*/get _LENGTH_EXTRA_TABLE() {
+      return C4 || CT.C4;
+    },
+    /*inflate.Inflate._DIST_CODE_TABLE*/get _DIST_CODE_TABLE() {
+      return C5 || CT.C5;
+    },
+    /*inflate.Inflate._DIST_EXTRA_TABLE*/get _DIST_EXTRA_TABLE() {
+      return C6 || CT.C6;
+    }
+  }, true);
+  dart.trackLibraries("packages/archive/src/zlib/inflate.dart", {
+    "package:archive/src/zlib/inflate.dart": inflate
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["inflate.dart"],"names":[],"mappings":"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","file":"../../../../../../../../../packages/archive/src/zlib/inflate.dart.lib.js"}');
+  // Exports:
+  return {
+    src__zlib__inflate: inflate
+  };
+}));
+
+//# sourceMappingURL=inflate.dart.lib.js.map

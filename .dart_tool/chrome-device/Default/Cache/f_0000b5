@@ -1,0 +1,1578 @@
+define(['dart_sdk', 'packages/image/src/formats/ico_encoder.dart', 'packages/image/src/util/point.dart', 'packages/image/src/util/input_buffer.dart', 'packages/image/src/formats/png_decoder.dart', 'packages/image/src/util/output_buffer.dart', 'packages/image/src/formats/decoder.dart', 'packages/image/src/formats/decode_info.dart', 'packages/image/src/animation.dart', 'packages/image/src/image.dart', 'packages/image/src/image_exception.dart', 'packages/image/src/color.dart', 'packages/image/src/internal/bit_operators.dart', 'packages/image/src/formats/jpeg_decoder.dart', 'packages/image/src/formats/gif_decoder.dart', 'packages/image/src/formats/webp_decoder.dart', 'packages/image/src/formats/tiff_decoder.dart', 'packages/image/src/formats/psd_decoder.dart', 'packages/image/src/formats/tga_decoder.dart', 'packages/image/src/formats/jpeg_encoder.dart', 'packages/image/src/formats/png_encoder.dart', 'packages/image/src/formats/tga_encoder.dart', 'packages/image/src/formats/gif_encoder.dart', 'packages/image/src/hdr/hdr_to_image.dart', 'packages/image/src/formats/exr/exr_zip_compressor.dart', 'packages/image/src/hdr/hdr_slice.dart'], (function load__packages__image__src__formats__cur_encoder_dart(dart_sdk, packages__image__src__formats__ico_encoder$46dart, packages__image__src__util__point$46dart, packages__image__src__util__input_buffer$46dart, packages__image__src__formats__png_decoder$46dart, packages__image__src__util__output_buffer$46dart, packages__image__src__formats__decoder$46dart, packages__image__src__formats__decode_info$46dart, packages__image__src__animation$46dart, packages__image__src__image$46dart, packages__image__src__image_exception$46dart, packages__image__src__color$46dart, packages__image__src__internal__bit_operators$46dart, packages__image__src__formats__jpeg_decoder$46dart, packages__image__src__formats__gif_decoder$46dart, packages__image__src__formats__webp_decoder$46dart, packages__image__src__formats__tiff_decoder$46dart, packages__image__src__formats__psd_decoder$46dart, packages__image__src__formats__tga_decoder$46dart, packages__image__src__formats__jpeg_encoder$46dart, packages__image__src__formats__png_encoder$46dart, packages__image__src__formats__tga_encoder$46dart, packages__image__src__formats__gif_encoder$46dart, packages__image__src__hdr__hdr_to_image$46dart, packages__image__src__formats__exr__exr_zip_compressor$46dart, packages__image__src__hdr__hdr_slice$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _interceptors = dart_sdk._interceptors;
+  const _js_helper = dart_sdk._js_helper;
+  const convert = dart_sdk.convert;
+  const typed_data = dart_sdk.typed_data;
+  const _native_typed_data = dart_sdk._native_typed_data;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const ico_encoder = packages__image__src__formats__ico_encoder$46dart.src__formats__ico_encoder;
+  const point = packages__image__src__util__point$46dart.src__util__point;
+  const input_buffer = packages__image__src__util__input_buffer$46dart.src__util__input_buffer;
+  const png_decoder = packages__image__src__formats__png_decoder$46dart.src__formats__png_decoder;
+  const output_buffer = packages__image__src__util__output_buffer$46dart.src__util__output_buffer;
+  const decoder = packages__image__src__formats__decoder$46dart.src__formats__decoder;
+  const decode_info = packages__image__src__formats__decode_info$46dart.src__formats__decode_info;
+  const animation = packages__image__src__animation$46dart.src__animation;
+  const image$ = packages__image__src__image$46dart.src__image;
+  const image_exception = packages__image__src__image_exception$46dart.src__image_exception;
+  const color = packages__image__src__color$46dart.src__color;
+  const bit_operators = packages__image__src__internal__bit_operators$46dart.src__internal__bit_operators;
+  const jpeg_decoder = packages__image__src__formats__jpeg_decoder$46dart.src__formats__jpeg_decoder;
+  const gif_decoder = packages__image__src__formats__gif_decoder$46dart.src__formats__gif_decoder;
+  const webp_decoder = packages__image__src__formats__webp_decoder$46dart.src__formats__webp_decoder;
+  const tiff_decoder = packages__image__src__formats__tiff_decoder$46dart.src__formats__tiff_decoder;
+  const psd_decoder = packages__image__src__formats__psd_decoder$46dart.src__formats__psd_decoder;
+  const tga_decoder = packages__image__src__formats__tga_decoder$46dart.src__formats__tga_decoder;
+  const jpeg_encoder = packages__image__src__formats__jpeg_encoder$46dart.src__formats__jpeg_encoder;
+  const png_encoder = packages__image__src__formats__png_encoder$46dart.src__formats__png_encoder;
+  const tga_encoder = packages__image__src__formats__tga_encoder$46dart.src__formats__tga_encoder;
+  const gif_encoder = packages__image__src__formats__gif_encoder$46dart.src__formats__gif_encoder;
+  const hdr_to_image = packages__image__src__hdr__hdr_to_image$46dart.src__hdr__hdr_to_image;
+  const exr_part = packages__image__src__formats__exr__exr_zip_compressor$46dart.src__formats__exr__exr_part;
+  const hdr_slice = packages__image__src__hdr__hdr_slice$46dart.src__hdr__hdr_slice;
+  var cur_encoder = Object.create(dart.library);
+  var ico_decoder = Object.create(dart.library);
+  var bmp_info = Object.create(dart.library);
+  var bmp_decoder = Object.create(dart.library);
+  var formats = Object.create(dart.library);
+  var exr_decoder = Object.create(dart.library);
+  var exr_image = Object.create(dart.library);
+  var image = Object.create(dart.library);
+  var $containsKey = dartx.containsKey;
+  var $_get = dartx._get;
+  var $sublist = dartx.sublist;
+  var $leftShift = dartx['<<'];
+  var $modulo = dartx['%'];
+  var $truncate = dartx.truncate;
+  var $length = dartx.length;
+  var $contains = dartx.contains;
+  var $toList = dartx.toList;
+  var $isNegative = dartx.isNegative;
+  var $abs = dartx.abs;
+  var $rightShift = dartx['>>'];
+  var $toString = dartx.toString;
+  var $toLowerCase = dartx.toLowerCase;
+  var $endsWith = dartx.endsWith;
+  var $add = dartx.add;
+  var $isEmpty = dartx.isEmpty;
+  var $_set = dartx._set;
+  var intL = () => (intL = dart.constFn(dart.legacy(core.int)))();
+  var JSArrayOfintL = () => (JSArrayOfintL = dart.constFn(_interceptors.JSArray$(intL())))();
+  var IcoInfoImageL = () => (IcoInfoImageL = dart.constFn(dart.legacy(ico_decoder.IcoInfoImage)))();
+  var IterableOfIcoInfoImageL = () => (IterableOfIcoInfoImageL = dart.constFn(core.Iterable$(IcoInfoImageL())))();
+  var intLToIcoInfoImageL = () => (intLToIcoInfoImageL = dart.constFn(dart.fnType(IcoInfoImageL(), [intL()])))();
+  var IterableOfintL = () => (IterableOfintL = dart.constFn(core.Iterable$(intL())))();
+  var intLTointL = () => (intLTointL = dart.constFn(dart.fnType(intL(), [intL()])))();
+  var BitmapCompressionL = () => (BitmapCompressionL = dart.constFn(dart.legacy(bmp_info.BitmapCompression)))();
+  var IdentityMapOfintL$BitmapCompressionL = () => (IdentityMapOfintL$BitmapCompressionL = dart.constFn(_js_helper.IdentityMap$(intL(), BitmapCompressionL())))();
+  var StringL = () => (StringL = dart.constFn(dart.legacy(core.String)))();
+  var ObjectL = () => (ObjectL = dart.constFn(dart.legacy(core.Object)))();
+  var IdentityMapOfStringL$ObjectL = () => (IdentityMapOfStringL$ObjectL = dart.constFn(_js_helper.IdentityMap$(StringL(), ObjectL())))();
+  var IdentityMapOfStringL$intL = () => (IdentityMapOfStringL$intL = dart.constFn(_js_helper.IdentityMap$(StringL(), intL())))();
+  var intLTovoid = () => (intLTovoid = dart.constFn(dart.fnType(dart.void, [intL()])))();
+  var Uint8ListL = () => (Uint8ListL = dart.constFn(dart.legacy(typed_data.Uint8List)))();
+  var InternalExrPartL = () => (InternalExrPartL = dart.constFn(dart.legacy(exr_part.InternalExrPart)))();
+  var JSArrayOfInternalExrPartL = () => (JSArrayOfInternalExrPartL = dart.constFn(_interceptors.JSArray$(InternalExrPartL())))();
+  const CT = Object.create(null);
+  var L6 = "package:image/src/formats/exr/exr_image.dart";
+  var L0 = "package:image/src/formats/cur_encoder.dart";
+  var L4 = "package:image/src/formats/bmp_decoder.dart";
+  var L3 = "package:image/src/formats/bmp/bmp_info.dart";
+  var L5 = "package:image/src/formats/exr_decoder.dart";
+  var L2 = "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.19/lib/src/formats/ico_decoder.dart";
+  var L1 = "package:image/src/formats/ico_decoder.dart";
+  dart.defineLazy(CT, {
+    get C0() {
+      return C0 = dart.const({
+        __proto__: bmp_info.BitmapCompression.prototype,
+        [_name$]: "BitmapCompression.BI_BITFIELDS",
+        index: 0
+      });
+    },
+    get C1() {
+      return C1 = dart.const({
+        __proto__: bmp_info.BitmapCompression.prototype,
+        [_name$]: "BitmapCompression.NONE",
+        index: 1
+      });
+    },
+    get C2() {
+      return C2 = dart.constList([C0 || CT.C0, C1 || CT.C1], BitmapCompressionL());
+    }
+  }, false);
+  var hotSpots$ = dart.privateName(cur_encoder, "CurEncoder.hotSpots");
+  cur_encoder.CurEncoder = class CurEncoder extends ico_encoder.WinEncoder {
+    get hotSpots() {
+      return this[hotSpots$];
+    }
+    set hotSpots(value) {
+      this[hotSpots$] = value;
+    }
+    colorPlanesOrXHotSpot(index) {
+      if (this.hotSpots != null) {
+        if (dart.test(this.hotSpots[$containsKey](index))) {
+          return this.hotSpots[$_get](index).xi;
+        }
+      }
+      return 0;
+    }
+    bitsPerPixelOrYHotSpot(index) {
+      if (this.hotSpots != null) {
+        if (dart.test(this.hotSpots[$containsKey](index))) {
+          return this.hotSpots[$_get](index).yi;
+        }
+      }
+      return 0;
+    }
+    get type() {
+      return 2;
+    }
+  };
+  (cur_encoder.CurEncoder.new = function(opts) {
+    let hotSpots = opts && 'hotSpots' in opts ? opts.hotSpots : null;
+    this[hotSpots$] = hotSpots;
+    ;
+  }).prototype = cur_encoder.CurEncoder.prototype;
+  dart.addTypeTests(cur_encoder.CurEncoder);
+  dart.addTypeCaches(cur_encoder.CurEncoder);
+  dart.setMethodSignature(cur_encoder.CurEncoder, () => ({
+    __proto__: dart.getMethods(cur_encoder.CurEncoder.__proto__),
+    colorPlanesOrXHotSpot: dart.fnType(dart.legacy(core.int), [dart.legacy(core.int)]),
+    bitsPerPixelOrYHotSpot: dart.fnType(dart.legacy(core.int), [dart.legacy(core.int)])
+  }));
+  dart.setGetterSignature(cur_encoder.CurEncoder, () => ({
+    __proto__: dart.getGetters(cur_encoder.CurEncoder.__proto__),
+    type: dart.legacy(core.int)
+  }));
+  dart.setLibraryUri(cur_encoder.CurEncoder, L0);
+  dart.setFieldSignature(cur_encoder.CurEncoder, () => ({
+    __proto__: dart.getFields(cur_encoder.CurEncoder.__proto__),
+    hotSpots: dart.fieldType(dart.legacy(core.Map$(dart.legacy(core.int), dart.legacy(point.Point))))
+  }));
+  var _input = dart.privateName(ico_decoder, "_input");
+  var _icoInfo = dart.privateName(ico_decoder, "_icoInfo");
+  ico_decoder.IcoDecoder = class IcoDecoder extends decoder.Decoder {
+    isValidFile(bytes) {
+      this[_input] = new input_buffer.InputBuffer.new(bytes);
+      this[_icoInfo] = ico_decoder.IcoInfo._read(this[_input]);
+      return this[_icoInfo] != null;
+    }
+    startDecode(bytes) {
+      this[_input] = new input_buffer.InputBuffer.new(bytes);
+      this[_icoInfo] = ico_decoder.IcoInfo._read(this[_input]);
+      return this[_icoInfo];
+    }
+    decodeAnimation(bytes) {
+      dart.throw(new core.UnimplementedError.new());
+    }
+    decodeFrame(frame) {
+      let t0, t0$;
+      if (this[_input] == null || this[_icoInfo] == null || dart.notNull(frame) >= dart.notNull(this[_icoInfo].numFrames)) {
+        return null;
+      }
+      let imageInfo = this[_icoInfo].images[$_get](frame);
+      let imageBuffer = this[_input].buffer[$sublist](dart.notNull(this[_input].start) + dart.notNull(imageInfo.bytesOffset), dart.notNull(this[_input].start) + dart.notNull(imageInfo.bytesOffset) + dart.notNull(imageInfo.bytesSize));
+      let png = new png_decoder.PngDecoder.new();
+      if (dart.test(png.isValidFile(imageBuffer))) {
+        return png.decodeImage(imageBuffer);
+      }
+      let dummyBmpHeader = (t0 = new output_buffer.OutputBuffer.new({size: 14}), (() => {
+        t0.writeUint16(19778);
+        t0.writeUint32(imageInfo.bytesSize);
+        t0.writeUint32(0);
+        t0.writeUint32(0);
+        return t0;
+      })());
+      let bmpInfo = new ico_decoder.IcoBmpInfo.new(new input_buffer.InputBuffer.new(imageBuffer), {fileHeader: new bmp_info.BitmapFileHeader.new(new input_buffer.InputBuffer.new(dummyBmpHeader.getBytes()))});
+      if (bmpInfo === null) {
+        return null;
+      }
+      if (bmpInfo.headerSize !== 40 && bmpInfo.planes !== 1) {
+        return null;
+      }
+      let offset = null;
+      if (bmpInfo.totalColors === 0 && dart.notNull(bmpInfo.bpp) <= 8) {
+        offset = 40 + 4 * (1)[$leftShift](bmpInfo.bpp);
+      } else {
+        offset = 40 + 4 * dart.notNull(bmpInfo.totalColors);
+      }
+      bmpInfo.file.offset = offset;
+      t0$ = dummyBmpHeader;
+      t0$.length = dart.notNull(t0$.length) - 4;
+      dummyBmpHeader.writeUint32(offset);
+      let inp = new input_buffer.InputBuffer.new(imageBuffer);
+      let bmp = new bmp_decoder.DibDecoder.new(inp, bmpInfo);
+      let image = bmp.decodeFrame(0);
+      if (dart.notNull(bmpInfo.bpp) >= 32) {
+        return image;
+      }
+      let padding = 32 - bmpInfo.width[$modulo](32);
+      let rowLength = (dart.notNull(padding === 32 ? bmpInfo.width : dart.notNull(bmpInfo.width) + padding) / 8)[$truncate]();
+      for (let y = 0; y < dart.notNull(bmpInfo.height); y = y + 1) {
+        let line = dart.test(bmpInfo.readBottomUp) ? y : dart.notNull(image.height) - 1 - y;
+        let row = inp.readBytes(rowLength);
+        for (let x = 0; x < dart.notNull(bmpInfo.width);) {
+          let b = row.readByte();
+          for (let j = 7; j > -1 && x < dart.notNull(bmpInfo.width); j = j - 1) {
+            if ((dart.notNull(b) & (1)[$leftShift](j)) !== 0) {
+              image.setPixelRgba(x, line, 0, 0, 0, 0);
+            }
+            x = x + 1;
+          }
+        }
+      }
+      return image;
+    }
+    decodeImageLargest(bytes) {
+      let info = this.startDecode(bytes);
+      if (info == null) {
+        return null;
+      }
+      let largestFrame = 0;
+      let largestSize = 0;
+      for (let i = 0; i < dart.notNull(this[_icoInfo].images[$length]); i = i + 1) {
+        let image = this[_icoInfo].images[$_get](i);
+        let size = dart.notNull(image.width) * dart.notNull(image.height);
+        if (size > largestSize) {
+          largestSize = size;
+          largestFrame = i;
+        }
+      }
+      return this.decodeFrame(largestFrame);
+    }
+    decodeImage(bytes, opts) {
+      let frame = opts && 'frame' in opts ? opts.frame : 0;
+      let info = this.startDecode(bytes);
+      if (info == null) {
+        return null;
+      }
+      return this.decodeFrame(frame);
+    }
+    numFrames() {
+      let t0, t0$;
+      t0$ = (t0 = this[_icoInfo], t0 == null ? null : t0.numFrames);
+      return t0$ == null ? 0 : t0$;
+    }
+  };
+  (ico_decoder.IcoDecoder.new = function() {
+    this[_input] = null;
+    this[_icoInfo] = null;
+    ;
+  }).prototype = ico_decoder.IcoDecoder.prototype;
+  dart.addTypeTests(ico_decoder.IcoDecoder);
+  dart.addTypeCaches(ico_decoder.IcoDecoder);
+  dart.setMethodSignature(ico_decoder.IcoDecoder, () => ({
+    __proto__: dart.getMethods(ico_decoder.IcoDecoder.__proto__),
+    isValidFile: dart.fnType(dart.legacy(core.bool), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    startDecode: dart.fnType(dart.legacy(decode_info.DecodeInfo), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    decodeAnimation: dart.fnType(dart.legacy(animation.Animation), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    decodeFrame: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.int)]),
+    decodeImageLargest: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    decodeImage: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.List$(dart.legacy(core.int)))], {frame: dart.legacy(core.int)}, {}),
+    numFrames: dart.fnType(dart.legacy(core.int), [])
+  }));
+  dart.setLibraryUri(ico_decoder.IcoDecoder, L1);
+  dart.setFieldSignature(ico_decoder.IcoDecoder, () => ({
+    __proto__: dart.getFields(ico_decoder.IcoDecoder.__proto__),
+    [_input]: dart.fieldType(dart.legacy(input_buffer.InputBuffer)),
+    [_icoInfo]: dart.fieldType(dart.legacy(ico_decoder.IcoInfo))
+  }));
+  var type$ = dart.privateName(ico_decoder, "IcoInfo.type");
+  var numFrames$ = dart.privateName(ico_decoder, "IcoInfo.numFrames");
+  var images$ = dart.privateName(ico_decoder, "IcoInfo.images");
+  ico_decoder.IcoInfo = class IcoInfo extends decode_info.DecodeInfo {
+    get type() {
+      return this[type$];
+    }
+    set type(value) {
+      super.type = value;
+    }
+    get numFrames() {
+      return this[numFrames$];
+    }
+    set numFrames(value) {
+      super.numFrames = value;
+    }
+    get images() {
+      return this[images$];
+    }
+    set images(value) {
+      super.images = value;
+    }
+    static _read(input) {
+      if (input.readUint16() !== 0) {
+        return null;
+      }
+      let type = input.readUint16();
+      if (!dart.test(JSArrayOfintL().of([1, 2])[$contains](type))) {
+        return null;
+      }
+      if (type === 2) {
+        return null;
+      }
+      let imageCount = input.readUint16();
+      let images = IterableOfIcoInfoImageL().generate(imageCount, dart.fn(e => {
+        let t0;
+        return new ico_decoder.IcoInfoImage.new({width: input.readByte(), height: input.readByte(), colorPalette: input.readByte(), colorPlanes: (t0 = input, (() => {
+            t0.skip(1);
+            return t0;
+          })()).readUint16(), bitsPerPixel: input.readUint16(), bytesSize: input.readUint32(), bytesOffset: input.readUint32()});
+      }, intLToIcoInfoImageL()))[$toList]();
+      return new ico_decoder.IcoInfo.new({type: type, numFrames: imageCount, images: images});
+    }
+  };
+  (ico_decoder.IcoInfo.new = function(opts) {
+    let type = opts && 'type' in opts ? opts.type : null;
+    let numFrames = opts && 'numFrames' in opts ? opts.numFrames : null;
+    let images = opts && 'images' in opts ? opts.images : null;
+    this[type$] = type;
+    this[numFrames$] = numFrames;
+    this[images$] = images;
+    ico_decoder.IcoInfo.__proto__.new.call(this);
+    ;
+  }).prototype = ico_decoder.IcoInfo.prototype;
+  dart.addTypeTests(ico_decoder.IcoInfo);
+  dart.addTypeCaches(ico_decoder.IcoInfo);
+  dart.setLibraryUri(ico_decoder.IcoInfo, L1);
+  dart.setFieldSignature(ico_decoder.IcoInfo, () => ({
+    __proto__: dart.getFields(ico_decoder.IcoInfo.__proto__),
+    type: dart.finalFieldType(dart.legacy(core.int)),
+    numFrames: dart.finalFieldType(dart.legacy(core.int)),
+    images: dart.finalFieldType(dart.legacy(core.List$(dart.legacy(ico_decoder.IcoInfoImage))))
+  }));
+  var width$ = dart.privateName(ico_decoder, "IcoInfoImage.width");
+  var height$ = dart.privateName(ico_decoder, "IcoInfoImage.height");
+  var colorPalette$ = dart.privateName(ico_decoder, "IcoInfoImage.colorPalette");
+  var bytesSize$ = dart.privateName(ico_decoder, "IcoInfoImage.bytesSize");
+  var bytesOffset$ = dart.privateName(ico_decoder, "IcoInfoImage.bytesOffset");
+  var colorPlanes$ = dart.privateName(ico_decoder, "IcoInfoImage.colorPlanes");
+  var bitsPerPixel$ = dart.privateName(ico_decoder, "IcoInfoImage.bitsPerPixel");
+  ico_decoder.IcoInfoImage = class IcoInfoImage extends core.Object {
+    get width() {
+      return this[width$];
+    }
+    set width(value) {
+      super.width = value;
+    }
+    get height() {
+      return this[height$];
+    }
+    set height(value) {
+      super.height = value;
+    }
+    get colorPalette() {
+      return this[colorPalette$];
+    }
+    set colorPalette(value) {
+      super.colorPalette = value;
+    }
+    get bytesSize() {
+      return this[bytesSize$];
+    }
+    set bytesSize(value) {
+      super.bytesSize = value;
+    }
+    get bytesOffset() {
+      return this[bytesOffset$];
+    }
+    set bytesOffset(value) {
+      super.bytesOffset = value;
+    }
+    get colorPlanes() {
+      return this[colorPlanes$];
+    }
+    set colorPlanes(value) {
+      super.colorPlanes = value;
+    }
+    get bitsPerPixel() {
+      return this[bitsPerPixel$];
+    }
+    set bitsPerPixel(value) {
+      super.bitsPerPixel = value;
+    }
+  };
+  (ico_decoder.IcoInfoImage.new = function(opts) {
+    let width = opts && 'width' in opts ? opts.width : null;
+    let height = opts && 'height' in opts ? opts.height : null;
+    let colorPalette = opts && 'colorPalette' in opts ? opts.colorPalette : null;
+    let bytesSize = opts && 'bytesSize' in opts ? opts.bytesSize : null;
+    let bytesOffset = opts && 'bytesOffset' in opts ? opts.bytesOffset : null;
+    let colorPlanes = opts && 'colorPlanes' in opts ? opts.colorPlanes : null;
+    let bitsPerPixel = opts && 'bitsPerPixel' in opts ? opts.bitsPerPixel : null;
+    this[width$] = width;
+    this[height$] = height;
+    this[colorPalette$] = colorPalette;
+    this[bytesSize$] = bytesSize;
+    this[bytesOffset$] = bytesOffset;
+    this[colorPlanes$] = colorPlanes;
+    this[bitsPerPixel$] = bitsPerPixel;
+    if (!(width != null)) dart.assertFailed(null, L2, 193, 16, "width != null");
+    if (!(height != null)) dart.assertFailed(null, L2, 194, 16, "height != null");
+    if (!(colorPalette != null)) dart.assertFailed(null, L2, 195, 16, "colorPalette != null");
+    if (!(bytesSize != null)) dart.assertFailed(null, L2, 196, 16, "bytesSize != null");
+    if (!(bytesOffset != null)) dart.assertFailed(null, L2, 197, 16, "bytesOffset != null");
+    if (!(colorPlanes != null)) dart.assertFailed(null, L2, 198, 16, "colorPlanes != null");
+    if (!(bitsPerPixel != null)) dart.assertFailed(null, L2, 199, 16, "bitsPerPixel != null");
+    ;
+  }).prototype = ico_decoder.IcoInfoImage.prototype;
+  dart.addTypeTests(ico_decoder.IcoInfoImage);
+  dart.addTypeCaches(ico_decoder.IcoInfoImage);
+  dart.setLibraryUri(ico_decoder.IcoInfoImage, L1);
+  dart.setFieldSignature(ico_decoder.IcoInfoImage, () => ({
+    __proto__: dart.getFields(ico_decoder.IcoInfoImage.__proto__),
+    width: dart.finalFieldType(dart.legacy(core.int)),
+    height: dart.finalFieldType(dart.legacy(core.int)),
+    colorPalette: dart.finalFieldType(dart.legacy(core.int)),
+    bytesSize: dart.finalFieldType(dart.legacy(core.int)),
+    bytesOffset: dart.finalFieldType(dart.legacy(core.int)),
+    colorPlanes: dart.finalFieldType(dart.legacy(core.int)),
+    bitsPerPixel: dart.finalFieldType(dart.legacy(core.int))
+  }));
+  var _height = dart.privateName(bmp_info, "_height");
+  var _readRgba = dart.privateName(bmp_info, "_readRgba");
+  var _name$ = dart.privateName(bmp_info, "_name");
+  var C0;
+  var C1;
+  var _compToString = dart.privateName(bmp_info, "_compToString");
+  var file = dart.privateName(bmp_info, "BmpInfo.file");
+  var width = dart.privateName(bmp_info, "BmpInfo.width");
+  var headerSize = dart.privateName(bmp_info, "BmpInfo.headerSize");
+  var planes = dart.privateName(bmp_info, "BmpInfo.planes");
+  var bpp = dart.privateName(bmp_info, "BmpInfo.bpp");
+  var compression = dart.privateName(bmp_info, "BmpInfo.compression");
+  var imageSize = dart.privateName(bmp_info, "BmpInfo.imageSize");
+  var xppm = dart.privateName(bmp_info, "BmpInfo.xppm");
+  var yppm = dart.privateName(bmp_info, "BmpInfo.yppm");
+  var totalColors = dart.privateName(bmp_info, "BmpInfo.totalColors");
+  var importantColors = dart.privateName(bmp_info, "BmpInfo.importantColors");
+  var v5redMask = dart.privateName(bmp_info, "BmpInfo.v5redMask");
+  var v5greenMask = dart.privateName(bmp_info, "BmpInfo.v5greenMask");
+  var v5blueMask = dart.privateName(bmp_info, "BmpInfo.v5blueMask");
+  var v5alphaMask = dart.privateName(bmp_info, "BmpInfo.v5alphaMask");
+  var colorPalette = dart.privateName(bmp_info, "BmpInfo.colorPalette");
+  bmp_info.BmpInfo = class BmpInfo extends decode_info.DecodeInfo {
+    get file() {
+      return this[file];
+    }
+    set file(value) {
+      super.file = value;
+    }
+    get width() {
+      return this[width];
+    }
+    set width(value) {
+      super.width = value;
+    }
+    get headerSize() {
+      return this[headerSize];
+    }
+    set headerSize(value) {
+      super.headerSize = value;
+    }
+    get planes() {
+      return this[planes];
+    }
+    set planes(value) {
+      super.planes = value;
+    }
+    get bpp() {
+      return this[bpp];
+    }
+    set bpp(value) {
+      super.bpp = value;
+    }
+    get compression() {
+      return this[compression];
+    }
+    set compression(value) {
+      super.compression = value;
+    }
+    get imageSize() {
+      return this[imageSize];
+    }
+    set imageSize(value) {
+      super.imageSize = value;
+    }
+    get xppm() {
+      return this[xppm];
+    }
+    set xppm(value) {
+      super.xppm = value;
+    }
+    get yppm() {
+      return this[yppm];
+    }
+    set yppm(value) {
+      super.yppm = value;
+    }
+    get totalColors() {
+      return this[totalColors];
+    }
+    set totalColors(value) {
+      super.totalColors = value;
+    }
+    get importantColors() {
+      return this[importantColors];
+    }
+    set importantColors(value) {
+      super.importantColors = value;
+    }
+    get v5redMask() {
+      return this[v5redMask];
+    }
+    set v5redMask(value) {
+      this[v5redMask] = value;
+    }
+    get v5greenMask() {
+      return this[v5greenMask];
+    }
+    set v5greenMask(value) {
+      this[v5greenMask] = value;
+    }
+    get v5blueMask() {
+      return this[v5blueMask];
+    }
+    set v5blueMask(value) {
+      this[v5blueMask] = value;
+    }
+    get v5alphaMask() {
+      return this[v5alphaMask];
+    }
+    set v5alphaMask(value) {
+      this[v5alphaMask] = value;
+    }
+    get colorPalette() {
+      return this[colorPalette];
+    }
+    set colorPalette(value) {
+      this[colorPalette] = value;
+    }
+    get numFrames() {
+      return 1;
+    }
+    get ignoreAlphaChannel() {
+      return this.headerSize === 40 || this.headerSize === 124 && this.v5alphaMask === 0;
+    }
+    get readBottomUp() {
+      return !this[_height][$isNegative];
+    }
+    get height() {
+      return this[_height][$abs]();
+    }
+    set height(value) {
+      super.height = value;
+    }
+    readPalette(p) {
+      let colors = this.totalColors === 0 ? (1)[$leftShift](this.bpp) : this.totalColors;
+      let colorBytes = this.headerSize === 12 ? 3 : 4;
+      this.colorPalette = IterableOfintL().generate(colors, dart.fn(i => this[_readRgba](p, {aDefault: colorBytes === 3 ? 100 : null}), intLTointL()))[$toList]();
+    }
+    static _intToCompressions(compIndex) {
+      let map = new (IdentityMapOfintL$BitmapCompressionL()).from([0, bmp_info.BitmapCompression.NONE, 3, bmp_info.BitmapCompression.BI_BITFIELDS]);
+      let compression = map[$_get](compIndex);
+      if (compression == null) {
+        dart.throw(new image_exception.ImageException.new("Bitmap compression " + dart.str(compIndex) + " is not supported yet."));
+      }
+      return compression;
+    }
+    [_readRgba](input, opts) {
+      let t0, t0$;
+      let aDefault = opts && 'aDefault' in opts ? opts.aDefault : null;
+      if (dart.test(this.readBottomUp)) {
+        let b = input.readByte();
+        let g = input.readByte();
+        let r = input.readByte();
+        let a = (t0 = aDefault, t0 == null ? input.readByte() : t0);
+        return color.getColor(r, g, b, dart.test(this.ignoreAlphaChannel) ? 255 : a);
+      } else {
+        let r = input.readByte();
+        let b = input.readByte();
+        let g = input.readByte();
+        let a = (t0$ = aDefault, t0$ == null ? input.readByte() : t0$);
+        return color.getColor(r, b, g, dart.test(this.ignoreAlphaChannel) ? 255 : a);
+      }
+    }
+    decodeRgba(input, pixel) {
+      if (this.colorPalette != null) {
+        if (this.bpp === 4) {
+          let b = input.readByte();
+          let left = b[$rightShift](4);
+          let right = dart.notNull(b) & 15;
+          pixel(this.colorPalette[$_get](left));
+          pixel(this.colorPalette[$_get](right));
+          return;
+        }
+      }
+      if (this.compression == bmp_info.BitmapCompression.BI_BITFIELDS && this.bpp === 32) {
+        return pixel(this[_readRgba](input));
+      } else if (this.bpp === 32 && this.compression == bmp_info.BitmapCompression.NONE) {
+        return pixel(this[_readRgba](input));
+      } else if (this.bpp === 24) {
+        return pixel(this[_readRgba](input, {aDefault: 255}));
+      } else {
+        dart.throw(new image_exception.ImageException.new("Unsupported bpp (" + dart.str(this.bpp) + ") or compression unsupported."));
+      }
+    }
+    [_compToString]() {
+      switch (this.compression) {
+        case C0 || CT.C0:
+        {
+          return "BI_BITFIELDS";
+        }
+        case C1 || CT.C1:
+        {
+          return "none";
+        }
+      }
+      return "UNSUPPORTED: " + dart.str(this.compression);
+    }
+    toString() {
+      let json = new convert.JsonEncoder.withIndent(" ");
+      return json.convert(new (IdentityMapOfStringL$ObjectL()).from(["headerSize", this.headerSize, "width", this.width, "height", this.height, "planes", this.planes, "bpp", this.bpp, "file", this.file.toJson(), "compression", this[_compToString](), "imageSize", this.imageSize, "xppm", this.xppm, "yppm", this.yppm, "totalColors", this.totalColors, "importantColors", this.importantColors, "readBottomUp", this.readBottomUp, "v5redMask", bit_operators.debugBits32(this.v5redMask), "v5greenMask", bit_operators.debugBits32(this.v5greenMask), "v5blueMask", bit_operators.debugBits32(this.v5blueMask), "v5alphaMask", bit_operators.debugBits32(this.v5alphaMask)]));
+    }
+  };
+  (bmp_info.BmpInfo.new = function(p, opts) {
+    let t0;
+    let fileHeader = opts && 'fileHeader' in opts ? opts.fileHeader : null;
+    this[v5redMask] = null;
+    this[v5greenMask] = null;
+    this[v5blueMask] = null;
+    this[v5alphaMask] = null;
+    this[colorPalette] = null;
+    this[file] = (t0 = fileHeader, t0 == null ? new bmp_info.BitmapFileHeader.new(p) : t0);
+    this[headerSize] = p.readUint32();
+    this[width] = p.readInt32();
+    this[_height] = p.readInt32();
+    this[planes] = p.readUint16();
+    this[bpp] = p.readUint16();
+    this[compression] = bmp_info.BmpInfo._intToCompressions(p.readUint32());
+    this[imageSize] = p.readUint32();
+    this[xppm] = p.readInt32();
+    this[yppm] = p.readInt32();
+    this[totalColors] = p.readUint32();
+    this[importantColors] = p.readUint32();
+    bmp_info.BmpInfo.__proto__.new.call(this);
+    if (dart.test(JSArrayOfintL().of([1, 4, 8])[$contains](this.bpp))) {
+      this.readPalette(p);
+    }
+    if (this.headerSize === 124) {
+      this.v5redMask = p.readUint32();
+      this.v5greenMask = p.readUint32();
+      this.v5blueMask = p.readUint32();
+      this.v5alphaMask = p.readUint32();
+    }
+  }).prototype = bmp_info.BmpInfo.prototype;
+  dart.addTypeTests(bmp_info.BmpInfo);
+  dart.addTypeCaches(bmp_info.BmpInfo);
+  dart.setMethodSignature(bmp_info.BmpInfo, () => ({
+    __proto__: dart.getMethods(bmp_info.BmpInfo.__proto__),
+    readPalette: dart.fnType(dart.void, [dart.legacy(input_buffer.InputBuffer)]),
+    [_readRgba]: dart.fnType(dart.legacy(core.int), [dart.legacy(input_buffer.InputBuffer)], {aDefault: dart.legacy(core.int)}, {}),
+    decodeRgba: dart.fnType(dart.void, [dart.legacy(input_buffer.InputBuffer), dart.legacy(dart.fnType(dart.void, [dart.legacy(core.int)]))]),
+    [_compToString]: dart.fnType(dart.legacy(core.String), []),
+    toString: dart.fnType(dart.legacy(core.String), []),
+    [$toString]: dart.fnType(dart.legacy(core.String), [])
+  }));
+  dart.setGetterSignature(bmp_info.BmpInfo, () => ({
+    __proto__: dart.getGetters(bmp_info.BmpInfo.__proto__),
+    numFrames: dart.legacy(core.int),
+    ignoreAlphaChannel: dart.legacy(core.bool),
+    readBottomUp: dart.legacy(core.bool),
+    height: dart.legacy(core.int)
+  }));
+  dart.setLibraryUri(bmp_info.BmpInfo, L3);
+  dart.setFieldSignature(bmp_info.BmpInfo, () => ({
+    __proto__: dart.getFields(bmp_info.BmpInfo.__proto__),
+    file: dart.finalFieldType(dart.legacy(bmp_info.BitmapFileHeader)),
+    [_height]: dart.finalFieldType(dart.legacy(core.int)),
+    width: dart.finalFieldType(dart.legacy(core.int)),
+    headerSize: dart.finalFieldType(dart.legacy(core.int)),
+    planes: dart.finalFieldType(dart.legacy(core.int)),
+    bpp: dart.finalFieldType(dart.legacy(core.int)),
+    compression: dart.finalFieldType(dart.legacy(bmp_info.BitmapCompression)),
+    imageSize: dart.finalFieldType(dart.legacy(core.int)),
+    xppm: dart.finalFieldType(dart.legacy(core.int)),
+    yppm: dart.finalFieldType(dart.legacy(core.int)),
+    totalColors: dart.finalFieldType(dart.legacy(core.int)),
+    importantColors: dart.finalFieldType(dart.legacy(core.int)),
+    v5redMask: dart.fieldType(dart.legacy(core.int)),
+    v5greenMask: dart.fieldType(dart.legacy(core.int)),
+    v5blueMask: dart.fieldType(dart.legacy(core.int)),
+    v5alphaMask: dart.fieldType(dart.legacy(core.int)),
+    colorPalette: dart.fieldType(dart.legacy(core.List$(dart.legacy(core.int))))
+  }));
+  dart.defineExtensionMethods(bmp_info.BmpInfo, ['toString']);
+  ico_decoder.IcoBmpInfo = class IcoBmpInfo extends bmp_info.BmpInfo {
+    get height() {
+      return (dart.notNull(super.height) / 2)[$truncate]();
+    }
+    set height(value) {
+      super.height = value;
+    }
+    get ignoreAlphaChannel() {
+      return this.headerSize === 40 && this.bpp === 32 ? false : super.ignoreAlphaChannel;
+    }
+  };
+  (ico_decoder.IcoBmpInfo.new = function(p, opts) {
+    let fileHeader = opts && 'fileHeader' in opts ? opts.fileHeader : null;
+    ico_decoder.IcoBmpInfo.__proto__.new.call(this, p, {fileHeader: fileHeader});
+    ;
+  }).prototype = ico_decoder.IcoBmpInfo.prototype;
+  dart.addTypeTests(ico_decoder.IcoBmpInfo);
+  dart.addTypeCaches(ico_decoder.IcoBmpInfo);
+  dart.setLibraryUri(ico_decoder.IcoBmpInfo, L1);
+  dart.defineLazy(ico_decoder, {
+    /*ico_decoder._TYPE_ICO*/get _TYPE_ICO() {
+      return 1;
+    },
+    /*ico_decoder._TYPE_CUR*/get _TYPE_CUR() {
+      return 2;
+    }
+  }, true);
+  var C2;
+  bmp_info.BitmapCompression = class BitmapCompression extends core.Object {
+    toString() {
+      return this[_name$];
+    }
+  };
+  (bmp_info.BitmapCompression.new = function(index, _name) {
+    this.index = index;
+    this[_name$] = _name;
+    ;
+  }).prototype = bmp_info.BitmapCompression.prototype;
+  dart.addTypeTests(bmp_info.BitmapCompression);
+  dart.addTypeCaches(bmp_info.BitmapCompression);
+  dart.setMethodSignature(bmp_info.BitmapCompression, () => ({
+    __proto__: dart.getMethods(bmp_info.BitmapCompression.__proto__),
+    toString: dart.fnType(dart.legacy(core.String), []),
+    [$toString]: dart.fnType(dart.legacy(core.String), [])
+  }));
+  dart.setLibraryUri(bmp_info.BitmapCompression, L3);
+  dart.setFieldSignature(bmp_info.BitmapCompression, () => ({
+    __proto__: dart.getFields(bmp_info.BitmapCompression.__proto__),
+    index: dart.finalFieldType(dart.legacy(core.int)),
+    [_name$]: dart.finalFieldType(dart.legacy(core.String))
+  }));
+  dart.defineExtensionMethods(bmp_info.BitmapCompression, ['toString']);
+  bmp_info.BitmapCompression.BI_BITFIELDS = C0 || CT.C0;
+  bmp_info.BitmapCompression.NONE = C1 || CT.C1;
+  bmp_info.BitmapCompression.values = C2 || CT.C2;
+  var fileLength = dart.privateName(bmp_info, "BitmapFileHeader.fileLength");
+  var offset = dart.privateName(bmp_info, "BitmapFileHeader.offset");
+  bmp_info.BitmapFileHeader = class BitmapFileHeader extends core.Object {
+    get fileLength() {
+      return this[fileLength];
+    }
+    set fileLength(value) {
+      this[fileLength] = value;
+    }
+    get offset() {
+      return this[offset];
+    }
+    set offset(value) {
+      this[offset] = value;
+    }
+    static isValidFile(b) {
+      if (dart.notNull(b.length) < 2) {
+        return false;
+      }
+      let type = new input_buffer.InputBuffer.from(b).readUint16();
+      return type === 19778;
+    }
+    toJson() {
+      return new (IdentityMapOfStringL$intL()).from(["offset", this.offset, "fileLength", this.fileLength, "fileType", 19778]);
+    }
+  };
+  (bmp_info.BitmapFileHeader.new = function(b) {
+    this[fileLength] = null;
+    this[offset] = null;
+    if (!dart.test(bmp_info.BitmapFileHeader.isValidFile(b))) {
+      dart.throw(new image_exception.ImageException.new("Not a bitmap file."));
+    }
+    b.skip(2);
+    this.fileLength = b.readInt32();
+    b.skip(4);
+    this.offset = b.readInt32();
+  }).prototype = bmp_info.BitmapFileHeader.prototype;
+  dart.addTypeTests(bmp_info.BitmapFileHeader);
+  dart.addTypeCaches(bmp_info.BitmapFileHeader);
+  dart.setMethodSignature(bmp_info.BitmapFileHeader, () => ({
+    __proto__: dart.getMethods(bmp_info.BitmapFileHeader.__proto__),
+    toJson: dart.fnType(dart.legacy(core.Map$(dart.legacy(core.String), dart.legacy(core.int))), [])
+  }));
+  dart.setLibraryUri(bmp_info.BitmapFileHeader, L3);
+  dart.setFieldSignature(bmp_info.BitmapFileHeader, () => ({
+    __proto__: dart.getFields(bmp_info.BitmapFileHeader.__proto__),
+    fileLength: dart.fieldType(dart.legacy(core.int)),
+    offset: dart.fieldType(dart.legacy(core.int))
+  }));
+  dart.defineLazy(bmp_info.BitmapFileHeader, {
+    /*bmp_info.BitmapFileHeader.fileHeaderSize*/get fileHeaderSize() {
+      return 14;
+    },
+    /*bmp_info.BitmapFileHeader.BMP_HEADER_FILETYPE*/get BMP_HEADER_FILETYPE() {
+      return 19778;
+    }
+  }, true);
+  var _input$ = dart.privateName(bmp_decoder, "_input");
+  var _pixelDataOffset = dart.privateName(bmp_decoder, "_pixelDataOffset");
+  var info = dart.privateName(bmp_decoder, "BmpDecoder.info");
+  bmp_decoder.BmpDecoder = class BmpDecoder extends decoder.Decoder {
+    get info() {
+      return this[info];
+    }
+    set info(value) {
+      this[info] = value;
+    }
+    isValidFile(data) {
+      return bmp_info.BitmapFileHeader.isValidFile(new input_buffer.InputBuffer.new(data));
+    }
+    numFrames() {
+      return this.info != null ? this.info.numFrames : 0;
+    }
+    startDecode(bytes) {
+      if (!dart.test(this.isValidFile(bytes))) return null;
+      this[_input$] = new input_buffer.InputBuffer.new(bytes);
+      this.info = new bmp_info.BmpInfo.new(this[_input$]);
+      return this.info;
+    }
+    [_pixelDataOffset]() {
+      return this.info.file.offset;
+    }
+    decodeFrame(frame) {
+      this[_input$].offset = this[_pixelDataOffset]();
+      let rowStride = (dart.notNull(this.info.width) * dart.notNull(this.info.bpp))[$rightShift](3);
+      if (rowStride[$modulo](4) !== 0) {
+        rowStride = rowStride + (4 - rowStride[$modulo](4));
+      }
+      let image = new image$.Image.new(this.info.width, this.info.height, {channels: image$.Channels.rgba});
+      for (let y = dart.notNull(image.height) - 1; y >= 0; y = y - 1) {
+        let line = dart.test(this.info.readBottomUp) ? y : dart.notNull(image.height) - 1 - y;
+        let row = this[_input$].readBytes(rowStride);
+        for (let x = 0; x < dart.notNull(image.width);) {
+          this.info.decodeRgba(row, dart.fn(color => {
+            let t0;
+            return image.setPixel((t0 = x, x = t0 + 1, t0), line, color);
+          }, intLTovoid()));
+        }
+      }
+      return image;
+    }
+    decodeImage(data, opts) {
+      let frame = opts && 'frame' in opts ? opts.frame : 0;
+      if (!dart.test(this.isValidFile(data))) return null;
+      this.startDecode(data);
+      return this.decodeFrame(frame);
+    }
+    decodeAnimation(data) {
+      if (!dart.test(this.isValidFile(data))) return null;
+      let image = this.decodeImage(data);
+      let anim = new animation.Animation.new();
+      anim.width = image.width;
+      anim.height = image.height;
+      anim.addFrame(image);
+      return anim;
+    }
+  };
+  (bmp_decoder.BmpDecoder.new = function() {
+    this[_input$] = null;
+    this[info] = null;
+    ;
+  }).prototype = bmp_decoder.BmpDecoder.prototype;
+  dart.addTypeTests(bmp_decoder.BmpDecoder);
+  dart.addTypeCaches(bmp_decoder.BmpDecoder);
+  dart.setMethodSignature(bmp_decoder.BmpDecoder, () => ({
+    __proto__: dart.getMethods(bmp_decoder.BmpDecoder.__proto__),
+    isValidFile: dart.fnType(dart.legacy(core.bool), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    numFrames: dart.fnType(dart.legacy(core.int), []),
+    startDecode: dart.fnType(dart.legacy(bmp_info.BmpInfo), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    [_pixelDataOffset]: dart.fnType(dart.legacy(core.int), []),
+    decodeFrame: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.int)]),
+    decodeImage: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.List$(dart.legacy(core.int)))], {frame: dart.legacy(core.int)}, {}),
+    decodeAnimation: dart.fnType(dart.legacy(animation.Animation), [dart.legacy(core.List$(dart.legacy(core.int)))])
+  }));
+  dart.setLibraryUri(bmp_decoder.BmpDecoder, L4);
+  dart.setFieldSignature(bmp_decoder.BmpDecoder, () => ({
+    __proto__: dart.getFields(bmp_decoder.BmpDecoder.__proto__),
+    [_input$]: dart.fieldType(dart.legacy(input_buffer.InputBuffer)),
+    info: dart.fieldType(dart.legacy(bmp_info.BmpInfo))
+  }));
+  bmp_decoder.DibDecoder = class DibDecoder extends bmp_decoder.BmpDecoder {};
+  (bmp_decoder.DibDecoder.new = function(input, info) {
+    bmp_decoder.DibDecoder.__proto__.new.call(this);
+    this[_input$] = input;
+    this.info = info;
+  }).prototype = bmp_decoder.DibDecoder.prototype;
+  dart.addTypeTests(bmp_decoder.DibDecoder);
+  dart.addTypeCaches(bmp_decoder.DibDecoder);
+  dart.setLibraryUri(bmp_decoder.DibDecoder, L4);
+  formats.findDecoderForData = function findDecoderForData(data) {
+    let bytes = Uint8ListL().is(data) ? data : _native_typed_data.NativeUint8List.fromList(data);
+    let jpg = new jpeg_decoder.JpegDecoder.new();
+    if (dart.test(jpg.isValidFile(bytes))) {
+      return jpg;
+    }
+    let png = new png_decoder.PngDecoder.new();
+    if (dart.test(png.isValidFile(bytes))) {
+      return png;
+    }
+    let gif = new gif_decoder.GifDecoder.new();
+    if (dart.test(gif.isValidFile(bytes))) {
+      return gif;
+    }
+    let webp = new webp_decoder.WebPDecoder.new();
+    if (dart.test(webp.isValidFile(bytes))) {
+      return webp;
+    }
+    let tiff = new tiff_decoder.TiffDecoder.new();
+    if (dart.test(tiff.isValidFile(bytes))) {
+      return tiff;
+    }
+    let psd = new psd_decoder.PsdDecoder.new();
+    if (dart.test(psd.isValidFile(bytes))) {
+      return psd;
+    }
+    let exr = new exr_decoder.ExrDecoder.new();
+    if (dart.test(exr.isValidFile(bytes))) {
+      return exr;
+    }
+    let bmp = new bmp_decoder.BmpDecoder.new();
+    if (dart.test(bmp.isValidFile(bytes))) {
+      return bmp;
+    }
+    let tga = new tga_decoder.TgaDecoder.new();
+    if (dart.test(tga.isValidFile(bytes))) {
+      return tga;
+    }
+    let ico = new ico_decoder.IcoDecoder.new();
+    if (dart.test(ico.isValidFile(bytes))) {
+      return ico;
+    }
+    return null;
+  };
+  formats.decodeImage = function decodeImage(data) {
+    let decoder = formats.findDecoderForData(data);
+    if (decoder == null) {
+      return null;
+    }
+    return decoder.decodeImage(data);
+  };
+  formats.decodeAnimation = function decodeAnimation(data) {
+    let decoder = formats.findDecoderForData(data);
+    if (decoder == null) {
+      return null;
+    }
+    return decoder.decodeAnimation(data);
+  };
+  formats.getDecoderForNamedImage = function getDecoderForNamedImage(name) {
+    let n = name[$toLowerCase]();
+    if (n[$endsWith](".jpg") || n[$endsWith](".jpeg")) {
+      return new jpeg_decoder.JpegDecoder.new();
+    }
+    if (n[$endsWith](".png")) {
+      return new png_decoder.PngDecoder.new();
+    }
+    if (n[$endsWith](".tga")) {
+      return new tga_decoder.TgaDecoder.new();
+    }
+    if (n[$endsWith](".webp")) {
+      return new webp_decoder.WebPDecoder.new();
+    }
+    if (n[$endsWith](".gif")) {
+      return new gif_decoder.GifDecoder.new();
+    }
+    if (n[$endsWith](".tif") || n[$endsWith](".tiff")) {
+      return new tiff_decoder.TiffDecoder.new();
+    }
+    if (n[$endsWith](".psd")) {
+      return new psd_decoder.PsdDecoder.new();
+    }
+    if (n[$endsWith](".exr")) {
+      return new exr_decoder.ExrDecoder.new();
+    }
+    if (n[$endsWith](".bmp")) {
+      return new bmp_decoder.BmpDecoder.new();
+    }
+    if (n[$endsWith](".ico")) {
+      return new ico_decoder.IcoDecoder.new();
+    }
+    return null;
+  };
+  formats.decodeNamedAnimation = function decodeNamedAnimation(bytes, name) {
+    let decoder = formats.getDecoderForNamedImage(name);
+    if (decoder == null) {
+      return null;
+    }
+    return decoder.decodeAnimation(bytes);
+  };
+  formats.decodeNamedImage = function decodeNamedImage(bytes, name) {
+    let decoder = formats.getDecoderForNamedImage(name);
+    if (decoder == null) {
+      return null;
+    }
+    return decoder.decodeImage(bytes);
+  };
+  formats.encodeNamedImage = function encodeNamedImage(image, name) {
+    let n = name[$toLowerCase]();
+    if (n[$endsWith](".jpg") || n[$endsWith](".jpeg")) {
+      return formats.encodeJpg(image);
+    }
+    if (n[$endsWith](".png")) {
+      return formats.encodePng(image);
+    }
+    if (n[$endsWith](".tga")) {
+      return formats.encodeTga(image);
+    }
+    if (n[$endsWith](".gif")) {
+      return formats.encodeGif(image);
+    }
+    if (n[$endsWith](".cur")) {
+      return formats.encodeCur(image);
+    }
+    if (n[$endsWith](".ico")) {
+      return formats.encodeIco(image);
+    }
+    return null;
+  };
+  formats.decodeJpg = function decodeJpg(bytes) {
+    return new jpeg_decoder.JpegDecoder.new().decodeImage(bytes);
+  };
+  formats.readJpg = function readJpg(bytes) {
+    return formats.decodeJpg(bytes);
+  };
+  formats.encodeJpg = function encodeJpg(image, opts) {
+    let quality = opts && 'quality' in opts ? opts.quality : 100;
+    return new jpeg_encoder.JpegEncoder.new({quality: quality}).encodeImage(image);
+  };
+  formats.writeJpg = function writeJpg(image, opts) {
+    let quality = opts && 'quality' in opts ? opts.quality : 100;
+    return formats.encodeJpg(image, {quality: quality});
+  };
+  formats.decodePng = function decodePng(bytes) {
+    return new png_decoder.PngDecoder.new().decodeImage(bytes);
+  };
+  formats.decodePngAnimation = function decodePngAnimation(bytes) {
+    return new png_decoder.PngDecoder.new().decodeAnimation(bytes);
+  };
+  formats.readPng = function readPng(bytes) {
+    return formats.decodePng(bytes);
+  };
+  formats.encodePng = function encodePng(image, opts) {
+    let level = opts && 'level' in opts ? opts.level : 6;
+    return new png_encoder.PngEncoder.new({level: level}).encodeImage(image);
+  };
+  formats.encodePngAnimation = function encodePngAnimation(anim, opts) {
+    let level = opts && 'level' in opts ? opts.level : 6;
+    return new png_encoder.PngEncoder.new({level: level}).encodeAnimation(anim);
+  };
+  formats.writePng = function writePng(image, opts) {
+    let level = opts && 'level' in opts ? opts.level : 6;
+    return formats.encodePng(image, {level: level});
+  };
+  formats.decodeTga = function decodeTga(bytes) {
+    return new tga_decoder.TgaDecoder.new().decodeImage(bytes);
+  };
+  formats.readTga = function readTga(bytes) {
+    return formats.decodeTga(bytes);
+  };
+  formats.encodeTga = function encodeTga(image) {
+    return new tga_encoder.TgaEncoder.new().encodeImage(image);
+  };
+  formats.writeTga = function writeTga(image) {
+    return formats.encodeTga(image);
+  };
+  formats.decodeWebP = function decodeWebP(bytes) {
+    return new webp_decoder.WebPDecoder.new().decodeImage(bytes);
+  };
+  formats.decodeWebPAnimation = function decodeWebPAnimation(bytes) {
+    return new webp_decoder.WebPDecoder.new().decodeAnimation(bytes);
+  };
+  formats.decodeGif = function decodeGif(bytes) {
+    return new gif_decoder.GifDecoder.new().decodeImage(bytes);
+  };
+  formats.decodeGifAnimation = function decodeGifAnimation(bytes) {
+    return new gif_decoder.GifDecoder.new().decodeAnimation(bytes);
+  };
+  formats.encodeGif = function encodeGif(image, opts) {
+    let samplingFactor = opts && 'samplingFactor' in opts ? opts.samplingFactor : 10;
+    return new gif_encoder.GifEncoder.new({samplingFactor: samplingFactor}).encodeImage(image);
+  };
+  formats.encodeGifAnimation = function encodeGifAnimation(anim, opts) {
+    let samplingFactor = opts && 'samplingFactor' in opts ? opts.samplingFactor : 30;
+    return new gif_encoder.GifEncoder.new({samplingFactor: samplingFactor}).encodeAnimation(anim);
+  };
+  formats.decodeTiff = function decodeTiff(bytes) {
+    return new tiff_decoder.TiffDecoder.new().decodeImage(bytes);
+  };
+  formats.decodeTiffAnimation = function decodeTiffAnimation(bytes) {
+    return new tiff_decoder.TiffDecoder.new().decodeAnimation(bytes);
+  };
+  formats.decodePsd = function decodePsd(bytes) {
+    return new psd_decoder.PsdDecoder.new().decodeImage(bytes);
+  };
+  formats.decodeExr = function decodeExr(bytes, opts) {
+    let exposure = opts && 'exposure' in opts ? opts.exposure : 1;
+    return new exr_decoder.ExrDecoder.new({exposure: exposure}).decodeImage(bytes);
+  };
+  formats.decodeBmp = function decodeBmp(bytes) {
+    return new bmp_decoder.BmpDecoder.new().decodeImage(bytes);
+  };
+  formats.encodeCur = function encodeCur(image) {
+    return new cur_encoder.CurEncoder.new().encodeImage(image);
+  };
+  formats.encodeCurImages = function encodeCurImages(images) {
+    return new cur_encoder.CurEncoder.new().encodeImages(images);
+  };
+  formats.encodeIco = function encodeIco(image) {
+    return new ico_encoder.IcoEncoder.new().encodeImage(image);
+  };
+  formats.encodeIcoImages = function encodeIcoImages(images) {
+    return new ico_encoder.IcoEncoder.new().encodeImages(images);
+  };
+  formats.decodeIco = function decodeIco(bytes) {
+    return new ico_decoder.IcoDecoder.new().decodeImage(bytes);
+  };
+  var exrImage = dart.privateName(exr_decoder, "ExrDecoder.exrImage");
+  var exposure$ = dart.privateName(exr_decoder, "ExrDecoder.exposure");
+  var gamma = dart.privateName(exr_decoder, "ExrDecoder.gamma");
+  var reinhard = dart.privateName(exr_decoder, "ExrDecoder.reinhard");
+  var bloomAmount = dart.privateName(exr_decoder, "ExrDecoder.bloomAmount");
+  var bloomRadius = dart.privateName(exr_decoder, "ExrDecoder.bloomRadius");
+  exr_decoder.ExrDecoder = class ExrDecoder extends decoder.Decoder {
+    get exrImage() {
+      return this[exrImage];
+    }
+    set exrImage(value) {
+      this[exrImage] = value;
+    }
+    get exposure() {
+      return this[exposure$];
+    }
+    set exposure(value) {
+      this[exposure$] = value;
+    }
+    get gamma() {
+      return this[gamma];
+    }
+    set gamma(value) {
+      this[gamma] = value;
+    }
+    get reinhard() {
+      return this[reinhard];
+    }
+    set reinhard(value) {
+      this[reinhard] = value;
+    }
+    get bloomAmount() {
+      return this[bloomAmount];
+    }
+    set bloomAmount(value) {
+      this[bloomAmount] = value;
+    }
+    get bloomRadius() {
+      return this[bloomRadius];
+    }
+    set bloomRadius(value) {
+      this[bloomRadius] = value;
+    }
+    isValidFile(data) {
+      return exr_image.ExrImage.isValidFile(data);
+    }
+    startDecode(data) {
+      this.exrImage = new exr_image.ExrImage.new(data);
+      return this.exrImage;
+    }
+    numFrames() {
+      return this.exrImage != null ? this.exrImage.parts[$length] : 0;
+    }
+    decodeFrame(frame) {
+      if (this.exrImage == null) {
+        return null;
+      }
+      return hdr_to_image.hdrToImage(this.exrImage.getPart(frame).framebuffer, {exposure: this.exposure});
+    }
+    decodeHdrFrame(frame) {
+      if (this.exrImage == null) {
+        return null;
+      }
+      if (dart.notNull(frame) >= dart.notNull(this.exrImage.parts[$length])) {
+        return null;
+      }
+      return this.exrImage.parts[$_get](frame).framebuffer;
+    }
+    decodeImage(bytes, opts) {
+      let frame = opts && 'frame' in opts ? opts.frame : 0;
+      if (this.startDecode(bytes) == null) {
+        return null;
+      }
+      return this.decodeFrame(frame);
+    }
+    decodeHdrImage(bytes, opts) {
+      let frame = opts && 'frame' in opts ? opts.frame : 0;
+      if (this.startDecode(bytes) == null) {
+        return null;
+      }
+      return this.decodeHdrFrame(frame);
+    }
+    decodeAnimation(data) {
+      let image = this.decodeImage(data);
+      if (image == null) {
+        return null;
+      }
+      let anim = new animation.Animation.new();
+      anim.width = image.width;
+      anim.height = image.height;
+      anim.addFrame(image);
+      return anim;
+    }
+  };
+  (exr_decoder.ExrDecoder.new = function(opts) {
+    let exposure = opts && 'exposure' in opts ? opts.exposure : 1;
+    this[exrImage] = null;
+    this[gamma] = null;
+    this[reinhard] = null;
+    this[bloomAmount] = null;
+    this[bloomRadius] = null;
+    this[exposure$] = exposure;
+    ;
+  }).prototype = exr_decoder.ExrDecoder.prototype;
+  dart.addTypeTests(exr_decoder.ExrDecoder);
+  dart.addTypeCaches(exr_decoder.ExrDecoder);
+  dart.setMethodSignature(exr_decoder.ExrDecoder, () => ({
+    __proto__: dart.getMethods(exr_decoder.ExrDecoder.__proto__),
+    isValidFile: dart.fnType(dart.legacy(core.bool), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    startDecode: dart.fnType(dart.legacy(decode_info.DecodeInfo), [dart.legacy(core.List$(dart.legacy(core.int)))]),
+    numFrames: dart.fnType(dart.legacy(core.int), []),
+    decodeFrame: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.int)]),
+    decodeImage: dart.fnType(dart.legacy(image$.Image), [dart.legacy(core.List$(dart.legacy(core.int)))], {frame: dart.legacy(core.int)}, {}),
+    decodeAnimation: dart.fnType(dart.legacy(animation.Animation), [dart.legacy(core.List$(dart.legacy(core.int)))])
+  }));
+  dart.setLibraryUri(exr_decoder.ExrDecoder, L5);
+  dart.setFieldSignature(exr_decoder.ExrDecoder, () => ({
+    __proto__: dart.getFields(exr_decoder.ExrDecoder.__proto__),
+    exrImage: dart.fieldType(dart.legacy(exr_image.ExrImage)),
+    exposure: dart.fieldType(dart.legacy(core.double)),
+    gamma: dart.fieldType(dart.legacy(core.double)),
+    reinhard: dart.fieldType(dart.legacy(core.bool)),
+    bloomAmount: dart.fieldType(dart.legacy(core.double)),
+    bloomRadius: dart.fieldType(dart.legacy(core.double))
+  }));
+  var _parts = dart.privateName(exr_image, "_parts");
+  var _isMultiPart = dart.privateName(exr_image, "_isMultiPart");
+  var _isTiled = dart.privateName(exr_image, "_isTiled");
+  var _readImage = dart.privateName(exr_image, "_readImage");
+  var _readTiledPart = dart.privateName(exr_image, "_readTiledPart");
+  var _readScanlinePart = dart.privateName(exr_image, "_readScanlinePart");
+  var version = dart.privateName(exr_image, "ExrImage.version");
+  var flags = dart.privateName(exr_image, "ExrImage.flags");
+  exr_image.ExrImage = class ExrImage extends decode_info.DecodeInfo {
+    get version() {
+      return this[version];
+    }
+    set version(value) {
+      this[version] = value;
+    }
+    get flags() {
+      return this[flags];
+    }
+    set flags(value) {
+      this[flags] = value;
+    }
+    get parts() {
+      return this[_parts];
+    }
+    get numFrames() {
+      return 1;
+    }
+    static isValidFile(bytes) {
+      let input = new input_buffer.InputBuffer.new(bytes);
+      let magic = input.readUint32();
+      if (magic !== 20000630) {
+        return false;
+      }
+      let version = input.readByte();
+      if (version !== 2) {
+        return false;
+      }
+      let flags = input.readUint24();
+      if (!dart.test(exr_image.ExrImage._supportsFlags(flags))) {
+        return false;
+      }
+      return true;
+    }
+    numParts() {
+      return this[_parts][$length];
+    }
+    getPart(i) {
+      return this[_parts][$_get](i);
+    }
+    [_isTiled]() {
+      return (dart.notNull(this.flags) & 2) !== 0;
+    }
+    [_isMultiPart]() {
+      return (dart.notNull(this.flags) & 16) !== 0;
+    }
+    static _supportsFlags(flags) {
+      return (dart.notNull(flags) & ~6 >>> 0) === 0;
+    }
+    [_readImage](input) {
+      for (let pi = 0; pi < dart.notNull(this[_parts][$length]); pi = pi + 1) {
+        let part = this[_parts][$_get](pi);
+        let framebuffer = part.framebuffer;
+        for (let ci = 0; ci < dart.notNull(part.channels[$length]); ci = ci + 1) {
+          let ch = part.channels[$_get](ci);
+          if (!dart.test(framebuffer.hasChannel(ch.name))) {
+            this.width = part.width;
+            this.height = part.height;
+            framebuffer.addSlice(new hdr_slice.HdrSlice.new(ch.name, part.width, part.height, ch.type === 0 ? 0 : 3, 8 * dart.notNull(ch.size)));
+          }
+        }
+        if (dart.test(part.tiled)) {
+          this[_readTiledPart](pi, input);
+        } else {
+          this[_readScanlinePart](pi, input);
+        }
+      }
+    }
+    [_readTiledPart](pi, input) {
+      let t0;
+      let part = this[_parts][$_get](pi);
+      let multiPart = this[_isMultiPart]();
+      let framebuffer = part.framebuffer;
+      let compressor = part.compressor;
+      let offsets = part.offsets;
+      let imgData = new input_buffer.InputBuffer.from(input);
+      for (let ly = 0, l = 0; ly < dart.notNull(part.numYLevels); ly = ly + 1) {
+        for (let lx = 0; lx < dart.notNull(part.numXLevels); lx = lx + 1, l = l + 1) {
+          for (let ty = 0, oi = 0; ty < dart.notNull(part.numYTiles[$_get](ly)); ty = ty + 1) {
+            for (let tx = 0; tx < dart.notNull(part.numXTiles[$_get](lx)); tx = tx + 1, oi = oi + 1) {
+              if (l !== 0) {
+                break;
+              }
+              let offset = offsets[$_get](l)[$_get](oi);
+              imgData.offset = offset;
+              if (dart.test(multiPart)) {
+                let p = imgData.readUint32();
+                if (p != pi) {
+                  dart.throw(new image_exception.ImageException.new("Invalid Image Data"));
+                }
+              }
+              let tileX = imgData.readUint32();
+              let tileY = imgData.readUint32();
+              imgData.readUint32();
+              imgData.readUint32();
+              let dataSize = imgData.readUint32();
+              let data = imgData.readBytes(dataSize);
+              let ty = dart.notNull(tileY) * dart.notNull(part.tileHeight);
+              let tx = dart.notNull(tileX) * dart.notNull(part.tileWidth);
+              let tileWidth = compressor.decodedWidth;
+              let tileHeight = compressor.decodedHeight;
+              if (tx + dart.notNull(tileWidth) > dart.notNull(this.width)) {
+                tileWidth = dart.notNull(this.width) - tx;
+              }
+              if (ty + dart.notNull(tileHeight) > dart.notNull(this.height)) {
+                tileHeight = dart.notNull(this.height) - ty;
+              }
+              let uncompressedData = null;
+              if (compressor != null) {
+                uncompressedData = compressor.uncompress(data, tx, ty, part.tileWidth, part.tileHeight);
+                tileWidth = compressor.decodedWidth;
+                tileHeight = compressor.decodedHeight;
+              } else {
+                uncompressedData = data.toUint8List();
+              }
+              let si = 0;
+              let len = uncompressedData[$length];
+              let numChannels = part.channels[$length];
+              for (let yi = 0; yi < dart.notNull(tileHeight) && ty < dart.notNull(this.height); yi = yi + 1, ty = ty + 1) {
+                for (let ci = 0; ci < dart.notNull(numChannels); ci = ci + 1) {
+                  let ch = part.channels[$_get](ci);
+                  let slice = framebuffer._get(ch.name).getBytes();
+                  if (si >= dart.notNull(len)) {
+                    break;
+                  }
+                  let tx = dart.notNull(tileX) * dart.notNull(part.tileWidth);
+                  for (let xx = 0; xx < dart.notNull(tileWidth); xx = xx + 1, tx = tx + 1) {
+                    for (let bi = 0; bi < dart.notNull(ch.size); bi = bi + 1) {
+                      if (tx < dart.notNull(part.width) && ty < dart.notNull(part.height)) {
+                        let di = (ty * dart.notNull(part.width) + tx) * dart.notNull(ch.size) + bi;
+                        slice[$_set](di, uncompressedData[$_get]((t0 = si, si = t0 + 1, t0)));
+                      } else {
+                        si = si + 1;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    [_readScanlinePart](pi, input) {
+      let t2, t1, t0, t0$;
+      let part = this[_parts][$_get](pi);
+      let multiPart = this[_isMultiPart]();
+      let framebuffer = part.framebuffer;
+      let compressor = part.compressor;
+      let offsets = part.offsets[$_get](0);
+      let linesInBuffer = part.linesInBuffer;
+      let fbi = _native_typed_data.NativeUint32List.new(part.channels[$length]);
+      let yy = 0;
+      let imgData = new input_buffer.InputBuffer.from(input);
+      for (let offset of offsets) {
+        imgData.offset = offset;
+        if (dart.test(multiPart)) {
+          let p = imgData.readUint32();
+          if (p != pi) {
+            dart.throw(new image_exception.ImageException.new("Invalid Image Data"));
+          }
+        }
+        imgData.readInt32();
+        let dataSize = imgData.readInt32();
+        let data = imgData.readBytes(dataSize);
+        let uncompressedData = null;
+        if (compressor != null) {
+          uncompressedData = compressor.uncompress(data, 0, yy);
+        } else {
+          uncompressedData = data.toUint8List();
+        }
+        let si = 0;
+        let len = uncompressedData[$length];
+        let numChannels = part.channels[$length];
+        for (let yi = 0; yi < dart.notNull(linesInBuffer) && yy < dart.notNull(this.height); yi = yi + 1, yy = yy + 1) {
+          si = part.offsetInLineBuffer[$_get](yy);
+          if (dart.notNull(si) >= dart.notNull(len)) {
+            break;
+          }
+          for (let ci = 0; ci < dart.notNull(numChannels); ci = ci + 1) {
+            let ch = part.channels[$_get](ci);
+            let slice = framebuffer._get(ch.name).getBytes();
+            if (dart.notNull(si) >= dart.notNull(len)) {
+              break;
+            }
+            for (let xx = 0; xx < dart.notNull(part.width); xx = xx + 1) {
+              for (let bi = 0; bi < dart.notNull(ch.size); bi = bi + 1) {
+                slice[$_set]((t0 = fbi, t1 = ci, t2 = t0[$_get](t1), t0[$_set](t1, dart.notNull(t2) + 1), t2), uncompressedData[$_get]((t0$ = si, si = dart.notNull(t0$) + 1, t0$)));
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+  (exr_image.ExrImage.new = function(bytes) {
+    this[_parts] = JSArrayOfInternalExrPartL().of([]);
+    this[version] = null;
+    this[flags] = null;
+    exr_image.ExrImage.__proto__.new.call(this);
+    let input = new input_buffer.InputBuffer.new(bytes);
+    let magic = input.readUint32();
+    if (magic !== 20000630) {
+      dart.throw(new image_exception.ImageException.new("File is not an OpenEXR image file."));
+    }
+    this.version = input.readByte();
+    if (this.version !== 2) {
+      dart.throw(new image_exception.ImageException.new("Cannot read version " + dart.str(this.version) + " image files."));
+    }
+    this.flags = input.readUint24();
+    if (!dart.test(exr_image.ExrImage._supportsFlags(this.flags))) {
+      dart.throw(new image_exception.ImageException.new("The file format version number's flag field " + "contains unrecognized flags."));
+    }
+    if (!dart.test(this[_isMultiPart]())) {
+      let part = new exr_part.InternalExrPart.new(this[_isTiled](), input);
+      if (dart.test(part.isValid)) {
+        this[_parts][$add](InternalExrPartL().as(part));
+      }
+    } else {
+      while (true) {
+        let part = new exr_part.InternalExrPart.new(this[_isTiled](), input);
+        if (!dart.test(part.isValid)) {
+          break;
+        }
+        this[_parts][$add](InternalExrPartL().as(part));
+      }
+    }
+    if (dart.test(this[_parts][$isEmpty])) {
+      dart.throw(new image_exception.ImageException.new("Error reading image header"));
+    }
+    for (let part of this[_parts]) {
+      part.readOffsets(input);
+    }
+    this[_readImage](input);
+  }).prototype = exr_image.ExrImage.prototype;
+  dart.addTypeTests(exr_image.ExrImage);
+  dart.addTypeCaches(exr_image.ExrImage);
+  dart.setMethodSignature(exr_image.ExrImage, () => ({
+    __proto__: dart.getMethods(exr_image.ExrImage.__proto__),
+    numParts: dart.fnType(dart.legacy(core.int), []),
+    getPart: dart.fnType(dart.legacy(exr_part.ExrPart), [dart.legacy(core.int)]),
+    [_isTiled]: dart.fnType(dart.legacy(core.bool), []),
+    [_isMultiPart]: dart.fnType(dart.legacy(core.bool), []),
+    [_readImage]: dart.fnType(dart.void, [dart.legacy(input_buffer.InputBuffer)]),
+    [_readTiledPart]: dart.fnType(dart.void, [dart.legacy(core.int), dart.legacy(input_buffer.InputBuffer)]),
+    [_readScanlinePart]: dart.fnType(dart.void, [dart.legacy(core.int), dart.legacy(input_buffer.InputBuffer)])
+  }));
+  dart.setGetterSignature(exr_image.ExrImage, () => ({
+    __proto__: dart.getGetters(exr_image.ExrImage.__proto__),
+    parts: dart.legacy(core.List$(dart.legacy(exr_part.ExrPart))),
+    numFrames: dart.legacy(core.int)
+  }));
+  dart.setLibraryUri(exr_image.ExrImage, L6);
+  dart.setFieldSignature(exr_image.ExrImage, () => ({
+    __proto__: dart.getFields(exr_image.ExrImage.__proto__),
+    [_parts]: dart.finalFieldType(dart.legacy(core.List$(dart.legacy(exr_part.InternalExrPart)))),
+    version: dart.fieldType(dart.legacy(core.int)),
+    flags: dart.fieldType(dart.legacy(core.int))
+  }));
+  dart.defineLazy(exr_image.ExrImage, {
+    /*exr_image.ExrImage.MAGIC*/get MAGIC() {
+      return 20000630;
+    },
+    /*exr_image.ExrImage.EXR_VERSION*/get EXR_VERSION() {
+      return 2;
+    },
+    /*exr_image.ExrImage.TILED_FLAG*/get TILED_FLAG() {
+      return 2;
+    },
+    /*exr_image.ExrImage.LONG_NAMES_FLAG*/get LONG_NAMES_FLAG() {
+      return 4;
+    },
+    /*exr_image.ExrImage.NON_IMAGE_FLAG*/get NON_IMAGE_FLAG() {
+      return 8;
+    },
+    /*exr_image.ExrImage.MULTI_PART_FILE_FLAG*/get MULTI_PART_FILE_FLAG() {
+      return 16;
+    },
+    /*exr_image.ExrImage.ALL_FLAGS*/get ALL_FLAGS() {
+      return 6;
+    }
+  }, true);
+  dart.trackLibraries("packages/image/src/formats/cur_encoder.dart", {
+    "package:image/src/formats/cur_encoder.dart": cur_encoder,
+    "package:image/src/formats/ico_decoder.dart": ico_decoder,
+    "package:image/src/formats/bmp/bmp_info.dart": bmp_info,
+    "package:image/src/formats/bmp_decoder.dart": bmp_decoder,
+    "package:image/src/formats/formats.dart": formats,
+    "package:image/src/formats/exr_decoder.dart": exr_decoder,
+    "package:image/src/formats/exr/exr_image.dart": exr_image,
+    "package:image/image.dart": image
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["cur_encoder.dart","ico_decoder.dart","bmp/bmp_info.dart","bmp_decoder.dart","formats.dart","exr_decoder.dart","exr/exr_image.dart"],"names":[],"mappings":"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","file":"../../../../../../../../../packages/image/src/formats/cur_encoder.dart.lib.js"}');
+  // Exports:
+  return {
+    src__formats__cur_encoder: cur_encoder,
+    src__formats__ico_decoder: ico_decoder,
+    src__formats__bmp__bmp_info: bmp_info,
+    src__formats__bmp_decoder: bmp_decoder,
+    src__formats__formats: formats,
+    src__formats__exr_decoder: exr_decoder,
+    src__formats__exr__exr_image: exr_image,
+    image: image
+  };
+}));
+
+//# sourceMappingURL=cur_encoder.dart.lib.js.map

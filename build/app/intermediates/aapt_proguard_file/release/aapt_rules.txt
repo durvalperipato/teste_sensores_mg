@@ -1,0 +1,3 @@
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+-keep class com.example.lines.MainActivity { <init>(); }
+-keep class net.nfet.flutter.printing.PrintFileProvider { <init>(); }

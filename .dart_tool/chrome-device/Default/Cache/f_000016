@@ -1,0 +1,150 @@
+define(['dart_sdk', 'packages/flutter/src/painting/box_decoration.dart', 'packages/flutter/src/widgets/widget_span.dart', 'packages/pdf/src/widgets/container.dart', 'packages/pdf/src/widgets/multi_page.dart', 'packages/pdf/src/pdf/colors.dart', 'packages/pdf/src/widgets/stack.dart', 'packages/flutter/src/material/colors.dart'], (function load__packages__lines__pdf_dart(dart_sdk, packages__flutter__src__painting__box_decoration$46dart, packages__flutter__src__widgets__widget_span$46dart, packages__pdf__src__widgets__container$46dart, packages__pdf__src__widgets__multi_page$46dart, packages__pdf__src__pdf__colors$46dart, packages__pdf__src__widgets__stack$46dart, packages__flutter__src__material__colors$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _js_helper = dart_sdk._js_helper;
+  const _interceptors = dart_sdk._interceptors;
+  const async = dart_sdk.async;
+  const typed_data = dart_sdk.typed_data;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const box_decoration = packages__flutter__src__painting__box_decoration$46dart.src__painting__box_decoration;
+  const container = packages__flutter__src__widgets__widget_span$46dart.src__widgets__container;
+  const gesture_detector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__gesture_detector;
+  const document = packages__pdf__src__widgets__container$46dart.src__widgets__document;
+  const page = packages__pdf__src__widgets__container$46dart.src__widgets__page;
+  const geometry = packages__pdf__src__widgets__container$46dart.src__widgets__geometry;
+  const basic = packages__pdf__src__widgets__container$46dart.src__widgets__basic;
+  const widget = packages__pdf__src__widgets__container$46dart.src__widgets__widget;
+  const container$ = packages__pdf__src__widgets__container$46dart.src__widgets__container;
+  const decoration = packages__pdf__src__widgets__container$46dart.src__widgets__decoration;
+  const box_border = packages__pdf__src__widgets__container$46dart.src__widgets__box_border;
+  const text = packages__pdf__src__widgets__container$46dart.src__widgets__text;
+  const text_style = packages__pdf__src__widgets__container$46dart.src__widgets__text_style;
+  const flex = packages__pdf__src__widgets__multi_page$46dart.src__widgets__flex;
+  const colors$ = packages__pdf__src__pdf__colors$46dart.src__pdf__colors;
+  const stack = packages__pdf__src__widgets__stack$46dart.src__widgets__stack;
+  const colors$0 = packages__flutter__src__material__colors$46dart.src__material__colors;
+  var pdf$ = Object.create(dart.library);
+  var $add = dartx.add;
+  var $forEach = dartx.forEach;
+  var $_set = dartx._set;
+  var $values = dartx.values;
+  var $_get = dartx._get;
+  var $toString = dartx.toString;
+  var $elementAt = dartx.elementAt;
+  var intL = () => (intL = dart.constFn(dart.legacy(core.int)))();
+  var BoxDecorationL = () => (BoxDecorationL = dart.constFn(dart.legacy(box_decoration.BoxDecoration)))();
+  var ListOfBoxDecorationL = () => (ListOfBoxDecorationL = dart.constFn(core.List$(BoxDecorationL())))();
+  var ListLOfBoxDecorationL = () => (ListLOfBoxDecorationL = dart.constFn(dart.legacy(ListOfBoxDecorationL())))();
+  var IdentityMapOfintL$ListLOfBoxDecorationL = () => (IdentityMapOfintL$ListLOfBoxDecorationL = dart.constFn(_js_helper.IdentityMap$(intL(), ListLOfBoxDecorationL())))();
+  var JSArrayOfBoxDecorationL = () => (JSArrayOfBoxDecorationL = dart.constFn(_interceptors.JSArray$(BoxDecorationL())))();
+  var ContainerL = () => (ContainerL = dart.constFn(dart.legacy(container.Container)))();
+  var GestureDetectorL = () => (GestureDetectorL = dart.constFn(dart.legacy(gesture_detector.GestureDetector)))();
+  var GestureDetectorLToNull = () => (GestureDetectorLToNull = dart.constFn(dart.fnType(core.Null, [GestureDetectorL()])))();
+  var ListOfGestureDetectorL = () => (ListOfGestureDetectorL = dart.constFn(core.List$(GestureDetectorL())))();
+  var ListLOfGestureDetectorL = () => (ListLOfGestureDetectorL = dart.constFn(dart.legacy(ListOfGestureDetectorL())))();
+  var intLAndListLOfGestureDetectorLToNull = () => (intLAndListLOfGestureDetectorLToNull = dart.constFn(dart.fnType(core.Null, [intL(), ListLOfGestureDetectorL()])))();
+  var WidgetL = () => (WidgetL = dart.constFn(dart.legacy(widget.Widget)))();
+  var JSArrayOfWidgetL = () => (JSArrayOfWidgetL = dart.constFn(_interceptors.JSArray$(WidgetL())))();
+  var CenterL = () => (CenterL = dart.constFn(dart.legacy(basic.Center)))();
+  var ContextL = () => (ContextL = dart.constFn(dart.legacy(widget.Context)))();
+  var ContextLToCenterL = () => (ContextLToCenterL = dart.constFn(dart.fnType(CenterL(), [ContextL()])))();
+  var Uint8ListL = () => (Uint8ListL = dart.constFn(dart.legacy(typed_data.Uint8List)))();
+  var IdentityMapOfintL$WidgetL = () => (IdentityMapOfintL$WidgetL = dart.constFn(_js_helper.IdentityMap$(intL(), WidgetL())))();
+  var ListOfWidgetL = () => (ListOfWidgetL = dart.constFn(core.List$(WidgetL())))();
+  var ListLOfWidgetL = () => (ListLOfWidgetL = dart.constFn(dart.legacy(ListOfWidgetL())))();
+  var IdentityMapOfintL$ListLOfWidgetL = () => (IdentityMapOfintL$ListLOfWidgetL = dart.constFn(_js_helper.IdentityMap$(intL(), ListLOfWidgetL())))();
+  const CT = Object.create(null);
+  pdf$.generatePdf = function generatePdf(format, colorsPoints, angle) {
+    return async.async(Uint8ListL(), function* generatePdf() {
+      pdf$.maxAngle = angle;
+      let colors = new (IdentityMapOfintL$ListLOfBoxDecorationL()).new();
+      colorsPoints[$forEach](dart.fn((key, value) => {
+        let color = JSArrayOfBoxDecorationL().of([]);
+        value[$forEach](dart.fn(element => {
+          let container = ContainerL().as(element.child);
+          let boxDecoration = BoxDecorationL().as(container.decoration);
+          color[$add](boxDecoration);
+        }, GestureDetectorLToNull()));
+        colors[$_set](key, color);
+      }, intLAndListLOfGestureDetectorLToNull()));
+      pdf$._lines();
+      pdf$._points(colors);
+      let pdf = new document.Document.new();
+      pdf.addPage(new page.Page.new({margin: new geometry.EdgeInsets.symmetric({vertical: 10.0, horizontal: 20.0}), pageFormat: format, build: dart.fn(context => new basic.Center.new({child: new flex.Column.new({children: JSArrayOfWidgetL().of([WidgetL().as(pdf$.headerPdf()), WidgetL().as(pdf$.result())])})}), ContextLToCenterL())}));
+      return pdf.save();
+    });
+  };
+  pdf$.headerPdf = function headerPdf() {
+    return new container$.Container.new({padding: new geometry.EdgeInsets.all(10.0), child: new flex.Column.new({children: JSArrayOfWidgetL().of([new container$.Container.new({color: colors$.PdfColors.grey, child: new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceAround, crossAxisAlignment: flex.CrossAxisAlignment.center, children: JSArrayOfWidgetL().of([new flex.Expanded.new({flex: 2, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Amostra")})})}), new flex.Expanded.new({flex: 5, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Produto")})})}), new flex.Expanded.new({flex: 5, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Local")})})}), new flex.Expanded.new({flex: 3, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Data")})})})])})}), new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceAround, crossAxisAlignment: flex.CrossAxisAlignment.center, children: JSArrayOfWidgetL().of([new flex.Expanded.new({flex: 2, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({flex: 5, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({flex: 5, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({flex: 3, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})})])}), new container$.Container.new({color: colors$.PdfColors.grey, child: new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceAround, crossAxisAlignment: flex.CrossAxisAlignment.center, children: JSArrayOfWidgetL().of([new flex.Expanded.new({flex: 3, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Sensibilidade")})})}), new flex.Expanded.new({flex: 3, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Tensão")})})}), new flex.Expanded.new({flex: 3, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Temperatura")})})}), new flex.Expanded.new({flex: 3, child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Umidade")})})})])})}), new container$.Container.new({color: colors$.PdfColors.grey300, child: new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceAround, crossAxisAlignment: flex.CrossAxisAlignment.center, children: JSArrayOfWidgetL().of([new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Max")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Min")})})})])})}), new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Max")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Min")})})})])})}), new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Inicial")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Final")})})})])})}), new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Inicial")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Final")})})})])})})])})}), new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceAround, crossAxisAlignment: flex.CrossAxisAlignment.center, children: JSArrayOfWidgetL().of([new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})})])})}), new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})})])})}), new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})})])})}), new flex.Expanded.new({flex: 3, child: new flex.Row.new({children: JSArrayOfWidgetL().of([new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})}), new flex.Expanded.new({child: new container$.Container.new({height: 25.0, decoration: new decoration.BoxDecoration.new({border: box_border.Border.all({color: colors$.PdfColors.black})}), child: new basic.Center.new({child: new text.Text.new("Teste")})})})])})})])})])})});
+  };
+  pdf$.result = function result() {
+    return new stack.Stack.new({children: (() => {
+        let t0 = JSArrayOfWidgetL().of([]);
+        for (let line of pdf$.lines[$values])
+          t0.push(line);
+        for (let point of pdf$.points[$values])
+          t0.push(point);
+        return t0;
+      })()});
+  };
+  pdf$._lines = function _lines() {
+    for (let angle = 0; angle <= dart.notNull(pdf$.maxAngle); angle = angle + 10) {
+      pdf$.lines[$_set](angle, new container$.Container.new({height: dart.notNull(pdf$.lineSize) - 10, width: dart.notNull(pdf$.lineSize) - 10, child: new basic.Transform.rotate({angle: angle * (3.141592653589793 / 180), child: new container$.Container.new({height: pdf$.pointSize, child: new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.end, children: JSArrayOfWidgetL().of([new container$.Container.new({height: angle === 0 || angle === 90 || angle === 180 || angle === 270 ? 2.0 : 1.0, width: dart.notNull(pdf$.lineSize) / 2 - 10, color: angle === 0 || angle === 90 || angle === 180 || angle === 270 ? colors$.PdfColors.black : colors$.PdfColors.grey})])})})})}));
+    }
+  };
+  pdf$._points = function _points(colors) {
+    for (let angle = 0; angle <= dart.notNull(pdf$.maxAngle); angle = angle + 10) {
+      pdf$._buildPoint(angle, colors);
+      pdf$.points[$_set](angle, new container$.Container.new({height: dart.notNull(pdf$.lineSize) - 10, width: dart.notNull(pdf$.lineSize) - 10, child: new basic.Transform.rotate({angle: angle * (3.141592653589793 / 180), child: new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.end, children: JSArrayOfWidgetL().of([new container$.Container.new({height: pdf$.pointSize, width: dart.notNull(pdf$.lineSize) / 2 - 10 - dart.notNull(pdf$.widthTextAngle), child: new flex.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceBetween, children: pdf$.colorsPointsPdf[$_get](angle)})}), new container$.Container.new({margin: new geometry.EdgeInsets.only({left: 1.0}), height: pdf$.pointSize, width: pdf$.widthTextAngle, color: colors$.PdfColors.white, child: new basic.Center.new({child: new text.Text.new(angle[$toString]() + "º", {style: new text_style.TextStyle.new({fontSize: 4.0})})})})])})})}));
+    }
+  };
+  pdf$._buildPoint = function _buildPoint(angle, colors) {
+    let point = JSArrayOfWidgetL().of([]);
+    for (let meters = 0; meters <= 12; meters = meters + 1) {
+      if (meters === 2 && (angle === 10 || angle === 30 || angle === 50 || angle === 70 || angle === 90 || angle === 110 || angle === 130 || angle === 150 || angle === 170 || angle === 190 || angle === 210 || angle === 230 || angle === 250 || angle === 270 || angle === 290 || angle === 310 || angle === 330 || angle === 350) || meters === 0 || meters === 1) {
+        point[$add](new container$.Container.new({height: pdf$.pointSize, width: pdf$.pointSize}));
+      } else {
+        point[$add](new container$.Container.new({height: pdf$.pointSize, width: pdf$.pointSize, decoration: new decoration.BoxDecoration.new({shape: decoration.BoxShape.circle, border: box_border.Border.all({color: colors$.PdfColors.black}), color: dart.equals(colors[$_get](angle)[$elementAt](meters).color, colors$0.Colors.white) ? colors$.PdfColors.white : colors$.PdfColors.red}), child: (dart.notNull(angle) >= 0 && dart.notNull(angle) <= 80 || dart.notNull(angle) >= 280 && dart.notNull(angle) <= 350) && meters !== 0 && meters !== 1 ? new basic.Center.new({child: new text.Text.new(meters[$toString](), {style: new text_style.TextStyle.new({fontSize: 5.0})})}) : (angle === 90 || angle === 270) && meters !== 0 && meters !== 1 ? new basic.Center.new({child: new text.Text.new(meters[$toString](), {style: new text_style.TextStyle.new({fontSize: 5.0})})}) : meters !== 0 && meters !== 1 ? new basic.Center.new({child: new text.Text.new(meters[$toString](), {style: new text_style.TextStyle.new({fontSize: 5.0})})}) : null}));
+      }
+    }
+    pdf$.colorsPointsPdf[$_set](angle, point);
+  };
+  dart.defineLazy(pdf$, {
+    /*pdf$.widthTextAngle*/get widthTextAngle() {
+      return 20.0;
+    },
+    /*pdf$.lineSize*/get lineSize() {
+      return 577.0;
+    },
+    /*pdf$.maxAngle*/get maxAngle() {
+      return null;
+    },
+    set maxAngle(_) {},
+    /*pdf$.pointSize*/get pointSize() {
+      return 10.0;
+    },
+    /*pdf$.lines*/get lines() {
+      return new (IdentityMapOfintL$WidgetL()).new();
+    },
+    set lines(_) {},
+    /*pdf$.points*/get points() {
+      return new (IdentityMapOfintL$WidgetL()).new();
+    },
+    set points(_) {},
+    /*pdf$.colorsPointsPdf*/get colorsPointsPdf() {
+      return new (IdentityMapOfintL$ListLOfWidgetL()).new();
+    },
+    set colorsPointsPdf(_) {}
+  }, true);
+  dart.trackLibraries("packages/lines/pdf.dart", {
+    "package:lines/pdf.dart": pdf$
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["pdf.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;0CAmB4C,QACR,cAAqB;AAD5B;AAEX,MAAhB,gBAAW,KAAK;AACc,mBAAS;AASrC,MARF,AAAa,YAAD,WAAS,SAAC,KAAK;AACL,oBAAQ;AAK1B,QAJF,AAAM,KAAD,WAAS,QAAC;AACH,0CAAY,AAAQ,OAAD;AACf,kDAAgB,AAAU,SAAD;AACf,UAAxB,AAAM,KAAD,OAAK,aAAa;;AAEN,QAAnB,AAAM,MAAA,QAAC,GAAG,EAAI,KAAK;;AAGb,MAAR;AACe,MAAf,aAAQ,MAAM;AACR,gBAAS;AAgBd,MAfD,AAAI,GAAD,SACE,2BACqB,6CAAoB,kBAAgB,oBAC9C,MAAM,SACX,QAAC,WACI,6BACE,+BACE,oCACR,gCACA;AAQZ,YAAO,AAAI,IAAD;IACZ;;;AAGE,UAAU,wCACe,4BAAI,cACjB,+BACE,uBACL,qCACgB,+BACP,qCACgC,wDACE,0CAChC,uBACL,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,kBAEnC,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,kBAEnC,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,gBAEnC,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,qBAKzC,qCACuC,wDACE,0CAChC,uBACL,6BACK,UACI,sCACA,kBACO,0CACO,8BAAqB,oCACjC,6BACE,kBAAK,gBAIlB,6BACK,UACI,sCACA,kBACO,0CACO,8BAAqB,oCACjC,6BACE,kBAAK,gBAIlB,6BACK,UACI,sCACA,kBACO,0CACO,8BAAqB,oCACjC,6BACE,kBAAK,gBAIlB,6BACK,UACI,sCACA,kBACO,0CACO,8BAAqB,oCACjC,6BACE,kBAAK,oBAMtB,qCACgB,+BACP,qCACgC,wDACE,0CAChC,uBACL,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,wBAEnC,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,iBAEnC,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,sBAEnC,6BACK,UACI,sCACE,kBACO,0CACO,8BAAqB,oCACjC,6BAAiB,kBAAK,wBAKzC,qCACgB,kCACP,qCACgC,wDACE,0CAChC,uBACL,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,cAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,oBAOxB,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,cAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,oBAOxB,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,kBAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,sBAOxB,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,kBAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,4BAU9B,qCACuC,wDACE,0CAChC,uBACL,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,gBAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,sBAOxB,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,gBAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,sBAOxB,6BACK,UACI,4BACE,uBACL,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,gBAIlB,8BACS,sCACA,kBACO,0CACK,8BAAqB,oCAE/B,6BACE,kBAAK,sBAOxB,6BACK,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","file":"../../../../../../packages/lines/pdf.dart.lib.js"}');
+  // Exports:
+  return {
+    pdf: pdf$
+  };
+}));
+
+//# sourceMappingURL=pdf.dart.lib.js.map

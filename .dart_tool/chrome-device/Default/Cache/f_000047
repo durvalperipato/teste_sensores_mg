@@ -1,0 +1,701 @@
+define(['dart_sdk', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/material/colors.dart', 'packages/lines/data/header_json.dart', 'packages/flutter/src/painting/box_decoration.dart', 'packages/flutter/src/painting/box_border.dart', 'packages/flutter/src/rendering/flex.dart', 'packages/flutter/src/painting/edge_insets.dart'], (function load__packages__lines__header_dart(dart_sdk, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__material__colors$46dart, packages__lines__data__header_json$46dart, packages__flutter__src__painting__box_decoration$46dart, packages__flutter__src__painting__box_border$46dart, packages__flutter__src__rendering__flex$46dart, packages__flutter__src__painting__edge_insets$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _interceptors = dart_sdk._interceptors;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const container = packages__flutter__src__widgets__widget_span$46dart.src__widgets__container;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const basic = packages__flutter__src__widgets__widget_span$46dart.src__widgets__basic;
+  const text = packages__flutter__src__widgets__widget_span$46dart.src__widgets__text;
+  const media_query = packages__flutter__src__widgets__widget_span$46dart.src__widgets__media_query;
+  const colors = packages__flutter__src__material__colors$46dart.src__material__colors;
+  const header_json = packages__lines__data__header_json$46dart.data__header_json;
+  const box_decoration = packages__flutter__src__painting__box_decoration$46dart.src__painting__box_decoration;
+  const box_border = packages__flutter__src__painting__box_border$46dart.src__painting__box_border;
+  const flex = packages__flutter__src__rendering__flex$46dart.src__rendering__flex;
+  const edge_insets = packages__flutter__src__painting__edge_insets$46dart.src__painting__edge_insets;
+  var header = Object.create(dart.library);
+  var $_get = dartx._get;
+  var $add = dartx.add;
+  var $forEach = dartx.forEach;
+  var _LocationL = () => (_LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))();
+  var WidgetL = () => (WidgetL = dart.constFn(dart.legacy(framework.Widget)))();
+  var ListOfWidgetL = () => (ListOfWidgetL = dart.constFn(core.List$(WidgetL())))();
+  var ExpandedL = () => (ExpandedL = dart.constFn(dart.legacy(basic.Expanded)))();
+  var intL = () => (intL = dart.constFn(dart.legacy(core.int)))();
+  var intLToExpandedL = () => (intLToExpandedL = dart.constFn(dart.fnType(ExpandedL(), [intL()])))();
+  var JSArrayOfWidgetL = () => (JSArrayOfWidgetL = dart.constFn(_interceptors.JSArray$(WidgetL())))();
+  var StringL = () => (StringL = dart.constFn(dart.legacy(core.String)))();
+  var StringLAnddynamicToNull = () => (StringLAnddynamicToNull = dart.constFn(dart.fnType(core.Null, [StringL(), dart.dynamic])))();
+  const CT = Object.create(null);
+  dart.defineLazy(CT, {
+    get C2() {
+      return C2 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "color",
+        [_Location_column]: 7,
+        [_Location_line]: 8,
+        [_Location_file]: null
+      });
+    },
+    get C3() {
+      return C3 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 9,
+        [_Location_file]: null
+      });
+    },
+    get C1() {
+      return C1 = dart.constList([C2 || CT.C2, C3 || CT.C3], _LocationL());
+    },
+    get C0() {
+      return C0 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C1 || CT.C1,
+        [_Location_name]: null,
+        [_Location_column]: 44,
+        [_Location_line]: 7,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C6() {
+      return C6 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "color",
+        [_Location_column]: 7,
+        [_Location_line]: 13,
+        [_Location_file]: null
+      });
+    },
+    get C7() {
+      return C7 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 14,
+        [_Location_file]: null
+      });
+    },
+    get C5() {
+      return C5 = dart.constList([C6 || CT.C6, C7 || CT.C7], _LocationL());
+    },
+    get C4() {
+      return C4 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C5 || CT.C5,
+        [_Location_name]: null,
+        [_Location_column]: 47,
+        [_Location_line]: 12,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C10() {
+      return C10 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "data",
+        [_Location_column]: 61,
+        [_Location_line]: 28,
+        [_Location_file]: null
+      });
+    },
+    get C9() {
+      return C9 = dart.constList([C10 || CT.C10], _LocationL());
+    },
+    get C8() {
+      return C8 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C9 || CT.C9,
+        [_Location_name]: null,
+        [_Location_column]: 17,
+        [_Location_line]: 27,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C13() {
+      return C13 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "data",
+        [_Location_column]: 48,
+        [_Location_line]: 31,
+        [_Location_file]: null
+      });
+    },
+    get C12() {
+      return C12 = dart.constList([C13 || CT.C13], _LocationL());
+    },
+    get C11() {
+      return C11 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C12 || CT.C12,
+        [_Location_name]: null,
+        [_Location_column]: 17,
+        [_Location_line]: 30,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C16() {
+      return C16 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 26,
+        [_Location_file]: null
+      });
+    },
+    get C15() {
+      return C15 = dart.constList([C16 || CT.C16], _LocationL());
+    },
+    get C14() {
+      return C14 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C15 || CT.C15,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 25,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C19() {
+      return C19 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 9,
+        [_Location_line]: 23,
+        [_Location_file]: null
+      });
+    },
+    get C20() {
+      return C20 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "decoration",
+        [_Location_column]: 9,
+        [_Location_line]: 24,
+        [_Location_file]: null
+      });
+    },
+    get C21() {
+      return C21 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 25,
+        [_Location_file]: null
+      });
+    },
+    get C18() {
+      return C18 = dart.constList([C19 || CT.C19, C20 || CT.C20, C21 || CT.C21], _LocationL());
+    },
+    get C17() {
+      return C17 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C18 || CT.C18,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 22,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C24() {
+      return C24 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "flex",
+        [_Location_column]: 7,
+        [_Location_line]: 21,
+        [_Location_file]: null
+      });
+    },
+    get C25() {
+      return C25 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 22,
+        [_Location_file]: null
+      });
+    },
+    get C23() {
+      return C23 = dart.constList([C24 || CT.C24, C25 || CT.C25], _LocationL());
+    },
+    get C22() {
+      return C22 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C23 || CT.C23,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 20,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C28() {
+      return C28 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 9,
+        [_Location_line]: 46,
+        [_Location_file]: null
+      });
+    },
+    get C27() {
+      return C27 = dart.constList([C28 || CT.C28], _LocationL());
+    },
+    get C26() {
+      return C26 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C27 || CT.C27,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 45,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C31() {
+      return C31 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "flex",
+        [_Location_column]: 7,
+        [_Location_line]: 44,
+        [_Location_file]: null
+      });
+    },
+    get C32() {
+      return C32 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 45,
+        [_Location_file]: null
+      });
+    },
+    get C30() {
+      return C30 = dart.constList([C31 || CT.C31, C32 || CT.C32], _LocationL());
+    },
+    get C29() {
+      return C29 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C30 || CT.C30,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 43,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C35() {
+      return C35 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "data",
+        [_Location_column]: 28,
+        [_Location_line]: 69,
+        [_Location_file]: null
+      });
+    },
+    get C34() {
+      return C34 = dart.constList([C35 || CT.C35], _LocationL());
+    },
+    get C33() {
+      return C33 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C34 || CT.C34,
+        [_Location_name]: null,
+        [_Location_column]: 23,
+        [_Location_line]: 69,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C38() {
+      return C38 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "data",
+        [_Location_column]: 28,
+        [_Location_line]: 70,
+        [_Location_file]: null
+      });
+    },
+    get C37() {
+      return C37 = dart.constList([C38 || CT.C38], _LocationL());
+    },
+    get C36() {
+      return C36 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C37 || CT.C37,
+        [_Location_name]: null,
+        [_Location_column]: 23,
+        [_Location_line]: 70,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C41() {
+      return C41 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "data",
+        [_Location_column]: 56,
+        [_Location_line]: 71,
+        [_Location_file]: null
+      });
+    },
+    get C40() {
+      return C40 = dart.constList([C41 || CT.C41], _LocationL());
+    },
+    get C39() {
+      return C39 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C40 || CT.C40,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 71,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C44() {
+      return C44 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 13,
+        [_Location_line]: 66,
+        [_Location_file]: null
+      });
+    },
+    get C43() {
+      return C43 = dart.constList([C44 || CT.C44], _LocationL());
+    },
+    get C42() {
+      return C42 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C43 || CT.C43,
+        [_Location_name]: null,
+        [_Location_column]: 18,
+        [_Location_line]: 65,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C47() {
+      return C47 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 11,
+        [_Location_line]: 61,
+        [_Location_file]: null
+      });
+    },
+    get C48() {
+      return C48 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "decoration",
+        [_Location_column]: 11,
+        [_Location_line]: 62,
+        [_Location_file]: null
+      });
+    },
+    get C49() {
+      return C49 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 65,
+        [_Location_file]: null
+      });
+    },
+    get C46() {
+      return C46 = dart.constList([C47 || CT.C47, C48 || CT.C48, C49 || CT.C49], _LocationL());
+    },
+    get C45() {
+      return C45 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C46 || CT.C46,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 60,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C52() {
+      return C52 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 60,
+        [_Location_file]: null
+      });
+    },
+    get C51() {
+      return C51 = dart.constList([C52 || CT.C52], _LocationL());
+    },
+    get C50() {
+      return C50 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C51 || CT.C51,
+        [_Location_name]: null,
+        [_Location_column]: 7,
+        [_Location_line]: 59,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C55() {
+      return C55 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "mainAxisAlignment",
+        [_Location_column]: 5,
+        [_Location_line]: 112,
+        [_Location_file]: null
+      });
+    },
+    get C56() {
+      return C56 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "crossAxisAlignment",
+        [_Location_column]: 5,
+        [_Location_line]: 113,
+        [_Location_file]: null
+      });
+    },
+    get C57() {
+      return C57 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 5,
+        [_Location_line]: 114,
+        [_Location_file]: null
+      });
+    },
+    get C54() {
+      return C54 = dart.constList([C55 || CT.C55, C56 || CT.C56, C57 || CT.C57], _LocationL());
+    },
+    get C53() {
+      return C53 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C54 || CT.C54,
+        [_Location_name]: null,
+        [_Location_column]: 39,
+        [_Location_line]: 111,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C60() {
+      return C60 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 9,
+        [_Location_line]: 120,
+        [_Location_file]: null
+      });
+    },
+    get C59() {
+      return C59 = dart.constList([C60 || CT.C60], _LocationL());
+    },
+    get C58() {
+      return C58 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C59 || CT.C59,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 119,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    },
+    get C63() {
+      return C63 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 7,
+        [_Location_line]: 117,
+        [_Location_file]: null
+      });
+    },
+    get C64() {
+      return C64 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "width",
+        [_Location_column]: 7,
+        [_Location_line]: 118,
+        [_Location_file]: null
+      });
+    },
+    get C65() {
+      return C65 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 119,
+        [_Location_file]: null
+      });
+    },
+    get C62() {
+      return C62 = dart.constList([C63 || CT.C63, C64 || CT.C64, C65 || CT.C65], _LocationL());
+    },
+    get C61() {
+      return C61 = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C62 || CT.C62,
+        [_Location_name]: null,
+        [_Location_column]: 43,
+        [_Location_line]: 116,
+        [_Location_file]: "file:///C:/Users/DURVAL/Documents/Flutter%20Projects/lines/lib/header.dart"
+      });
+    }
+  }, false);
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  var C2;
+  var C3;
+  var C1;
+  var C0;
+  var C6;
+  var C7;
+  var C5;
+  var C4;
+  var C10;
+  var C9;
+  var C8;
+  var C13;
+  var C12;
+  var C11;
+  var C16;
+  var C15;
+  var C14;
+  var C19;
+  var C20;
+  var C21;
+  var C18;
+  var C17;
+  var C24;
+  var C25;
+  var C23;
+  var C22;
+  var C28;
+  var C27;
+  var C26;
+  var C31;
+  var C32;
+  var C30;
+  var C29;
+  var C35;
+  var C34;
+  var C33;
+  var C38;
+  var C37;
+  var C36;
+  var C41;
+  var C40;
+  var C39;
+  var C44;
+  var C43;
+  var C42;
+  var C47;
+  var C48;
+  var C49;
+  var C46;
+  var C45;
+  var C52;
+  var C51;
+  var C50;
+  var C55;
+  var C56;
+  var C57;
+  var C54;
+  var C53;
+  var C60;
+  var C59;
+  var C58;
+  var C63;
+  var C64;
+  var C65;
+  var C62;
+  var C61;
+  header.containerTitles = function containerTitles(child) {
+    return new container.Container.new({color: colors.Colors.grey, child: child, $creationLocationd_0dea112b090073317d4: C0 || CT.C0});
+  };
+  header.containerSubtitles = function containerSubtitles(child) {
+    return new container.Container.new({color: colors.Colors.grey._get(300), child: child, $creationLocationd_0dea112b090073317d4: C4 || CT.C4});
+  };
+  header.titlesAndFlex = function titlesAndFlex(line, textField) {
+    header.children = ListOfWidgetL().generate(core.int.as(dart.dload(dart.dsend(header_json.table[$_get](line), '_get', ["titles"]), 'length')), dart.fn(index => new basic.Expanded.new({flex: core.int.as(dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["titles"]), '_get', [index]), 'elementAt', [0])), child: new container.Container.new({height: header.heightContainer, decoration: new box_decoration.BoxDecoration.new({border: box_border.Border.all({color: colors.Colors.black})}), child: new basic.Center.new({child: dart.test(textField) ? new text.Text.new(core.String.as(dart.dload(dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["titles"]), '_get', [index]), 'elementAt', [2]), 'text')), {$creationLocationd_0dea112b090073317d4: C8 || CT.C8}) : new text.Text.new(core.String.as(dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["titles"]), '_get', [index]), 'elementAt', [1])), {$creationLocationd_0dea112b090073317d4: C11 || CT.C11}), $creationLocationd_0dea112b090073317d4: C14 || CT.C14}), $creationLocationd_0dea112b090073317d4: C17 || CT.C17}), $creationLocationd_0dea112b090073317d4: C22 || CT.C22}), intLToExpandedL()));
+    return header.drawRow(header.children);
+  };
+  header.subtitlesAndFlex = function subtitlesAndFlex(line, textField) {
+    header.children = ListOfWidgetL().generate(core.int.as(dart.dload(dart.dsend(header_json.table[$_get](line), '_get', ["subtitles"]), 'length')), dart.fn(index => new basic.Expanded.new({flex: core.int.as(dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["subtitles"]), '_get', [index]), 'elementAt', [0])), child: new basic.Row.new({children: header.subtitleText(line, index, textField), $creationLocationd_0dea112b090073317d4: C26 || CT.C26}), $creationLocationd_0dea112b090073317d4: C29 || CT.C29}), intLToExpandedL()));
+    return header.drawRow(header.children);
+  };
+  header.subtitleText = function subtitleText(line, index, textField) {
+    let children = JSArrayOfWidgetL().of([]);
+    for (let elementAt = 1; elementAt < dart.notNull(core.num.as(dart.dload(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["subtitles"]), '_get', [index]), 'length'))); elementAt = elementAt + 1) {
+      children[$add](new basic.Expanded.new({child: new container.Container.new({height: header.heightContainer, decoration: new box_decoration.BoxDecoration.new({border: box_border.Border.all({color: colors.Colors.black})}), child: new basic.Center.new({child: dart.test(textField) ? dart.equals(dart.dload(dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["titles"]), '_get', [index]), 'elementAt', [2]), 'text'), dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["subtitles"]), '_get', [index]), 'elementAt', [elementAt])) ? new text.Text.new("X", {$creationLocationd_0dea112b090073317d4: C33 || CT.C33}) : new text.Text.new("", {$creationLocationd_0dea112b090073317d4: C36 || CT.C36}) : new text.Text.new(core.String.as(dart.dsend(dart.dsend(dart.dsend(header_json.table[$_get](line), '_get', ["subtitles"]), '_get', [index]), 'elementAt', [elementAt])), {$creationLocationd_0dea112b090073317d4: C39 || CT.C39}), $creationLocationd_0dea112b090073317d4: C42 || CT.C42}), $creationLocationd_0dea112b090073317d4: C45 || CT.C45}), $creationLocationd_0dea112b090073317d4: C50 || CT.C50}));
+    }
+    return children;
+  };
+  header.drawTable = function drawTable() {
+    let children = JSArrayOfWidgetL().of([]);
+    header_json.table[$forEach](dart.fn((key, value) => {
+      if (dart.dsend(header_json.table[$_get](key), '_get', ["subtitles"]) != null) {
+        children[$add](header.containerTitles(header.titlesAndFlex(key, false)));
+        children[$add](header.containerSubtitles(header.subtitlesAndFlex(key, false)));
+        children[$add](header.subtitlesAndFlex(key, true));
+      } else {
+        children[$add](header.containerTitles(header.titlesAndFlex(key, false)));
+        children[$add](header.titlesAndFlex(key, true));
+      }
+    }, StringLAnddynamicToNull()));
+    return children;
+  };
+  header.drawRow = function drawRow(children) {
+    return new basic.Row.new({mainAxisAlignment: flex.MainAxisAlignment.spaceAround, crossAxisAlignment: flex.CrossAxisAlignment.center, children: children, $creationLocationd_0dea112b090073317d4: C53 || CT.C53});
+  };
+  header.header = function header$(context) {
+    return new container.Container.new({padding: new edge_insets.EdgeInsets.all(10.0), width: media_query.MediaQuery.of(context).size.width, child: new basic.Column.new({children: header.drawTable(), $creationLocationd_0dea112b090073317d4: C58 || CT.C58}), $creationLocationd_0dea112b090073317d4: C61 || CT.C61});
+  };
+  dart.defineLazy(header, {
+    /*header.children*/get children() {
+      return JSArrayOfWidgetL().of([]);
+    },
+    set children(_) {},
+    /*header.heightContainer*/get heightContainer() {
+      return 25.0;
+    },
+    set heightContainer(_) {}
+  }, true);
+  dart.trackLibraries("packages/lines/header.dart", {
+    "package:lines/header.dart": header
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["header.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;oDAMiC;AAAU,+CACvB,2BACP,KAAK;EACb;0DAE+B;AAAU,+CAC1B,AAAI,wBAAC,aACZ,KAAK;EACb;gDAEoB,MAAW;AAmBjC,IAlBD,kBAAgB,qCACQ,WAAX,WAAX,AAAK,yBAAC,IAAI,YAAE,wBACZ,QAAC,SAAU,0CAC0B,WAAR,WAAV,WAAX,AAAK,yBAAC,IAAI,YAAE,qBAAU,KAAK,kBAAY,aACtC,qCACG,oCACI,8CAA6B,8BAAkB,gCACpD,uCACE,SAAS,IACV,iCAC4C,WAAb,WAAR,WAAV,WAAX,AAAK,yBAAC,IAAI,YAAE,qBAAU,KAAK,kBAAY,wEAEzC,iCAC+B,WAAR,WAAV,WAAX,AAAK,yBAAC,IAAI,YAAE,qBAAU,KAAK,kBAAY;AAMvD,UAAO,gBAAQ;EACjB;sDAE4B,MAAW;AASpC,IARD,kBAAgB,qCACW,WAAd,WAAX,AAAK,yBAAC,IAAI,YAAE,2BACZ,QAAC,SAAU,0CAC6B,WAAR,WAAb,WAAX,AAAK,yBAAC,IAAI,YAAE,wBAAa,KAAK,kBAAY,aACzC,6BACK,oBAAa,IAAI,EAAE,KAAK,EAAE,SAAS;AAInD,UAAO,gBAAQ;EACjB;8CAEiC,MAAU,OAAY;AACxC,mBAAW;AACxB,aAAS,YAAY,GACjB,AAAU,SAAD,4BAAmC,WAAR,WAAb,WAAX,AAAK,yBAAC,IAAI,YAAE,wBAAa,KAAK,iBAC1C,YAAA,AAAS,SAAA;AAkBV,MAjBD,AAAS,QAAD,OACN,+BACS,qCACG,oCACI,8CACK,8BAAkB,gCAE5B,uCACE,SAAS,IACqC,YAAL,WAAb,WAAR,WAAV,WAAX,AAAK,yBAAC,IAAI,YAAE,qBAAU,KAAK,kBAAY,cACD,WAAR,WAAb,WAAX,AAAK,yBAAC,IAAI,YAAE,wBAAa,KAAK,kBAAY,SAAS,MACrD,kBAAK,gEACL,kBAAK,+DACT,iCAAqC,WAAR,WAAb,WAAX,AAAK,yBAAC,IAAI,YAAE,wBAAa,KAAK,kBAAY,SAAS;;AAMxE,UAAO,SAAQ;EACjB;;AAGe,mBAAW;AA0BtB,IAzBF,AAAM,4BAAQ,SAAC,KAAK;AAClB,UAAc,WAAV,AAAK,yBAAC,GAAG,YAAE,iBAAgB;AAK5B,QAJD,AAAS,QAAD,OACN,uBACE,qBAAc,GAAG,EAAE;AAOtB,QAJD,AAAS,QAAD,OACN,0BACE,wBAAiB,GAAG,EAAE;AAKzB,QAFD,AAAS,QAAD,OACN,wBAAiB,GAAG,EAAE;;AAOvB,QAJD,AAAS,QAAD,OACN,uBACE,qBAAc,GAAG,EAAE;AAKtB,QAFD,AAAS,QAAD,OACN,qBAAc,GAAG,EAAE;;;AAIzB,UAAO,SAAQ;EACjB;oCAEyB;AAAa,iDACG,wDACE,0CAC7B,QAAQ;EAAC;mCAEO;AAAY,iDAChB,+BAAI,cACN,AAAY,AAAK,0BAAd,OAAO,qBACrB,gCACK;EAEb;;MAtHQ,eAAQ;YAAG;;;MACjB,sBAAe;YAAG","file":"../../../../../../packages/lines/header.dart.lib.js"}');
+  // Exports:
+  return {
+    header: header
+  };
+}));
+
+//# sourceMappingURL=header.dart.lib.js.map
