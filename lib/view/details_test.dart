@@ -26,11 +26,6 @@ class DetailsSensor extends StatelessWidget {
               onPressed: () => Navigator.push(
                   context, MaterialPageRoute(builder: (context) => NewTest())),
             ),
-            /* RaisedButton(
-              child: Text('Inserir Produto'),
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => NewProduct())),
-            ), */
           ],
         ),
       ),
@@ -85,6 +80,53 @@ class _NewTestState extends State<NewTest> {
         ),
       );
 
+  Container containerTitleAndFormField(String titleOfText, Widget child) =>
+      Container(
+        height: 80,
+        width: 120,
+        child: Column(
+          children: [
+            title(titleOfText),
+            child,
+          ],
+        ),
+      );
+
+  DropdownButton dropDownButtonList(List<dynamic> items,
+          TextEditingController controller, String value) =>
+      DropdownButton(
+        underline: Container(),
+        items: items
+            .map(
+              (value) => DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          if (value == 'Min' || value == 'Max') {
+            sensibilidadeMaximaController.text = '';
+            sensibilidadeMinimaController.text = '';
+            value == 'Min'
+                ? sensibilidadeMinimaController.text = 'X'
+                : sensibilidadeMaximaController.text = 'X';
+          } else if (value == '127' || value == '220') {
+            tensao127Controller.text = '';
+            tensao220Controller.text = '';
+            value == '127'
+                ? tensao127Controller.text = 'X'
+                : tensao220Controller.text = 'X';
+          } else {
+            controller.text = value;
+          }
+          setState(() {
+            product = items.elementAt(items.indexOf(value));
+          });
+        },
+        value: value,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +142,7 @@ class _NewTestState extends State<NewTest> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(
-                flex: 5,
+                flex: 4,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -122,54 +164,23 @@ class _NewTestState extends State<NewTest> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('Amostra'),
-                                textFormField(
-                                    amostraController, TextInputType.text),
-                              ],
+                          containerTitleAndFormField(
+                            'Amostra',
+                            textFormField(
+                              amostraController,
+                              TextInputType.text,
                             ),
                           ),
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('Produto'),
-                                DropdownButton(
-                                  underline: Container(),
-                                  items: products
-                                      .map(
-                                        (value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) {
-                                    produtoController.text = value;
-                                    setState(() {
-                                      product = products
-                                          .elementAt(products.indexOf(value));
-                                    });
-                                  },
-                                  value: product,
-                                ),
-                              ],
-                            ),
+                          containerTitleAndFormField(
+                            'Produto',
+                            dropDownButtonList(
+                                products, produtoController, product),
                           ),
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('Local'),
-                                textFormField(
-                                    localController, TextInputType.text),
-                              ],
+                          containerTitleAndFormField(
+                            'Local',
+                            textFormField(
+                              localController,
+                              TextInputType.text,
                             ),
                           ),
                         ],
@@ -178,110 +189,31 @@ class _NewTestState extends State<NewTest> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('Data'),
-                                textFormField(
-                                    dataController, TextInputType.number),
-                              ],
-                            ),
+                          containerTitleAndFormField(
+                            'Data',
+                            textFormField(dataController, TextInputType.number),
                           ),
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('Sensibilidade'),
-                                DropdownButton(
-                                  underline: Container(),
-                                  items: sensibilitys
-                                      .map(
-                                        (value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) {
-                                    sensibilidadeMaximaController.text = '';
-                                    sensibilidadeMinimaController.text = '';
-                                    value == 'Min'
-                                        ? sensibilidadeMinimaController.text =
-                                            'X'
-                                        : sensibilidadeMaximaController.text =
-                                            'X';
-                                    setState(() {
-                                      sensibility = sensibilitys.elementAt(
-                                          sensibilitys.indexOf(value));
-                                    });
-                                  },
-                                  value: sensibility,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('Tensão'),
-                                DropdownButton(
-                                  underline: Container(),
-                                  items: voltages
-                                      .map(
-                                        (value) => DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) {
-                                    tensao127Controller.text = '';
-                                    tensao220Controller.text = '';
-                                    value == '127'
-                                        ? tensao127Controller.text = 'X'
-                                        : tensao220Controller.text = 'X';
-                                    setState(() {
-                                      voltage = voltages
-                                          .elementAt(voltages.indexOf(value));
-                                    });
-                                  },
-                                  value: voltage,
-                                ),
-                              ],
-                            ),
-                          ),
+                          containerTitleAndFormField(
+                              'Sensibilidade',
+                              dropDownButtonList(
+                                  sensibilitys, null, sensibility)),
+                          containerTitleAndFormField('Tensão',
+                              dropDownButtonList(voltages, null, voltage)),
                         ],
                       ),
                       space,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('T. Inicial'),
-                                textFormField(temperaturaInicialController,
-                                    TextInputType.number),
-                              ],
-                            ),
+                          containerTitleAndFormField(
+                            'T.Inicial',
+                            textFormField(temperaturaInicialController,
+                                TextInputType.number),
                           ),
-                          Container(
-                            height: 80,
-                            width: 120,
-                            child: Column(
-                              children: [
-                                title('U. Inicial'),
-                                textFormField(umidadeInicialController,
-                                    TextInputType.number),
-                              ],
-                            ),
+                          containerTitleAndFormField(
+                            'U.Inicial',
+                            textFormField(
+                                umidadeInicialController, TextInputType.number),
                           ),
                           SizedBox(
                             height: 80,
@@ -289,7 +221,6 @@ class _NewTestState extends State<NewTest> {
                           )
                         ],
                       ),
-                      space,
                     ],
                   ),
                 ),
