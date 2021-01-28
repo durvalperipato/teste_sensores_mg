@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lines/details_test.dart';
+import 'package:lines/view/details_test.dart';
 
-void main() {
+void main() async {
+  //WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 
@@ -16,21 +18,5 @@ class MyApp extends StatelessWidget {
       ),
       home: DetailsSensor(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, @required this.size}) : super(key: key);
-
-  final Size size;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
   }
 }

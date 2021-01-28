@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lines/header.dart';
+import 'package:lines/view/header.dart';
 import 'package:lines/widgets/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
-import '../pdf.dart';
+import 'pdf.dart';
 
 class TestSensor extends StatefulWidget {
   final Size size;
 
-  const TestSensor({Key key, this.size}) : super(key: key);
+  const TestSensor({Key key, @required this.size}) : super(key: key);
 
   @override
   _TestSensorState createState() => _TestSensorState();
@@ -86,7 +86,7 @@ class _TestSensorState extends State<TestSensor> {
         child: ListView(
           children: [
             DrawerHeader(
-              child: Center(child: Text('HELLO')),
+              child: Center(child: Text('ToDo')),
               decoration: BoxDecoration(color: Colors.red),
             ),
             ListTile(
