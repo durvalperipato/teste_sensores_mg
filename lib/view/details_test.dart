@@ -69,15 +69,36 @@ class _NewTestState extends State<NewTest> {
   );
 
   Container textFormField(
-          TextEditingController controller, TextInputType keyboardType) =>
+          TextEditingController controller, TextInputType keyboardType,
+          {bool date = false}) =>
       Container(
         width: 150,
-        child: TextFormField(
-          keyboardType: keyboardType,
-          textAlign: TextAlign.center,
-          controller: controller,
-          onSaved: (newValue) => controller.text = newValue,
-        ),
+        child: date
+            ? TextFormField(
+                textAlign: TextAlign.center,
+                controller: controller,
+                onTap: () async {
+                  DateTime dateTimePicked = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2021),
+                    lastDate: DateTime(2040),
+                  );
+
+                  controller.text =
+                      dateTimePicked.day.toString().padLeft(2, '0') +
+                          '/' +
+                          dateTimePicked.month.toString().padLeft(2, '0') +
+                          '/' +
+                          dateTimePicked.year.toString();
+                },
+              )
+            : TextFormField(
+                keyboardType: keyboardType,
+                textAlign: TextAlign.center,
+                controller: controller,
+                onSaved: (newValue) => controller.text = newValue,
+              ),
       );
 
   Container containerTitleAndFormField(String titleOfText, Widget child) =>
@@ -92,8 +113,8 @@ class _NewTestState extends State<NewTest> {
         ),
       );
 
-  DropdownButton dropDownButtonList(List<dynamic> items,
-          TextEditingController controller, String value) =>
+  DropdownButton dropDownButtonList(
+          List<dynamic> items, TextEditingController controller, String item) =>
       DropdownButton(
         underline: Container(),
         items: items
@@ -120,11 +141,18 @@ class _NewTestState extends State<NewTest> {
           } else {
             controller.text = value;
           }
+
           setState(() {
-            product = items.elementAt(items.indexOf(value));
+            if (value == 'Min' || value == 'Max') {
+              sensibility = items.elementAt(items.indexOf(value));
+            } else if (value == '127' || value == '220') {
+              voltage = items.elementAt(items.indexOf(value));
+            } else {
+              product = items.elementAt(items.indexOf(value));
+            }
           });
         },
-        value: value,
+        value: item,
       );
 
   @override
@@ -152,7 +180,7 @@ class _NewTestState extends State<NewTest> {
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(4, 4),
-                        color: Colors.black,
+                        color: Colors.grey,
                         blurRadius: 2,
                         spreadRadius: 2,
                       )
@@ -191,14 +219,17 @@ class _NewTestState extends State<NewTest> {
                         children: [
                           containerTitleAndFormField(
                             'Data',
-                            textFormField(dataController, TextInputType.number),
+                            textFormField(dataController, TextInputType.number,
+                                date: true),
                           ),
                           containerTitleAndFormField(
                               'Sensibilidade',
+                              dropDownButtonList(sensibilitys,
+                                  sensibilidadeMaximaController, sensibility)),
+                          containerTitleAndFormField(
+                              'Tensão',
                               dropDownButtonList(
-                                  sensibilitys, null, sensibility)),
-                          containerTitleAndFormField('Tensão',
-                              dropDownButtonList(voltages, null, voltage)),
+                                  voltages, tensao220Controller, voltage)),
                         ],
                       ),
                       space,

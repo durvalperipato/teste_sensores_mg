@@ -40,6 +40,7 @@ class _TestSensorState extends State<TestSensor> {
     350
   ];
   double pointSize;
+  double containerSize;
   double lineSize;
   int maxAngle;
   int angleInterval;
@@ -50,7 +51,7 @@ class _TestSensorState extends State<TestSensor> {
   @override
   void initState() {
     super.initState();
-    _lineSize();
+    _containerSize();
     maxAngle = 180;
     angleInterval = 10;
     maxMeters = 12;
@@ -58,22 +59,23 @@ class _TestSensorState extends State<TestSensor> {
     _points();
   }
 
-  _lineSize() {
-    lineSize = widget.size.height >= widget.size.width
-        ? widget.size.height
-        : widget.size.width;
-    pointSize = lineSize > 1300
+  _containerSize() {
+    containerSize = widget.size.height >= widget.size.width
+        ? widget.size.width
+        : widget.size.height;
+    pointSize = containerSize > 1300
         ? 22
-        : lineSize <= 1300 && lineSize >= 800
-            ? 20
-            : 10;
+        : containerSize <= 1300 && containerSize >= 800
+            ? 15
+            : 8;
+    lineSize = containerSize / 2 - 10;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (lineSize == widget.size.height &&
+    if (containerSize == widget.size.height &&
         widget.size.width > widget.size.height) {
-      _lineSize();
+      _containerSize();
       setState(() {
         _lines();
         _points(picked: true);
@@ -118,31 +120,31 @@ class _TestSensorState extends State<TestSensor> {
           ],
         ),
       ),
-      body: Scrollbar(
+      body:
+          /* Scrollbar(
         controller: scrollController,
-        child: ListView(
-          controller: scrollController,
+        child:  */
+          /* SingleChildScrollView(
+        //controller: scrollController,
+        child:  */
+          InteractiveViewer(
+        maxScale: 20,
+        child: /* Center(
+          child: */
+            Stack(
           children: [
-            InteractiveViewer(
-              maxScale: 20,
-              child: Center(
-                child: Column(
+            IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () => _scaffoldKey.currentState.openDrawer()),
+            Center(
+              child: Container(
+                padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                height: containerSize,
+                width: containerSize,
+                child: Stack(
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                      height: lineSize,
-                      width: lineSize,
-                      child: Stack(
-                        children: [
-                          IconButton(
-                              icon: Icon(Icons.menu),
-                              onPressed: () =>
-                                  _scaffoldKey.currentState.openDrawer()),
-                          for (Widget line in lines.values) line,
-                          for (Widget point in points.values) point,
-                        ],
-                      ),
-                    ),
+                    for (Widget line in lines.values) line,
+                    for (Widget point in points.values) point,
                   ],
                 ),
               ),
@@ -163,14 +165,14 @@ class _TestSensorState extends State<TestSensor> {
               children: [
                 Container(
                   height: isAxis(angle) ? 2 : 1,
-                  width: lineSize / 2 - 10,
+                  width: lineSize,
                   color: isAxis(angle) ? Colors.black : Colors.grey,
                 ),
               ],
             ),
           ),
           angle,
-          lineSize);
+          containerSize);
     }
   }
 
@@ -225,7 +227,7 @@ class _TestSensorState extends State<TestSensor> {
             children: [
               Container(
                 height: pointSize,
-                width: (lineSize / 2 - 10),
+                width: lineSize,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: colorsPoints[angle],
@@ -235,7 +237,7 @@ class _TestSensorState extends State<TestSensor> {
             ],
           ),
           angle,
-          lineSize);
+          containerSize);
     }
   }
 }
