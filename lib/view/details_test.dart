@@ -68,13 +68,18 @@ class _NewTestState extends State<NewTest> {
     height: 20,
   );
 
-  Container textFormField(
-          TextEditingController controller, TextInputType keyboardType,
+  Container textFormField(String labelText, TextEditingController controller,
+          TextInputType keyboardType,
           {bool date = false}) =>
       Container(
         width: 150,
+        height: 80,
         child: date
             ? TextFormField(
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
                 textAlign: TextAlign.center,
                 controller: controller,
                 onTap: () async {
@@ -94,20 +99,21 @@ class _NewTestState extends State<NewTest> {
                 },
               )
             : TextFormField(
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
                 keyboardType: keyboardType,
-                textAlign: TextAlign.center,
                 controller: controller,
                 onSaved: (newValue) => controller.text = newValue,
               ),
       );
 
-  Container containerTitleAndFormField(String titleOfText, Widget child) =>
-      Container(
-        height: 80,
+  Container containerTitleAndFormField(Widget child) => Container(
+        height: 100,
         width: 120,
         child: Column(
           children: [
-            title(titleOfText),
             child,
           ],
         ),
@@ -132,25 +138,20 @@ class _NewTestState extends State<NewTest> {
             value == 'Min'
                 ? sensibilidadeMinimaController.text = 'X'
                 : sensibilidadeMaximaController.text = 'X';
+            sensibility = items.elementAt(items.indexOf(value));
           } else if (value == '127' || value == '220') {
             tensao127Controller.text = '';
             tensao220Controller.text = '';
             value == '127'
                 ? tensao127Controller.text = 'X'
                 : tensao220Controller.text = 'X';
+            voltage = items.elementAt(items.indexOf(value));
           } else {
             controller.text = value;
+            product = items.elementAt(items.indexOf(value));
           }
 
-          setState(() {
-            if (value == 'Min' || value == 'Max') {
-              sensibility = items.elementAt(items.indexOf(value));
-            } else if (value == '127' || value == '220') {
-              voltage = items.elementAt(items.indexOf(value));
-            } else {
-              product = items.elementAt(items.indexOf(value));
-            }
-          });
+          setState(() {});
         },
         value: item,
       );
@@ -160,7 +161,7 @@ class _NewTestState extends State<NewTest> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 80,
+          vertical: 10,
           horizontal: 30,
         ),
         child: Form(
@@ -169,8 +170,8 @@ class _NewTestState extends State<NewTest> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Flexible(
-                flex: 4,
+              Expanded(
+                flex: 8,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -189,24 +190,29 @@ class _NewTestState extends State<NewTest> {
                   ),
                   child: ListView(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Informações'),
+                      ),
+                      space,
+                      space,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           containerTitleAndFormField(
-                            'Amostra',
                             textFormField(
+                              'Amostra',
                               amostraController,
                               TextInputType.text,
                             ),
                           ),
                           containerTitleAndFormField(
-                            'Produto',
                             dropDownButtonList(
                                 products, produtoController, product),
                           ),
                           containerTitleAndFormField(
-                            'Local',
                             textFormField(
+                              'Local',
                               localController,
                               TextInputType.text,
                             ),
@@ -218,18 +224,16 @@ class _NewTestState extends State<NewTest> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           containerTitleAndFormField(
-                            'Data',
-                            textFormField(dataController, TextInputType.number,
+                            textFormField(
+                                'Data', dataController, TextInputType.number,
                                 date: true),
                           ),
-                          containerTitleAndFormField(
-                              'Sensibilidade',
-                              dropDownButtonList(sensibilitys,
-                                  sensibilidadeMaximaController, sensibility)),
-                          containerTitleAndFormField(
-                              'Tensão',
-                              dropDownButtonList(
-                                  voltages, tensao220Controller, voltage)),
+                          containerTitleAndFormField(dropDownButtonList(
+                              sensibilitys,
+                              sensibilidadeMaximaController,
+                              sensibility)),
+                          containerTitleAndFormField(dropDownButtonList(
+                              voltages, tensao220Controller, voltage)),
                         ],
                       ),
                       space,
@@ -237,13 +241,13 @@ class _NewTestState extends State<NewTest> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           containerTitleAndFormField(
-                            'T.Inicial',
-                            textFormField(temperaturaInicialController,
+                            textFormField(
+                                'Temperatura Inicial',
+                                temperaturaInicialController,
                                 TextInputType.number),
                           ),
                           containerTitleAndFormField(
-                            'U.Inicial',
-                            textFormField(
+                            textFormField('Umidade Inicial',
                                 umidadeInicialController, TextInputType.number),
                           ),
                           SizedBox(

@@ -61,8 +61,8 @@ class _TestSensorState extends State<TestSensor> {
 
   _containerSize() {
     containerSize = widget.size.height >= widget.size.width
-        ? widget.size.width
-        : widget.size.height;
+        ? widget.size.height
+        : widget.size.width;
     pointSize = containerSize > 1300
         ? 22
         : containerSize <= 1300 && containerSize >= 800

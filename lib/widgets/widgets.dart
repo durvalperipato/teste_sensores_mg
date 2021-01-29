@@ -23,9 +23,12 @@ Container containerGestureDetectorAndWidgetRotate(
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       width: lineSize -
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
-      child: Transform.rotate(
-        angle: -angle * (math.pi / 180),
-        child: child,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Transform.rotate(
+          angle: -angle * (math.pi / 180),
+          child: child,
+        ),
       ),
     );
 
