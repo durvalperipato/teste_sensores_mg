@@ -64,9 +64,7 @@ class _NewTestState extends State<NewTest> {
         ),
       );
 
-  SizedBox space = SizedBox(
-    height: 20,
-  );
+  SizedBox space = SizedBox();
 
   Container textFormField(String labelText, TextEditingController controller,
           TextInputType keyboardType,
@@ -80,7 +78,6 @@ class _NewTestState extends State<NewTest> {
                   labelText: labelText,
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
-                textAlign: TextAlign.center,
                 controller: controller,
                 onTap: () async {
                   DateTime dateTimePicked = await showDatePicker(
@@ -105,7 +102,7 @@ class _NewTestState extends State<NewTest> {
                 ),
                 keyboardType: keyboardType,
                 controller: controller,
-                onSaved: (newValue) => controller.text = newValue,
+                onSaved: (newValue) => controller.text = newValue.toUpperCase(),
               ),
       );
 
@@ -119,10 +116,13 @@ class _NewTestState extends State<NewTest> {
         ),
       );
 
-  DropdownButton dropDownButtonList(
+  DropdownButtonFormField dropDownButtonList(String labelText,
           List<dynamic> items, TextEditingController controller, String item) =>
-      DropdownButton(
-        underline: Container(),
+      DropdownButtonFormField(
+        decoration: InputDecoration(
+          labelText: labelText,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ),
         items: items
             .map(
               (value) => DropdownMenuItem(
@@ -159,127 +159,158 @@ class _NewTestState extends State<NewTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 30,
-        ),
-        child: Form(
-          key: _keyForm,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                flex: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 20,
+            horizontal: 30,
+          ),
+          child: Form(
+            key: _keyForm,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(6, 6),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      height: double.maxFinite,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                        color: Color.fromRGBO(6, 58, 118, 1),
+                      ),
+                      child: Image.asset('images/logo_white.png'),
                     ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(4, 4),
-                        color: Colors.grey,
-                        blurRadius: 2,
-                        spreadRadius: 2,
-                      )
-                    ],
-                    color: Colors.white,
                   ),
-                  child: ListView(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Informações'),
+                  Expanded(
+                    flex: 8,
+                    child: Container(
+                      height: double.maxFinite,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                        color: Colors.white,
                       ),
-                      space,
-                      space,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          containerTitleAndFormField(
-                            textFormField(
-                              'Amostra',
-                              amostraController,
-                              TextInputType.text,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 15,
+                                bottom: 15,
+                              ),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Detalhes da Amostra',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                ),
+                              ),
                             ),
-                          ),
-                          containerTitleAndFormField(
-                            dropDownButtonList(
-                                products, produtoController, product),
-                          ),
-                          containerTitleAndFormField(
-                            textFormField(
-                              'Local',
-                              localController,
-                              TextInputType.text,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                containerTitleAndFormField(
+                                  textFormField(
+                                    'Nº da Amostra',
+                                    amostraController,
+                                    TextInputType.text,
+                                  ),
+                                ),
+                                containerTitleAndFormField(
+                                  dropDownButtonList('Produto', products,
+                                      produtoController, product),
+                                ),
+                                containerTitleAndFormField(
+                                  textFormField(
+                                    'Local',
+                                    localController,
+                                    TextInputType.text,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                containerTitleAndFormField(
+                                  textFormField('Data', dataController,
+                                      TextInputType.number,
+                                      date: true),
+                                ),
+                                containerTitleAndFormField(dropDownButtonList(
+                                    'Sensibilidade',
+                                    sensibilitys,
+                                    sensibilidadeMaximaController,
+                                    sensibility)),
+                                containerTitleAndFormField(dropDownButtonList(
+                                    'Tensão',
+                                    voltages,
+                                    tensao220Controller,
+                                    voltage)),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                containerTitleAndFormField(
+                                  textFormField(
+                                      'Temperatura Inicial',
+                                      temperaturaInicialController,
+                                      TextInputType.number),
+                                ),
+                                containerTitleAndFormField(
+                                  textFormField(
+                                      'Umidade Inicial',
+                                      umidadeInicialController,
+                                      TextInputType.number),
+                                ),
+                                SizedBox(
+                                  height: 80,
+                                  width: 120,
+                                ),
+                              ],
+                            ),
+                            RaisedButton(
+                              onPressed: () async {
+                                _keyForm.currentState.save();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TestSensor(
+                                            size:
+                                                MediaQuery.of(context).size)));
+                              },
+                              child: Text(
+                                'Iniciar Teste',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              elevation: 5,
+                              color: Colors.blueAccent,
+                            ),
+                          ],
+                        ),
                       ),
-                      space,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          containerTitleAndFormField(
-                            textFormField(
-                                'Data', dataController, TextInputType.number,
-                                date: true),
-                          ),
-                          containerTitleAndFormField(dropDownButtonList(
-                              sensibilitys,
-                              sensibilidadeMaximaController,
-                              sensibility)),
-                          containerTitleAndFormField(dropDownButtonList(
-                              voltages, tensao220Controller, voltage)),
-                        ],
-                      ),
-                      space,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          containerTitleAndFormField(
-                            textFormField(
-                                'Temperatura Inicial',
-                                temperaturaInicialController,
-                                TextInputType.number),
-                          ),
-                          containerTitleAndFormField(
-                            textFormField('Umidade Inicial',
-                                umidadeInicialController, TextInputType.number),
-                          ),
-                          SizedBox(
-                            height: 80,
-                            width: 120,
-                          )
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-              Flexible(
-                flex: 2,
-                child: RaisedButton(
-                  onPressed: () async {
-                    _keyForm.currentState.save();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                TestSensor(size: MediaQuery.of(context).size)));
-                  },
-                  child: Text(
-                    'Iniciar Teste',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  elevation: 5,
-                  color: Colors.blueAccent,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
