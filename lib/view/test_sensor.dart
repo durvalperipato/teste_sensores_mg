@@ -120,36 +120,33 @@ class _TestSensorState extends State<TestSensor> {
           ],
         ),
       ),
-      body:
-          /* Scrollbar(
-        controller: scrollController,
-        child:  */
-          /* SingleChildScrollView(
-        //controller: scrollController,
-        child:  */
-          InteractiveViewer(
-        maxScale: 20,
-        child: /* Center(
-          child: */
-            Stack(
-          children: [
-            IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () => _scaffoldKey.currentState.openDrawer()),
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                height: containerSize,
-                width: containerSize,
-                child: Stack(
-                  children: [
-                    for (Widget line in lines.values) line,
-                    for (Widget point in points.values) point,
-                  ],
+      body: SafeArea(
+        child: InteractiveViewer(
+          maxScale: 20,
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                  height: containerSize,
+                  width: containerSize,
+                  color: Colors.white,
+                  child: Stack(
+                    children: [
+                      for (Widget line in lines.values) line,
+                      for (Widget point in points.values) point,
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              IconButton(
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                  onPressed: () => _scaffoldKey.currentState.openDrawer()),
+            ],
+          ),
         ),
       ),
     );

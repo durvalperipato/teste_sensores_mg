@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:lines/data/header_json.dart';
 import 'package:lines/view/test_sensor.dart';
+import 'package:lines/widgets/widgets.dart';
 
-class MediaQuerySize extends StatelessWidget {
+/* class MediaQuerySize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,21 +14,37 @@ class MediaQuerySize extends StatelessWidget {
       ),
     );
   }
-}
+} */
 
 class DetailsSensor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlue[100],
+      appBar: AppBar(
+        elevation: 5,
+        title: Text(
+          'Menu',
+          style: TextStyle(fontSize: 30, letterSpacing: 5),
+        ),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            RaisedButton(
-              child: Text('Novo'),
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => NewTest())),
-            ),
+            button(
+                'Novo',
+                () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewTest()))),
+            button(
+                'Produtos',
+                () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewTest()))),
+            button(
+                'Teste',
+                () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewTest()))),
           ],
         ),
       ),
