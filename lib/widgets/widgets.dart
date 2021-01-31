@@ -1,62 +1,69 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:lines/data/header_json.dart';
+
 final double widthButton = 220;
 final double heightButton = 80;
 
-InkWell button(String title, void onTap()) =>
-    /* Container(
-      width: widthButton,
-      height: heightButton,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          color: Colors.grey[300],
-          width: 2,
-        ),
-        gradient: RadialGradient(
-          colors: [Colors.blue[100], Colors.blue[50]],
-        ),
+Text title(String text) => Text(
+      text,
+      style: TextStyle(
+        fontSize: 20,
       ),
-      alignment: Alignment.center,
-      child:  */
-    InkWell(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.blue[300],
-              Colors.blue[800],
-              Colors.blue[900],
-              Colors.blue[800],
-              Colors.blue[300],
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-          boxShadow: [
-            BoxShadow(color: Colors.black, offset: Offset(0, 4)),
-          ],
-          borderRadius: BorderRadius.circular(50),
-        ),
-        width: widthButton, // - 40,
-        height: heightButton, // - 40,
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-              letterSpacing: 2,
-            ),
-          ),
-        ),
-      ),
-      onTap: onTap,
     );
-//);
+
+SizedBox space = SizedBox();
+
+Container textFormField(BuildContext context, String labelText,
+        TextEditingController controller, TextInputType keyboardType,
+        {bool date = false}) =>
+    Container(
+      width: 150,
+      height: 80,
+      child: date
+          ? TextFormField(
+              decoration: InputDecoration(
+                labelText: labelText,
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
+              controller: controller,
+              onTap: () async {
+                DateTime dateTimePicked = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2021),
+                  lastDate: DateTime(2040),
+                );
+
+                controller.text =
+                    dateTimePicked.day.toString().padLeft(2, '0') +
+                        '/' +
+                        dateTimePicked.month.toString().padLeft(2, '0') +
+                        '/' +
+                        dateTimePicked.year.toString();
+              },
+            )
+          : TextFormField(
+              decoration: InputDecoration(
+                labelText: labelText,
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              ),
+              keyboardType: keyboardType,
+              controller: controller,
+              onSaved: (newValue) => controller.text = newValue.toUpperCase(),
+            ),
+    );
+
+Container containerTitleAndFormField(Widget child) => Container(
+      height: 100,
+      width: 120,
+      child: Column(
+        children: [
+          child,
+        ],
+      ),
+    );
 
 Container containerAngleText(int angle, double pointSize) => Container(
       padding: EdgeInsets.only(left: 10),

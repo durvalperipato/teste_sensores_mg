@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lines/view/details_test.dart';
+import 'package:lines/view/menu.dart';
 
 void main() async {
   //WidgetsFlutterBinding.ensureInitialized();
