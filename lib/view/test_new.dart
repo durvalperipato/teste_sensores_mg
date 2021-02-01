@@ -103,9 +103,9 @@ class _NewTestState extends State<NewTest> {
                           topLeft: Radius.circular(10),
                           bottomLeft: Radius.circular(10),
                         ),
-                        color: Color.fromRGBO(6, 58, 118, 1),
+                        color: Color.fromRGBO(2, 19, 125, 1),
                       ),
-                      child: Image.asset('images/logo_white.png'),
+                      child: Image.asset('images/logo_white2.jpg'),
                     ),
                   ),
                   Expanded(

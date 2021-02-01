@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:lines/data/header_json.dart';
-
 final double widthButton = 220;
 final double heightButton = 80;
 
