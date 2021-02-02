@@ -55,7 +55,7 @@ Container textFormField(BuildContext context, String labelText,
 
 Container containerTitleAndFormField(Widget child) => Container(
       height: 100,
-      width: 120,
+      width: 160,
       child: Column(
         children: [
           child,

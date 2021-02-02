@@ -87,19 +87,27 @@ class _TestSensorState extends State<TestSensor> {
         elevation: 2,
         child: ListView(
           children: [
-            DrawerHeader(
-              child: Center(child: Text('ToDo')),
-              decoration: BoxDecoration(color: Colors.red),
+            Container(
+              height: 200,
+              child: DrawerHeader(
+                child: Text(''),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      'images/logo_colorful.jpg',
+                    ),
+                  ),
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Gerar PDF'),
-              onTap: () => Printing.layoutPdf(
-                  format: PdfPageFormat.a4,
-                  onLayout: (format) =>
-                      generatePdf(format, colorsPoints, maxAngle.toDouble())),
-            ),
-            ListTile(
-              title: Text('Detalhes'),
+              title: Text(
+                'Especificações da Amostra',
+                style: TextStyle(fontSize: 18),
+              ),
               onTap: () {
                 showDialog(
                   context: context,
@@ -116,6 +124,16 @@ class _TestSensorState extends State<TestSensor> {
                   },
                 );
               },
+            ),
+            ListTile(
+              title: Text(
+                'Gerar PDF',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: () => Printing.layoutPdf(
+                  format: PdfPageFormat.a4,
+                  onLayout: (format) =>
+                      generatePdf(format, colorsPoints, maxAngle.toDouble())),
             ),
           ],
         ),

@@ -36,6 +36,7 @@ class _NewTestState extends State<NewTest> {
           labelText: labelText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
+
         items: items
             .map(
               (value) => DropdownMenuItem(
@@ -44,6 +45,7 @@ class _NewTestState extends State<NewTest> {
               ),
             )
             .toList(),
+
         onChanged: (value) {
           if (value == 'Min' || value == 'Max') {
             sensibilidadeMaximaController.text = '';
@@ -51,22 +53,22 @@ class _NewTestState extends State<NewTest> {
             value == 'Min'
                 ? sensibilidadeMinimaController.text = 'X'
                 : sensibilidadeMaximaController.text = 'X';
-            sensibility = items.elementAt(items.indexOf(value));
+            //  sensibility = items.elementAt(items.indexOf(value));
           } else if (value == '127' || value == '220') {
             tensao127Controller.text = '';
             tensao220Controller.text = '';
             value == '127'
                 ? tensao127Controller.text = 'X'
                 : tensao220Controller.text = 'X';
-            voltage = items.elementAt(items.indexOf(value));
+            //    voltage = items.elementAt(items.indexOf(value));
           } else {
             controller.text = value;
-            product = items.elementAt(items.indexOf(value));
+            //     product = items.elementAt(items.indexOf(value));
           }
 
           setState(() {});
         },
-        value: item,
+        //value: item,
       );
 
   @override
@@ -105,7 +107,7 @@ class _NewTestState extends State<NewTest> {
                         ),
                         color: Color.fromRGBO(2, 19, 125, 1),
                       ),
-                      child: Image.asset('images/logo_white2.jpg'),
+                      child: Image.asset('images/logo_white.jpg'),
                     ),
                   ),
                   Expanded(
@@ -146,9 +148,55 @@ class _NewTestState extends State<NewTest> {
                                     TextInputType.text,
                                   ),
                                 ),
-                                containerTitleAndFormField(
-                                  dropDownButtonList('Produto', products,
-                                      produtoController, product),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    containerTitleAndFormField(
+                                      dropDownButtonList('Produto', products,
+                                          produtoController, product),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.add_circle_outline,
+                                        ),
+                                        onPressed: () async {
+                                          String result = await showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title: Text('Novo Produto'),
+                                              content: TextField(
+                                                controller:
+                                                    novoProdutoController,
+                                              ),
+                                              actions: [
+                                                FlatButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context,
+                                                            novoProdutoController
+                                                                .text),
+                                                    child: Text('Confirmar')),
+                                                FlatButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                          context,
+                                                        ),
+                                                    child: Text('Voltar')),
+                                              ],
+                                            ),
+                                          );
+                                          if (result != null &&
+                                              result.isNotEmpty) {
+                                            products.add(result);
+                                          }
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 containerTitleAndFormField(
                                   textFormField(
@@ -168,11 +216,25 @@ class _NewTestState extends State<NewTest> {
                                       TextInputType.number,
                                       date: true),
                                 ),
-                                containerTitleAndFormField(dropDownButtonList(
-                                    'Sensibilidade',
-                                    sensibilitys,
-                                    sensibilidadeMaximaController,
-                                    sensibility)),
+                                Row(
+                                  children: [
+                                    containerTitleAndFormField(
+                                        dropDownButtonList(
+                                            'Sensibilidade',
+                                            sensibilitys,
+                                            sensibilidadeMaximaController,
+                                            sensibility)),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: IconButton(
+                                        icon: Icon(Icons.add),
+                                        color: Colors.transparent,
+                                        onPressed: () => null,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 containerTitleAndFormField(dropDownButtonList(
                                     'Tensão',
                                     voltages,
@@ -190,16 +252,29 @@ class _NewTestState extends State<NewTest> {
                                       temperaturaInicialController,
                                       TextInputType.number),
                                 ),
-                                containerTitleAndFormField(
-                                  textFormField(
-                                      context,
-                                      'Umidade Inicial',
-                                      umidadeInicialController,
-                                      TextInputType.number),
+                                Row(
+                                  children: [
+                                    containerTitleAndFormField(
+                                      textFormField(
+                                          context,
+                                          'Umidade Inicial',
+                                          umidadeInicialController,
+                                          TextInputType.number),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: IconButton(
+                                        icon: Icon(Icons.add),
+                                        color: Colors.transparent,
+                                        onPressed: () => null,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   height: 80,
-                                  width: 120,
+                                  width: 160,
                                 ),
                               ],
                             ),

@@ -61,7 +61,7 @@ class _ProductsState extends State<Products> {
                         color: Color.fromRGBO(
                             2, 19, 125, 1), //Color.fromRGBO(6, 58, 118, 1),
                       ),
-                      child: Image.asset('images/logo_white2.jpg'),
+                      child: Image.asset('images/logo_white.jpg'),
                     ),
                   ),
                   Expanded(
@@ -133,8 +133,8 @@ class _ProductsState extends State<Products> {
                             Container(
                               width: 600,
                               child: Divider(
-                                thickness: 4,
-                                color: Colors.lightBlue,
+                                thickness: 2,
+                                color: Colors.grey,
                               ),
                             ),
                             Container(
@@ -224,8 +224,8 @@ class _ProductsState extends State<Products> {
                             Container(
                               width: 600,
                               child: Divider(
-                                thickness: 4,
-                                color: Colors.lightBlue,
+                                thickness: 2,
+                                color: Colors.grey,
                               ),
                             ),
                             RaisedButton(

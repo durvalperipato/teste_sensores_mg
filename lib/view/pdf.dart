@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:lines/data/header_json.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -111,7 +112,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text('Teste'),
+                  child: pw.Text(amostraController.text),
                 ),
               ),
             ),
@@ -122,7 +123,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text('Teste'),
+                  child: pw.Text(produtoController.text),
                 ),
               ),
             ),
@@ -133,7 +134,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text('Teste'),
+                  child: pw.Text(localController.text),
                 ),
               ),
             ),
@@ -144,7 +145,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text('Teste'),
+                  child: pw.Text(dataController.text),
                 ),
               ),
             ),
@@ -237,7 +238,7 @@ headerPdf() {
                           border: pw.Border.all(color: PdfColors.black),
                         ),
                         child: pw.Center(
-                          child: pw.Text('Max'),
+                          child: pw.Text('127'),
                         ),
                       ),
                     ),
@@ -248,7 +249,7 @@ headerPdf() {
                           border: pw.Border.all(color: PdfColors.black),
                         ),
                         child: pw.Center(
-                          child: pw.Text('Min'),
+                          child: pw.Text('220'),
                         ),
                       ),
                     ),
@@ -331,7 +332,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text('Teste'),
+                        child: pw.Text(sensibilidadeMaximaController.text),
                       ),
                     ),
                   ),
@@ -342,36 +343,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text('Teste'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            pw.Expanded(
-              flex: 3,
-              child: pw.Row(
-                children: [
-                  pw.Expanded(
-                    child: pw.Container(
-                      height: 25,
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(color: PdfColors.black),
-                      ),
-                      child: pw.Center(
-                        child: pw.Text('Teste'),
-                      ),
-                    ),
-                  ),
-                  pw.Expanded(
-                    child: pw.Container(
-                      height: 25,
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(color: PdfColors.black),
-                      ),
-                      child: pw.Center(
-                        child: pw.Text('Teste'),
+                        child: pw.Text(sensibilidadeMinimaController.text),
                       ),
                     ),
                   ),
@@ -389,7 +361,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text('Teste'),
+                        child: pw.Text(tensao127Controller.text),
                       ),
                     ),
                   ),
@@ -400,7 +372,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text('Teste'),
+                        child: pw.Text(tensao220Controller.text),
                       ),
                     ),
                   ),
@@ -418,7 +390,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text('Teste'),
+                        child: pw.Text(temperaturaInicialController.text),
                       ),
                     ),
                   ),
@@ -429,7 +401,36 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text('Teste'),
+                        child: pw.Text(temperaturaFinalController.text),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            pw.Expanded(
+              flex: 3,
+              child: pw.Row(
+                children: [
+                  pw.Expanded(
+                    child: pw.Container(
+                      height: 25,
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(color: PdfColors.black),
+                      ),
+                      child: pw.Center(
+                        child: pw.Text(umidadeInicialController.text),
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Container(
+                      height: 25,
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(color: PdfColors.black),
+                      ),
+                      child: pw.Center(
+                        child: pw.Text(umidadeFinalController.text),
                       ),
                     ),
                   ),

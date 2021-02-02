@@ -15,6 +15,7 @@ TextEditingController temperaturaInicialController = TextEditingController();
 TextEditingController temperaturaFinalController = TextEditingController();
 TextEditingController umidadeInicialController = TextEditingController();
 TextEditingController umidadeFinalController = TextEditingController();
+TextEditingController novoProdutoController = TextEditingController();
 
 final Map<String, dynamic> table = {
   // blocoNumber
