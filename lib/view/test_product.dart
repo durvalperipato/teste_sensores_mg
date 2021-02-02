@@ -20,7 +20,7 @@ class _TestSensorState extends State<TestSensor> {
   Map<int, Widget> lines = {};
   Map<int, Widget> points = {};
   Map<int, List<GestureDetector>> colorsPoints = {};
-  List<int> disablePoints = [
+  List<int> disablePointsIn180 = [
     10,
     30,
     50,
@@ -38,6 +38,32 @@ class _TestSensorState extends State<TestSensor> {
     290,
     310,
     330,
+    350
+  ];
+  List<int> disablePointsIn360 = [
+    10,
+    20,
+    40,
+    50,
+    70,
+    80,
+    100,
+    110,
+    130,
+    140,
+    160,
+    170,
+    190,
+    200,
+    220,
+    230,
+    250,
+    260,
+    280,
+    290,
+    310,
+    320,
+    340,
     350
   ];
   double pointSize;
@@ -234,7 +260,16 @@ class _TestSensorState extends State<TestSensor> {
   ) {
     List<GestureDetector> point = [];
     for (int meters = 0; meters <= maxMeters; meters++) {
-      if (meters == 2 && (disablePoints.contains(angle))) {
+      if (meters == 2 &&
+          maxAngle == 180 &&
+          (disablePointsIn180.contains(angle))) {
+        point.add(
+          containerPoint(
+              null, Colors.transparent, Colors.transparent, null, pointSize),
+        );
+      } else if (meters == 2 &&
+          maxAngle == 350 &&
+          (disablePointsIn360.contains(angle))) {
         point.add(
           containerPoint(
               null, Colors.transparent, Colors.transparent, null, pointSize),

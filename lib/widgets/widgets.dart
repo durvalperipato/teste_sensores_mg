@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:lines/data/header_json.dart';
+
 final double widthButton = 220;
 final double heightButton = 80;
 
@@ -106,34 +108,44 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
               ? Center(
                   child: Text(
                     meters.toString(),
-                    style: TextStyle(fontSize: 4),
+                    style: TextStyle(
+                        fontSize: maxAngleController.text == '180' ? 8 : 4),
                   ),
                 )
               : (angle >= 0 && angle <= 90)
                   ? Center(
                       child: Text(
                         angle.toString() + '°',
-                        style: TextStyle(fontSize: 2),
+                        style: TextStyle(
+                            fontSize: maxAngleController.text == '180' ? 4 : 2),
                       ),
                     )
                   : (angle > 90 && angle <= 180)
                       ? Center(
                           child: Text(
                             (180 - angle).toString() + '°',
-                            style: TextStyle(fontSize: 2),
+                            style: TextStyle(
+                                fontSize:
+                                    maxAngleController.text == '180' ? 4 : 2),
                           ),
                         )
                       : (angle > 180 && angle <= 270)
                           ? Center(
                               child: Text(
                                 (angle - 180).toString() + '°',
-                                style: TextStyle(fontSize: 2),
+                                style: TextStyle(
+                                    fontSize: maxAngleController.text == '180'
+                                        ? 4
+                                        : 2),
                               ),
                             )
                           : Center(
                               child: Text(
                                 (360 - angle).toString() + '°',
-                                style: TextStyle(fontSize: 2),
+                                style: TextStyle(
+                                    fontSize: maxAngleController.text == '180'
+                                        ? 4
+                                        : 2),
                               ),
                             ),
     );
@@ -147,7 +159,9 @@ GestureDetector containerPoint(void Function() onTap, Color colorBorder,
         width: pointSize,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: colorBorder),
+          border: Border.all(
+              color: colorBorder,
+              width: maxAngleController.text == '180' ? 0.5 : 0.2),
           color: colorContainer,
         ),
         child: child,
