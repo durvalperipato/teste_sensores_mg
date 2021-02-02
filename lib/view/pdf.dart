@@ -41,11 +41,14 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
       pageFormat: format,
       build: (context) {
         return pw.Center(
-          child: pw.Column(
-            children: [
-              headerPdf(),
-              result(),
-            ],
+          child: pw.Container(
+            decoration: pw.BoxDecoration(border: pw.Border.all()),
+            child: pw.Column(
+              children: [
+                headerPdf(),
+                result(),
+              ],
+            ),
           ),
         );
       },
@@ -390,7 +393,8 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(temperaturaInicialController.text),
+                        child:
+                            pw.Text(temperaturaInicialController.text + ' °C'),
                       ),
                     ),
                   ),
@@ -401,7 +405,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(temperaturaFinalController.text),
+                        child: pw.Text(temperaturaFinalController.text + ' °C'),
                       ),
                     ),
                   ),
@@ -419,7 +423,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(umidadeInicialController.text),
+                        child: pw.Text(umidadeInicialController.text + ' %RH'),
                       ),
                     ),
                   ),
@@ -430,7 +434,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(umidadeFinalController.text),
+                        child: pw.Text(umidadeFinalController.text + ' %RH'),
                       ),
                     ),
                   ),
