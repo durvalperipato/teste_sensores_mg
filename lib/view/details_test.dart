@@ -43,9 +43,10 @@ class _NewTestState extends State<NewTest> {
   List<String> products = [];
   List<String> sensibilitys = [];
   List<String> voltages = [];
-  String product;
+  List<String> typeOfTest = [];
+  /* String product;
   String sensibility;
-  String voltage;
+  String voltage; */
 
   @override
   void initState() {
@@ -55,6 +56,8 @@ class _NewTestState extends State<NewTest> {
     sensibilitys.add('Min');
     voltages.add('127');
     voltages.add('220');
+    typeOfTest.add('180º');
+    typeOfTest.add('360º');
   }
 
   Text title(String text) => Text(
@@ -120,7 +123,7 @@ class _NewTestState extends State<NewTest> {
       );
 
   DropdownButton dropDownButtonList(
-          List<dynamic> items, TextEditingController controller, String item) =>
+          List<dynamic> items, TextEditingController controller) =>
       DropdownButton(
         underline: Container(),
         items: items
@@ -138,22 +141,22 @@ class _NewTestState extends State<NewTest> {
             value == 'Min'
                 ? sensibilidadeMinimaController.text = 'X'
                 : sensibilidadeMaximaController.text = 'X';
-            sensibility = items.elementAt(items.indexOf(value));
+            // sensibility = items.elementAt(items.indexOf(value));
           } else if (value == '127' || value == '220') {
             tensao127Controller.text = '';
             tensao220Controller.text = '';
             value == '127'
                 ? tensao127Controller.text = 'X'
                 : tensao220Controller.text = 'X';
-            voltage = items.elementAt(items.indexOf(value));
+            // voltage = items.elementAt(items.indexOf(value));
           } else {
             controller.text = value;
-            product = items.elementAt(items.indexOf(value));
+            //    product = items.elementAt(items.indexOf(value));
           }
 
           setState(() {});
         },
-        value: item,
+        //  value: item,
       );
 
   @override
@@ -207,8 +210,7 @@ class _NewTestState extends State<NewTest> {
                             ),
                           ),
                           containerTitleAndFormField(
-                            dropDownButtonList(
-                                products, produtoController, product),
+                            dropDownButtonList(products, produtoController),
                           ),
                           containerTitleAndFormField(
                             textFormField(
@@ -229,11 +231,9 @@ class _NewTestState extends State<NewTest> {
                                 date: true),
                           ),
                           containerTitleAndFormField(dropDownButtonList(
-                              sensibilitys,
-                              sensibilidadeMaximaController,
-                              sensibility)),
+                              sensibilitys, sensibilidadeMaximaController)),
                           containerTitleAndFormField(dropDownButtonList(
-                              voltages, tensao220Controller, voltage)),
+                              voltages, tensao220Controller)),
                         ],
                       ),
                       space,
@@ -250,10 +250,6 @@ class _NewTestState extends State<NewTest> {
                             textFormField('Umidade Inicial',
                                 umidadeInicialController, TextInputType.number),
                           ),
-                          SizedBox(
-                            height: 80,
-                            width: 120,
-                          )
                         ],
                       ),
                     ],

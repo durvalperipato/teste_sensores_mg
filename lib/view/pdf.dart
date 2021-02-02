@@ -209,7 +209,7 @@ headerPdf() {
                           border: pw.Border.all(color: PdfColors.black),
                         ),
                         child: pw.Center(
-                          child: pw.Text('Max'),
+                          child: pw.Text('Min'),
                         ),
                       ),
                     ),
@@ -220,7 +220,7 @@ headerPdf() {
                           border: pw.Border.all(color: PdfColors.black),
                         ),
                         child: pw.Center(
-                          child: pw.Text('Min'),
+                          child: pw.Text('Max'),
                         ),
                       ),
                     ),
@@ -332,7 +332,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(sensibilidadeMaximaController.text),
+                        child: pw.Text(sensibilidadeMinimaController.text),
                       ),
                     ),
                   ),
@@ -343,7 +343,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(sensibilidadeMinimaController.text),
+                        child: pw.Text(sensibilidadeMaximaController.text),
                       ),
                     ),
                   ),

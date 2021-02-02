@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lines/data/header_json.dart';
 import 'package:lines/view/header.dart';
 import 'package:lines/widgets/widgets.dart';
 import 'package:pdf/pdf.dart';
@@ -51,8 +52,9 @@ class _TestSensorState extends State<TestSensor> {
   @override
   void initState() {
     super.initState();
+    maxAngle = int.parse(maxAngleController.text);
     _containerSize();
-    maxAngle = 180;
+
     angleInterval = 10;
     maxMeters = 12;
     _lines();
@@ -68,7 +70,8 @@ class _TestSensorState extends State<TestSensor> {
         : containerSize <= 1300 && containerSize >= 800
             ? 15
             : 8;
-    lineSize = containerSize / 2 - 10;
+    lineSize =
+        maxAngle == 180 ? containerSize / 2 - 10 : containerSize / 4 - 10;
   }
 
   @override
@@ -145,17 +148,25 @@ class _TestSensorState extends State<TestSensor> {
             children: [
               Center(
                 child: Container(
-                  padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                  height: containerSize,
-                  width: containerSize,
-                  color: Colors.white,
-                  child: Stack(
-                    children: [
-                      for (Widget line in lines.values) line,
-                      for (Widget point in points.values) point,
-                    ],
-                  ),
-                ),
+                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                    height: containerSize,
+                    width: containerSize,
+                    color: Colors.white,
+                    child: maxAngle == 180
+                        ? Stack(
+                            children: [
+                              for (Widget line in lines.values) line,
+                              for (Widget point in points.values) point,
+                            ],
+                          )
+                        : Center(
+                            child: Stack(
+                              children: [
+                                for (Widget line in lines.values) line,
+                                for (Widget point in points.values) point,
+                              ],
+                            ),
+                          )),
               ),
               IconButton(
                   icon: Icon(

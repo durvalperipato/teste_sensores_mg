@@ -32,7 +32,6 @@ class _DetailsSensorState extends State<DetailsSensor>
           children: [
             button('Novo', 0, context, NewTest()),
             button('Produtos', 1, context, Products()),
-            button('Teste', 2, context, NewTest()),
           ],
         ),
       ),

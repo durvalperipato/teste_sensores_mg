@@ -15,6 +15,7 @@ class _NewTestState extends State<NewTest> {
   List<String> products = [];
   List<String> sensibilitys = [];
   List<String> voltages = [];
+  List<String> typeOfTest = [];
   String product;
   String sensibility;
   String voltage;
@@ -27,6 +28,8 @@ class _NewTestState extends State<NewTest> {
     sensibilitys.add('Min');
     voltages.add('127');
     voltages.add('220');
+    typeOfTest.add('180º');
+    typeOfTest.add('360º');
   }
 
   DropdownButtonFormField dropDownButtonList(String labelText,
@@ -61,6 +64,11 @@ class _NewTestState extends State<NewTest> {
                 ? tensao127Controller.text = 'X'
                 : tensao220Controller.text = 'X';
             //    voltage = items.elementAt(items.indexOf(value));
+          } else if (value == '180º' || value == '360º') {
+            maxAngleController.text = '';
+            value == '180º'
+                ? maxAngleController.text = '180'
+                : maxAngleController.text = '350';
           } else {
             controller.text = value;
             //     product = items.elementAt(items.indexOf(value));
@@ -272,10 +280,11 @@ class _NewTestState extends State<NewTest> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 80,
-                                  width: 160,
-                                ),
+                                containerTitleAndFormField(dropDownButtonList(
+                                    'Ângulo',
+                                    typeOfTest,
+                                    maxAngleController,
+                                    voltage)),
                               ],
                             ),
                             RaisedButton(
