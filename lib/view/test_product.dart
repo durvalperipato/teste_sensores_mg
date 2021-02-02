@@ -62,16 +62,21 @@ class _TestSensorState extends State<TestSensor> {
   }
 
   _containerSize() {
-    containerSize = widget.size.height >= widget.size.width
-        ? widget.size.height
-        : widget.size.width;
+    if (maxAngle == 350) {
+      containerSize = widget.size.height >= widget.size.width
+          ? widget.size.width
+          : widget.size.height;
+    } else {
+      containerSize = widget.size.height >= widget.size.width
+          ? widget.size.height
+          : widget.size.width;
+    }
     pointSize = containerSize > 1300
         ? 22
         : containerSize <= 1300 && containerSize >= 800
             ? 15
             : 8;
-    lineSize =
-        maxAngle == 180 ? containerSize / 2 - 10 : containerSize / 4 - 10;
+    lineSize = containerSize / 2 - 10;
   }
 
   @override
@@ -85,6 +90,7 @@ class _TestSensorState extends State<TestSensor> {
       });
     }
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _scaffoldKey,
       drawer: Drawer(
         elevation: 2,
@@ -152,21 +158,12 @@ class _TestSensorState extends State<TestSensor> {
                     height: containerSize,
                     width: containerSize,
                     color: Colors.white,
-                    child: maxAngle == 180
-                        ? Stack(
-                            children: [
-                              for (Widget line in lines.values) line,
-                              for (Widget point in points.values) point,
-                            ],
-                          )
-                        : Center(
-                            child: Stack(
-                              children: [
-                                for (Widget line in lines.values) line,
-                                for (Widget point in points.values) point,
-                              ],
-                            ),
-                          )),
+                    child: Stack(
+                      children: [
+                        for (Widget line in lines.values) line,
+                        for (Widget point in points.values) point,
+                      ],
+                    )),
               ),
               IconButton(
                   icon: Icon(
@@ -184,19 +181,35 @@ class _TestSensorState extends State<TestSensor> {
   _lines() {
     for (int angle = 0; angle <= maxAngle; angle += angleInterval) {
       lines[angle] = containerGestureDetectorAndWidgetRotate(
-          Container(
-            height: pointSize,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  height: isAxis(angle) ? 2 : 1,
-                  width: lineSize,
-                  color: isAxis(angle) ? Colors.black : Colors.grey,
+          maxAngle == 350
+              ? Center(
+                  child: Container(
+                    height: pointSize,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          height: isAxis(angle) ? 2 : 1,
+                          width: lineSize,
+                          color: isAxis(angle) ? Colors.black : Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : Container(
+                  height: pointSize,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: isAxis(angle) ? 2 : 1,
+                        width: lineSize,
+                        color: isAxis(angle) ? Colors.black : Colors.grey,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
           angle,
           containerSize);
     }
@@ -248,20 +261,37 @@ class _TestSensorState extends State<TestSensor> {
       }
 
       points[angle] = containerGestureDetectorAndWidgetRotate(
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: pointSize,
-                width: lineSize,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: colorsPoints[angle],
+          maxAngle == 350
+              ? Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: pointSize,
+                        width: lineSize,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: colorsPoints[angle],
+                        ),
+                      ),
+                      containerAngleText(angle, pointSize),
+                    ],
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: pointSize,
+                      width: lineSize,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: colorsPoints[angle],
+                      ),
+                    ),
+                    containerAngleText(angle, pointSize),
+                  ],
                 ),
-              ),
-              containerAngleText(angle, pointSize),
-            ],
-          ),
           angle,
           containerSize);
     }
