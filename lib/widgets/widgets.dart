@@ -102,12 +102,40 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
               : 2,
       child: noPoint(meters)
           ? null
-          : Center(
-              child: Text(
-                meters.toString(),
-                style: TextStyle(fontSize: 7),
-              ),
-            ),
+          : (angle == 0 || angle == 90 || angle == 180 || angle == 270)
+              ? Center(
+                  child: Text(
+                    meters.toString(),
+                    style: TextStyle(fontSize: 4),
+                  ),
+                )
+              : (angle >= 0 && angle <= 90)
+                  ? Center(
+                      child: Text(
+                        angle.toString() + '°',
+                        style: TextStyle(fontSize: 2),
+                      ),
+                    )
+                  : (angle > 90 && angle <= 180)
+                      ? Center(
+                          child: Text(
+                            (180 - angle).toString() + '°',
+                            style: TextStyle(fontSize: 2),
+                          ),
+                        )
+                      : (angle > 180 && angle <= 270)
+                          ? Center(
+                              child: Text(
+                                (angle - 180).toString() + '°',
+                                style: TextStyle(fontSize: 2),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                (360 - angle).toString() + '°',
+                                style: TextStyle(fontSize: 2),
+                              ),
+                            ),
     );
 
 GestureDetector containerPoint(void Function() onTap, Color colorBorder,
