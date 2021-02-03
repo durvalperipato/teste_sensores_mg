@@ -579,7 +579,10 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
           width: pointSize,
           decoration: pw.BoxDecoration(
             shape: pw.BoxShape.circle,
-            border: pw.Border.all(color: PdfColors.black),
+            border: pw.Border.all(
+                color: colors[angle].elementAt(meters).color == Colors.white
+                    ? PdfColors.grey
+                    : PdfColors.black),
             color: colors[angle].elementAt(meters).color == Colors.white
                 ? PdfColors.white
                 : PdfColors.red,
@@ -592,7 +595,12 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
               /* child: */ pw.Center(
                   child: pw.Text(
                     meters.toString(),
-                    style: pw.TextStyle(fontSize: 5),
+                    style: pw.TextStyle(
+                        fontSize: 5,
+                        color: colors[angle].elementAt(meters).color ==
+                                Colors.white
+                            ? PdfColors.grey
+                            : PdfColors.black),
                   ),
                 )
               //)
@@ -605,7 +613,12 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
                   pw.Center(
                       child: pw.Text(
                         meters.toString(),
-                        style: pw.TextStyle(fontSize: 5),
+                        style: pw.TextStyle(
+                            fontSize: 5,
+                            color: colors[angle].elementAt(meters).color ==
+                                    Colors.white
+                                ? PdfColors.grey
+                                : PdfColors.black),
                       ),
                       //),
                     )
@@ -616,7 +629,12 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
                       pw.Center(
                           child: pw.Text(
                             meters.toString(),
-                            style: pw.TextStyle(fontSize: 5),
+                            style: pw.TextStyle(
+                                fontSize: 5,
+                                color: colors[angle].elementAt(meters).color ==
+                                        Colors.white
+                                    ? PdfColors.grey
+                                    : PdfColors.black),
                           ),
                           //  ),
                         )

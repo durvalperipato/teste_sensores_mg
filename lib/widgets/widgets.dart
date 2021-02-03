@@ -132,7 +132,7 @@ Container containerTitleAndFormField(Widget child) => Container(
 
 Container containerAngleText(int angle, double pointSize) => Container(
       padding: EdgeInsets.only(left: 10),
-      height: pointSize + 10,
+      height: pointSize,
       width: 37,
       color: Colors.white,
       child: Center(
