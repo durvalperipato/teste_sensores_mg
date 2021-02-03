@@ -6,6 +6,53 @@ import 'package:lines/data/header_json.dart';
 final double widthButton = 220;
 final double heightButton = 80;
 
+List<int> disablePointsIn180 = [
+  10,
+  30,
+  50,
+  70,
+  90,
+  110,
+  130,
+  150,
+  170,
+  190,
+  210,
+  230,
+  250,
+  270,
+  290,
+  310,
+  330,
+  350
+];
+List<int> disablePointsIn360 = [
+  10,
+  20,
+  40,
+  50,
+  70,
+  80,
+  100,
+  110,
+  130,
+  140,
+  160,
+  170,
+  190,
+  200,
+  220,
+  230,
+  250,
+  260,
+  280,
+  290,
+  310,
+  320,
+  340,
+  350
+];
+
 Text title(String text) => Text(
       text,
       style: TextStyle(
@@ -57,7 +104,7 @@ Container textFormField(BuildContext context, String labelText,
 
 Container containerTitleAndFormField(Widget child) => Container(
       height: 100,
-      width: 160,
+      width: 180,
       child: Column(
         children: [
           child,
@@ -115,7 +162,7 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
               : (angle >= 0 && angle <= 90)
                   ? Center(
                       child: Text(
-                        angle.toString() + '°',
+                        (90 - angle).toString() + '°',
                         style: TextStyle(
                             fontSize: maxAngleController.text == '180' ? 4 : 2),
                       ),
@@ -123,7 +170,7 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                   : (angle > 90 && angle <= 180)
                       ? Center(
                           child: Text(
-                            (180 - angle).toString() + '°',
+                            (angle - 90).toString() + '°',
                             style: TextStyle(
                                 fontSize:
                                     maxAngleController.text == '180' ? 4 : 2),
@@ -132,7 +179,7 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                       : (angle > 180 && angle <= 270)
                           ? Center(
                               child: Text(
-                                (angle - 180).toString() + '°',
+                                (270 - angle).toString() + '°',
                                 style: TextStyle(
                                     fontSize: maxAngleController.text == '180'
                                         ? 4
@@ -141,7 +188,7 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                             )
                           : Center(
                               child: Text(
-                                (360 - angle).toString() + '°',
+                                (angle - 270).toString() + '°',
                                 style: TextStyle(
                                     fontSize: maxAngleController.text == '180'
                                         ? 4

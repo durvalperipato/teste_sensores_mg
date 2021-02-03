@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lines/data/header_json.dart';
+
 import 'package:lines/view/header.dart';
 import 'package:lines/view/test_new.dart';
 import 'package:lines/widgets/widgets.dart';
@@ -10,8 +11,11 @@ import 'pdf.dart';
 
 class TestSensor extends StatefulWidget {
   final Size size;
+  final bool recoveryLastTest;
 
-  const TestSensor({Key key, @required this.size}) : super(key: key);
+  const TestSensor(
+      {Key key, @required this.size, this.recoveryLastTest = false})
+      : super(key: key);
 
   @override
   _TestSensorState createState() => _TestSensorState();
@@ -21,52 +25,6 @@ class _TestSensorState extends State<TestSensor> {
   Map<int, Widget> lines = {};
   Map<int, Widget> points = {};
   Map<int, List<GestureDetector>> colorsPoints = {};
-  List<int> disablePointsIn180 = [
-    10,
-    30,
-    50,
-    70,
-    90,
-    110,
-    130,
-    150,
-    170,
-    190,
-    210,
-    230,
-    250,
-    270,
-    290,
-    310,
-    330,
-    350
-  ];
-  List<int> disablePointsIn360 = [
-    10,
-    20,
-    40,
-    50,
-    70,
-    80,
-    100,
-    110,
-    130,
-    140,
-    160,
-    170,
-    190,
-    200,
-    220,
-    230,
-    250,
-    260,
-    280,
-    290,
-    310,
-    320,
-    340,
-    350
-  ];
   double pointSize;
   double containerSize;
   double lineSize;
@@ -85,7 +43,7 @@ class _TestSensorState extends State<TestSensor> {
     angleInterval = 10;
     maxMeters = 12;
     _lines();
-    _points();
+    _points(picked: widget.recoveryLastTest);
   }
 
   _containerSize() {
@@ -116,131 +74,134 @@ class _TestSensorState extends State<TestSensor> {
         _points(picked: true);
       });
     }
-    return Scaffold(
-      backgroundColor: Colors.white,
-      key: _scaffoldKey,
-      drawer: Drawer(
-        elevation: 2,
-        child: ListView(
-          children: [
-            Container(
-              height: 200,
-              child: DrawerHeader(
-                child: Text(''),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      'images/logo_colorful.jpg',
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        key: _scaffoldKey,
+        drawer: Drawer(
+          elevation: 2,
+          child: ListView(
+            children: [
+              Container(
+                height: 200,
+                child: DrawerHeader(
+                  child: Text(''),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        'images/logo_colorful.jpg',
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            ListTile(
-              title: Text(
-                'Especificações da Amostra',
-                style: TextStyle(fontSize: 18),
+              ListTile(
+                title: Text(
+                  'Especificações da Amostra',
+                  style: TextStyle(fontSize: 18),
+                ),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: header(context),
+                        actions: [
+                          FlatButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('Voltar'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: header(context),
-                      actions: [
-                        FlatButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text('Voltar'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Gerar PDF',
-                style: TextStyle(fontSize: 18),
-              ),
-              onTap: () => Printing.layoutPdf(
-                  format: PdfPageFormat.a4,
-                  onLayout: (format) =>
-                      generatePdf(format, colorsPoints, maxAngle.toDouble())),
-            ),
-          ],
-        ),
-      ),
-      body: SafeArea(
-        child: InteractiveViewer(
-          maxScale: 20,
-          child: Stack(
-            children: [
-              Center(
-                child: Container(
-                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    height: containerSize,
-                    width: containerSize,
-                    color: Colors.white,
-                    child: Stack(
-                      children: [
-                        for (Widget line in lines.values) line,
-                        for (Widget point in points.values) point,
-                      ],
-                    )),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.black,
-                    ),
-                    onPressed: () => _scaffoldKey.currentState.openDrawer(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 30,
-                    ),
-                    child: RaisedButton(
-                      color: Colors.blue[200],
-                      child: Text('Reiniciar'),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text('Reiniciar Teste?'),
-                                  actions: [
-                                    FlatButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: Text('Voltar'),
-                                    ),
-                                    FlatButton(
-                                      onPressed: () {
-                                        _lines();
-                                        _points();
-                                        Navigator.pop(context);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NewTest()));
-                                      },
-                                      child: Text('Confirmar'),
-                                    ),
-                                  ],
-                                ));
-                      },
-                    ),
-                  ),
-                ],
+              ListTile(
+                title: Text(
+                  'Gerar PDF',
+                  style: TextStyle(fontSize: 18),
+                ),
+                onTap: () => Printing.layoutPdf(
+                    format: PdfPageFormat.a4,
+                    onLayout: (format) =>
+                        generatePdf(format, colorsPoints, maxAngle.toDouble())),
               ),
             ],
+          ),
+        ),
+        body: SafeArea(
+          child: InteractiveViewer(
+            maxScale: 20,
+            child: Stack(
+              children: [
+                Center(
+                  child: Container(
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                      height: containerSize,
+                      width: containerSize,
+                      color: Colors.white,
+                      child: Stack(
+                        children: [
+                          for (Widget line in lines.values) line,
+                          for (Widget point in points.values) point,
+                        ],
+                      )),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                      ),
+                      onPressed: () => _scaffoldKey.currentState.openDrawer(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 30,
+                      ),
+                      child: RaisedButton(
+                        color: Colors.blue[200],
+                        child: Text('Reiniciar'),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text('Reiniciar Teste?'),
+                                    actions: [
+                                      FlatButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('Voltar'),
+                                      ),
+                                      FlatButton(
+                                        onPressed: () {
+                                          /*  _lines();
+                                            _points(); */
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      NewTest()));
+                                        },
+                                        child: Text('Confirmar'),
+                                      ),
+                                    ],
+                                  ));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
