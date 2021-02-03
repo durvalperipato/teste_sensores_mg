@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lines/view/menu.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

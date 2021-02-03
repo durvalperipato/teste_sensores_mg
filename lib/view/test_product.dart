@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lines/data/header_json.dart';
 import 'package:lines/view/header.dart';
+import 'package:lines/view/test_new.dart';
 import 'package:lines/widgets/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
@@ -191,12 +192,54 @@ class _TestSensorState extends State<TestSensor> {
                       ],
                     )),
               ),
-              IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    color: Colors.black,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => _scaffoldKey.currentState.openDrawer(),
                   ),
-                  onPressed: () => _scaffoldKey.currentState.openDrawer()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 30,
+                    ),
+                    child: RaisedButton(
+                      color: Colors.blue[200],
+                      child: Text('Reiniciar'),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text('Reiniciar Teste?'),
+                                  actions: [
+                                    FlatButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('Voltar'),
+                                    ),
+                                    FlatButton(
+                                      onPressed: () {
+                                        _lines();
+                                        _points();
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NewTest()));
+                                      },
+                                      child: Text('Confirmar'),
+                                    ),
+                                  ],
+                                ));
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

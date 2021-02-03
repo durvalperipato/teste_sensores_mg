@@ -1,23 +1,20 @@
-class Products {
-  int id;
+class ProductsModel {
   String name;
 
-  Products({this.id, this.name});
+  ProductsModel({this.name});
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
     };
   }
 
-  Products.fromMap(Map<String, dynamic> map) {
-    this.id = map['id'];
+  ProductsModel.fromMap(Map<String, dynamic> map) {
     this.name = map['name'];
   }
 
   @override
   String toString() {
-    return ('ID: ' + id.toString() + ', Nome: ' + name);
+    return (name);
   }
 }

@@ -4,27 +4,18 @@ import 'package:path/path.dart';
 
 Future<Database> _open() async {
   final Future<Database> database = openDatabase(
-    // Set the path to the database. Note: Using the `join` function from the
-    // `path` package is best practice to ensure the path is correctly
-    // constructed for each platform.
     join(await getDatabasesPath(), 'database.db'),
-    // When the database is first created, create a table to store products.
     onCreate: (db, version) {
-      // Run the CREATE TABLE statement on the database.
-
       db.execute(
         "CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT)",
       );
     },
-
-    // Set the version. This executes the onCreate function and provides a
-    // path to perform database upgrades and downgrades.
     version: 1,
   );
   return database;
 }
 
-Future<void> insertProduct(Products products) async {
+Future<void> insertProduct(ProductsModel products) async {
   // Get a reference to the database.
   final Database db = await _open();
   // Insert the Dog into the correct table. You might also specify the
@@ -38,7 +29,7 @@ Future<void> insertProduct(Products products) async {
   );
 }
 
-Future<List<Products>> getProducts() async {
+Future<List<ProductsModel>> getProducts() async {
   // Get a reference to the database.
   final Database db = await _open();
 
@@ -47,9 +38,15 @@ Future<List<Products>> getProducts() async {
 
   // Convert the List<Map<String, dynamic> into a List<Products>.
   return List.generate(maps.length, (i) {
-    return Products(
-      id: maps[i]['id'],
+    return ProductsModel(
       name: maps[i]['name'],
     );
   });
+}
+
+Future<void> deleteProduct(ProductsModel product) async {
+  final Database db = await _open();
+  print('Deletando');
+  await db.delete('products', where: 'name = ?', whereArgs: [product.name]);
+  print('Deletei');
 }
