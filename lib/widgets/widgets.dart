@@ -28,6 +28,24 @@ List<int> disablePointsIn180 = [
 ];
 List<int> disablePointsIn360 = [
   10,
+  30,
+  50,
+  70,
+  90,
+  110,
+  130,
+  150,
+  170,
+  190,
+  210,
+  230,
+  250,
+  270,
+  290,
+  310,
+  330,
+  350
+  /* 10,
   20,
   40,
   50,
@@ -50,7 +68,7 @@ List<int> disablePointsIn360 = [
   310,
   320,
   340,
-  350
+  350 */
 ];
 
 Text title(String text) => Text(
@@ -114,16 +132,69 @@ Container containerTitleAndFormField(Widget child) => Container(
 
 Container containerAngleText(int angle, double pointSize) => Container(
       padding: EdgeInsets.only(left: 10),
-      height: pointSize,
+      height: pointSize + 10,
       width: 37,
       color: Colors.white,
       child: Center(
-        child: Text(
-          angle.toString() + 'º',
-          style: TextStyle(
-            fontSize: 10,
-          ),
-        ),
+        child: angle >= 0 && angle < 90
+            ? RotatedBox(
+                quarterTurns: 4,
+                child: Text(
+                  angle.toString() + 'º',
+                  style: TextStyle(
+                    fontSize: 3,
+                  ),
+                ),
+              )
+            : angle == 90
+                ? RotatedBox(
+                    quarterTurns: 1,
+                    child: Text(
+                      angle.toString() + 'º',
+                      style: TextStyle(
+                        fontSize: 3,
+                      ),
+                    ),
+                  )
+                : angle > 90 && angle <= 180
+                    ? RotatedBox(
+                        quarterTurns: 2,
+                        child: Text(
+                          angle.toString() + 'º',
+                          style: TextStyle(
+                            fontSize: 3,
+                          ),
+                        ),
+                      )
+                    : angle > 180 && angle < 270
+                        ? RotatedBox(
+                            quarterTurns: 2,
+                            child: Text(
+                              angle.toString() + 'º',
+                              style: TextStyle(
+                                fontSize: 3,
+                              ),
+                            ),
+                          )
+                        : angle == 270
+                            ? RotatedBox(
+                                quarterTurns: 1,
+                                child: Text(
+                                  angle.toString() + 'º',
+                                  style: TextStyle(
+                                    fontSize: 3,
+                                  ),
+                                ),
+                              )
+                            : RotatedBox(
+                                quarterTurns: 4,
+                                child: Text(
+                                  angle.toString() + 'º',
+                                  style: TextStyle(
+                                    fontSize: 3,
+                                  ),
+                                ),
+                              ),
       ),
     );
 

@@ -11,11 +11,8 @@ import 'pdf.dart';
 
 class TestSensor extends StatefulWidget {
   final Size size;
-  final bool recoveryLastTest;
 
-  const TestSensor(
-      {Key key, @required this.size, this.recoveryLastTest = false})
-      : super(key: key);
+  const TestSensor({Key key, @required this.size}) : super(key: key);
 
   @override
   _TestSensorState createState() => _TestSensorState();
@@ -41,9 +38,9 @@ class _TestSensorState extends State<TestSensor> {
     _containerSize();
 
     angleInterval = 10;
-    maxMeters = 12;
+    maxMeters = maxAngle == 180 ? 12 : 10;
     _lines();
-    _points(picked: widget.recoveryLastTest);
+    _points();
   }
 
   _containerSize() {
@@ -60,7 +57,7 @@ class _TestSensorState extends State<TestSensor> {
         ? 22
         : containerSize <= 1300 && containerSize >= 800
             ? 15
-            : 8;
+            : 7;
     lineSize = containerSize / 2 - 10;
   }
 
@@ -123,11 +120,16 @@ class _TestSensorState extends State<TestSensor> {
               ),
               ListTile(
                 title: Text(
-                  'Gerar PDF',
+                  'Exportar PDF',
                   style: TextStyle(fontSize: 18),
                 ),
                 onTap: () => Printing.layoutPdf(
                     format: PdfPageFormat.a4,
+                    name: amostraController.text +
+                        '-' +
+                        produtoController.text +
+                        '-' +
+                        dataController.text.replaceAll('/', '-'),
                     onLayout: (format) =>
                         generatePdf(format, colorsPoints, maxAngle.toDouble())),
               ),

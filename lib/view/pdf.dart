@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:lines/data/header_json.dart';
+import 'package:lines/widgets/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -21,6 +22,10 @@ Map<int, List<pw.Widget>> colorsPointsPdf = {};
 Future<Uint8List> generatePdf(PdfPageFormat format,
     Map<int, List<GestureDetector>> colorsPoints, double angle) async {
   maxAngle = angle;
+  lines.clear();
+  points.clear();
+  colorsPointsPdf.clear();
+
   Map<int, List<BoxDecoration>> colors = {};
   colorsPoints.forEach((key, value) {
     List<BoxDecoration> color = [];
@@ -492,9 +497,6 @@ _lines() {
 _points(Map<int, List<BoxDecoration>> colors) {
   for (int angle = 0; angle <= maxAngle; angle += 10) {
     _buildPoint(angle, colors);
-    /* if (!picked) {
-        _buildPoint(angle);
-      } */
 
     points[angle] = pw.Container(
       height: lineSize -
@@ -537,9 +539,13 @@ _points(Map<int, List<BoxDecoration>> colors) {
 
 _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
   List<pw.Widget> point = [];
-  for (int meters = 0; meters <= 12; meters++) {
+  int maxMeters = maxAngle == 180 ? 12 : 10;
+  for (int meters = 0; meters <= maxMeters; meters++) {
     if (meters == 2 &&
-            (angle == 10 ||
+            (maxAngle == 180
+                ? disablePointsIn180.contains(angle)
+                : disablePointsIn360.contains(
+                    angle)) /* (angle == 10 ||
                 angle == 30 ||
                 angle == 50 ||
                 angle == 70 ||
@@ -556,7 +562,8 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
                 angle == 290 ||
                 angle == 310 ||
                 angle == 330 ||
-                angle == 350) ||
+                angle == 350) */
+        ||
         meters == 0 ||
         meters == 1) {
       point.add(
