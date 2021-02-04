@@ -141,26 +141,47 @@ class _NewTestState extends State<NewTest> {
                               color: Colors.white,
                             ),
                             child: SingleChildScrollView(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 25),
                               child: Column(
                                 children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      top: 15,
-                                      bottom: 15,
-                                    ),
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Detalhes da Amostra',
-                                      style: TextStyle(
-                                        fontSize: 30,
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.arrow_back),
+                                        onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailsSensor(),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      Expanded(
+                                        flex: 9,
+                                        child: Center(
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                              top: 15,
+                                              bottom: 15,
+                                            ),
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Detalhes da Amostra',
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      containerTitleAndFormField(
+                                      containerTitleAndFormFieldMedSize(
                                         textFormField(
                                           context,
                                           'Nº da Amostra',
@@ -172,7 +193,7 @@ class _NewTestState extends State<NewTest> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          containerTitleAndFormField(
+                                          containerTitleAndFormFieldMaxSize(
                                             dropDownButtonList(
                                                 'Produto',
                                                 products,
@@ -223,7 +244,6 @@ class _NewTestState extends State<NewTest> {
                                                           novoProdutoController
                                                               .text
                                                               .toUpperCase()));
-                                                  /* products.add(ProductsModel(name: novoProdutoController.text)); */
                                                 }
                                                 novoProdutoController.text = '';
                                                 setState(() {});
@@ -232,7 +252,13 @@ class _NewTestState extends State<NewTest> {
                                           ),
                                         ],
                                       ),
-                                      containerTitleAndFormField(
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      containerTitleAndFormFieldMedSize(
                                         textFormField(
                                           context,
                                           'Local',
@@ -240,13 +266,7 @@ class _NewTestState extends State<NewTest> {
                                           TextInputType.text,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      containerTitleAndFormField(
+                                      containerTitleAndFormFieldMedSize(
                                         textFormField(
                                             context,
                                             'Data',
@@ -254,67 +274,75 @@ class _NewTestState extends State<NewTest> {
                                             TextInputType.number,
                                             date: true),
                                       ),
-                                      Row(
-                                        children: [
-                                          containerTitleAndFormField(
-                                              dropDownButtonList(
-                                                  'Sensibilidade',
-                                                  sensibilitys,
-                                                  sensibilidadeMaximaController,
-                                                  sensibility)),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 20),
-                                            child: IconButton(
-                                              icon: Icon(Icons.add),
-                                              color: Colors.transparent,
-                                              onPressed: () => null,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      containerTitleAndFormField(
-                                          dropDownButtonList('Tensão', voltages,
-                                              tensao220Controller, voltage)),
+                                      containerTitleAndFormFieldMinSize(
+                                          dropDownButtonList(
+                                              'Sensibilidade',
+                                              sensibilitys,
+                                              sensibilidadeMaximaController,
+                                              sensibility)),
                                     ],
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      containerTitleAndFormField(
+                                      containerTitleAndFormFieldMedSize(
                                         textFormField(
                                             context,
                                             'Temperatura Inicial',
                                             temperaturaInicialController,
                                             TextInputType.number),
                                       ),
+                                      /*  Row(
+                                        children: [ */
+                                      containerTitleAndFormFieldMedSize(
+                                        textFormField(
+                                            context,
+                                            'Umidade Inicial',
+                                            umidadeInicialController,
+                                            TextInputType.number),
+                                      ),
+                                      /* ], */
+                                      /*   ), */
+                                      containerTitleAndFormFieldMinSize(
+                                        dropDownButtonList('Tensão', voltages,
+                                            tensao220Controller, voltage),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      containerTitleAndFormFieldMedSize(
+                                        dropDownButtonList('Ângulo', typeOfTest,
+                                            maxAngleController, voltage),
+                                      ),
                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          containerTitleAndFormField(
+                                          containerTitleAndFormFieldMaxSize(
                                             textFormField(
-                                                context,
-                                                'Umidade Inicial',
-                                                umidadeInicialController,
-                                                TextInputType.number),
+                                              context,
+                                              'Observação',
+                                              observacaoController,
+                                              TextInputType.text,
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 bottom: 20),
                                             child: IconButton(
-                                              icon: Icon(Icons.add),
                                               color: Colors.transparent,
+                                              icon: Icon(
+                                                Icons.add_circle_outline,
+                                              ),
                                               onPressed: () => null,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      containerTitleAndFormField(
-                                          dropDownButtonList(
-                                              'Ângulo',
-                                              typeOfTest,
-                                              maxAngleController,
-                                              voltage)),
                                     ],
                                   ),
                                   Container(
@@ -339,22 +367,6 @@ class _NewTestState extends State<NewTest> {
                                       elevation: 5,
                                       color: Colors.blueAccent,
                                     ),
-                                  ),
-                                  RaisedButton(
-                                    onPressed: () async {
-                                      _keyForm.currentState.save();
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailsSensor()));
-                                    },
-                                    child: Text(
-                                      'Voltar',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    elevation: 5,
-                                    color: Colors.blueAccent,
                                   ),
                                 ],
                               ),

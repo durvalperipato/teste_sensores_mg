@@ -71,6 +71,8 @@ List<int> disablePointsIn360 = [
   350 */
 ];
 
+FocusNode dataFocusNode = FocusNode();
+
 Text title(String text) => Text(
       text,
       style: TextStyle(
@@ -84,7 +86,7 @@ Container textFormField(BuildContext context, String labelText,
         TextEditingController controller, TextInputType keyboardType,
         {bool date = false}) =>
     Container(
-      width: 150,
+      //width: 250,
       height: 80,
       child: date
           ? TextFormField(
@@ -92,21 +94,25 @@ Container textFormField(BuildContext context, String labelText,
                 labelText: labelText,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
+              focusNode: dataFocusNode,
               controller: controller,
               onTap: () async {
+                controller.clear();
+                dataFocusNode.unfocus();
                 DateTime dateTimePicked = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2021),
                   lastDate: DateTime(2040),
                 );
-
-                controller.text =
-                    dateTimePicked.day.toString().padLeft(2, '0') +
-                        '/' +
-                        dateTimePicked.month.toString().padLeft(2, '0') +
-                        '/' +
-                        dateTimePicked.year.toString();
+                if (dateTimePicked != null) {
+                  controller.text =
+                      dateTimePicked.day.toString().padLeft(2, '0') +
+                          '/' +
+                          dateTimePicked.month.toString().padLeft(2, '0') +
+                          '/' +
+                          dateTimePicked.year.toString();
+                }
               },
             )
           : TextFormField(
@@ -120,9 +126,27 @@ Container textFormField(BuildContext context, String labelText,
             ),
     );
 
-Container containerTitleAndFormField(Widget child) => Container(
+Container containerTitleAndFormFieldMaxSize(Widget child) => Container(
       height: 100,
-      width: 180,
+      width: 350,
+      child: Column(
+        children: [
+          child,
+        ],
+      ),
+    );
+Container containerTitleAndFormFieldMedSize(Widget child) => Container(
+      height: 100,
+      width: 120,
+      child: Column(
+        children: [
+          child,
+        ],
+      ),
+    );
+Container containerTitleAndFormFieldMinSize(Widget child) => Container(
+      height: 100,
+      width: 90,
       child: Column(
         children: [
           child,

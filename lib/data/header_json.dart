@@ -17,6 +17,7 @@ TextEditingController umidadeInicialController = TextEditingController();
 TextEditingController umidadeFinalController = TextEditingController();
 TextEditingController novoProdutoController = TextEditingController();
 TextEditingController maxAngleController = TextEditingController(text: '180');
+TextEditingController observacaoController = TextEditingController();
 
 final Map<String, dynamic> table = {
   // blocoNumber
@@ -24,7 +25,7 @@ final Map<String, dynamic> table = {
     'titles': {
       // index: {flex, title}
       0: {2, 'Amostra', amostraController},
-      1: {5, 'Produto', produtoController},
+      1: {8, 'Produto', produtoController},
       2: {5, 'Local', localController},
       3: {3, 'Data', dataController},
     },
@@ -57,6 +58,14 @@ final Map<String, dynamic> table = {
       1: {tensao127Controller, tensao220Controller},
       2: {temperaturaInicialController, temperaturaFinalController},
       3: {umidadeInicialController, umidadeFinalController},
-    }
+    },
   },
+  'bloco3': {
+    'titles': {
+      0: {1, 'Observação'},
+    },
+    'controllers': {
+      0: {observacaoController},
+    }
+  }
 };

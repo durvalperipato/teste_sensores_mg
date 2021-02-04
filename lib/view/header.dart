@@ -129,7 +129,7 @@ Row drawRow(List<Widget> children) => Row(
 Container header(BuildContext context) => Container(
       padding: EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width,
-      height: 150,
+      height: 200,
       child: Column(
         children: drawTable(),
       ),

@@ -110,7 +110,12 @@ class _TestSensorState extends State<TestSensor> {
                         actions: [
                           FlatButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: Text('Voltar'),
+                            child: Text(
+                              'OK',
+                              style: TextStyle(
+                                fontSize: 24,
+                              ),
+                            ),
                           ),
                         ],
                       );
@@ -184,8 +189,13 @@ class _TestSensorState extends State<TestSensor> {
                                       ),
                                       FlatButton(
                                         onPressed: () {
-                                          /*  _lines();
-                                            _points(); */
+                                          amostraController.clear();
+                                          produtoController.clear();
+                                          temperaturaInicialController.clear();
+                                          temperaturaFinalController.clear();
+                                          umidadeInicialController.clear();
+                                          umidadeFinalController.clear();
+                                          observacaoController.clear();
                                           Navigator.pop(context);
                                           Navigator.push(
                                               context,

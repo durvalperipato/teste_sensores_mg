@@ -52,6 +52,7 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
               children: [
                 headerPdf(),
                 result(),
+                bottomPdf(),
               ],
             ),
           ),
@@ -61,6 +62,33 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
   );
 
   return pdf.save();
+}
+
+bottomPdf() {
+  return pw.Container(
+    padding: pw.EdgeInsets.all(10),
+    child: pw.Column(
+      children: [
+        pw.Container(
+          height: 25,
+          decoration: pw.BoxDecoration(
+              border: pw.Border.all(color: PdfColors.black),
+              color: PdfColors.grey),
+          child: pw.Center(
+            child: pw.Text('Observação'),
+          ),
+        ),
+        pw.Container(
+          height: 25,
+          decoration:
+              pw.BoxDecoration(border: pw.Border.all(color: PdfColors.black)),
+          child: pw.Center(
+            child: pw.Text(observacaoController.text),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 headerPdf() {
@@ -544,26 +572,7 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
     if (meters == 2 &&
             (maxAngle == 180
                 ? disablePointsIn180.contains(angle)
-                : disablePointsIn360.contains(
-                    angle)) /* (angle == 10 ||
-                angle == 30 ||
-                angle == 50 ||
-                angle == 70 ||
-                angle == 90 ||
-                angle == 110 ||
-                angle == 130 ||
-                angle == 150 ||
-                angle == 170 ||
-                angle == 190 ||
-                angle == 210 ||
-                angle == 230 ||
-                angle == 250 ||
-                angle == 270 ||
-                angle == 290 ||
-                angle == 310 ||
-                angle == 330 ||
-                angle == 350) */
-        ||
+                : disablePointsIn360.contains(angle)) ||
         meters == 0 ||
         meters == 1) {
       point.add(
@@ -636,7 +645,6 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
                                     ? PdfColors.grey
                                     : PdfColors.black),
                           ),
-                          //  ),
                         )
                       : null,
         ),
