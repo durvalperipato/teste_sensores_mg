@@ -195,8 +195,8 @@ class _ProductsState extends State<Products> {
                                                                           ),
                                                                           FlatButton(
                                                                             onPressed:
-                                                                                () {
-                                                                              deleteProduct(products.elementAt(index));
+                                                                                () async {
+                                                                              await deleteProduct(products.elementAt(index));
 
                                                                               Navigator.pop(context, true);
                                                                             },

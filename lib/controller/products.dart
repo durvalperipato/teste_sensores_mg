@@ -7,7 +7,7 @@ Future<Database> _open() async {
     join(await getDatabasesPath(), 'database.db'),
     onCreate: (db, version) {
       db.execute(
-        "CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT)",
+        "CREATE TABLE products(name TEXT)",
       );
     },
     version: 1,
@@ -46,7 +46,6 @@ Future<List<ProductsModel>> getProducts() async {
 
 Future<void> deleteProduct(ProductsModel product) async {
   final Database db = await _open();
-  print('Deletando');
+
   await db.delete('products', where: 'name = ?', whereArgs: [product.name]);
-  print('Deletei');
 }
