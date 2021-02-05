@@ -1,11 +1,22 @@
 # Remember to never publicly share your keystore.
 # See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
 key.properties
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/.filecache
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/app.dill
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/debug_android_application.stamp
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/flutter_assets.d
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/kernel_snapshot.d
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/kernel_snapshot.stamp
-.dart_tool/flutter_build/1160c618cbff80e648c503940b11d3e9/outputs.json
+.dart_tool/
 build/
+.firebase/
+.idea/
+android/
+integration_test/
+ios/
+test/
+web/
+.firebaserc
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+.packages
+debug.log
+firebase.json
+lines.iml
+pubspec.yaml
+README.md
