@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lines">
    <application
-        android:label="lines"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Sensores"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
