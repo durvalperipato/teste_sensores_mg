@@ -3,6 +3,7 @@ a estrutura do nível do Map -> bloco(number) -> titles(title:flex) -> subtitles
 
 import 'package:flutter/cupertino.dart';
 
+TextEditingController riaController = TextEditingController();
 TextEditingController amostraController = TextEditingController();
 TextEditingController produtoController = TextEditingController();
 TextEditingController localController = TextEditingController();
@@ -21,6 +22,14 @@ TextEditingController observacaoController = TextEditingController();
 
 final Map<String, dynamic> table = {
   // blocoNumber
+  'bloco0': {
+    'titles': {
+      0: {2, 'RIA', riaController},
+    },
+    'controllers': {
+      0: {riaController},
+    }
+  },
   'bloco1': {
     'titles': {
       // index: {flex, title}

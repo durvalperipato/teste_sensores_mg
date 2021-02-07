@@ -45,30 +45,6 @@ List<int> disablePointsIn360 = [
   310,
   330,
   350
-  /* 10,
-  20,
-  40,
-  50,
-  70,
-  80,
-  100,
-  110,
-  130,
-  140,
-  160,
-  170,
-  190,
-  200,
-  220,
-  230,
-  250,
-  260,
-  280,
-  290,
-  310,
-  320,
-  340,
-  350 */
 ];
 
 FocusNode dataFocusNode = FocusNode();
@@ -86,7 +62,6 @@ Container textFormField(BuildContext context, String labelText,
         TextEditingController controller, TextInputType keyboardType,
         {bool date = false}) =>
     Container(
-      //width: 250,
       height: 80,
       child: date
           ? TextFormField(

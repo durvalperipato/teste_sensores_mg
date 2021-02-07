@@ -8,6 +8,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 final double widthTextAngle = 20;
+final double heigthContainerTextHeader = 15;
 
 final double lineSize = 577;
 
@@ -79,7 +80,7 @@ bottomPdf() {
           ),
         ),
         pw.Container(
-          height: 25,
+          height: heigthContainerTextHeader,
           decoration:
               pw.BoxDecoration(border: pw.Border.all(color: PdfColors.black)),
           child: pw.Center(
@@ -96,6 +97,38 @@ headerPdf() {
     padding: pw.EdgeInsets.all(10),
     child: pw.Column(
       children: [
+        pw.Align(
+          alignment: pw.Alignment.topRight,
+          child: pw.Container(
+            child: pw.Column(
+              children: [
+                pw.Container(
+                  height: 15,
+                  width: 100,
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border.all(color: PdfColors.black),
+                    color: PdfColors.grey,
+                  ),
+                  child: pw.Center(
+                    child: pw.Text('RIA'),
+                  ),
+                ),
+                pw.Container(
+                  margin: pw.EdgeInsets.only(bottom: 10),
+                  height: 15,
+                  width: 100,
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border.all(color: PdfColors.black),
+                    color: PdfColors.white,
+                  ),
+                  child: pw.Center(
+                    child: pw.Text(riaController.text),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         pw.Container(
           color: PdfColors.grey,
           child: pw.Row(
@@ -105,7 +138,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 2,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Amostra'))),
@@ -113,7 +146,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 5,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Produto'))),
@@ -121,7 +154,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 5,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Local'))),
@@ -129,7 +162,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 3,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Data'))),
@@ -144,7 +177,7 @@ headerPdf() {
             pw.Expanded(
               flex: 2,
               child: pw.Container(
-                height: 25,
+                height: heigthContainerTextHeader,
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
@@ -155,7 +188,7 @@ headerPdf() {
             pw.Expanded(
               flex: 5,
               child: pw.Container(
-                height: 25,
+                height: heigthContainerTextHeader,
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
@@ -166,7 +199,7 @@ headerPdf() {
             pw.Expanded(
               flex: 5,
               child: pw.Container(
-                height: 25,
+                height: heigthContainerTextHeader,
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
@@ -177,7 +210,7 @@ headerPdf() {
             pw.Expanded(
               flex: 3,
               child: pw.Container(
-                height: 25,
+                height: heigthContainerTextHeader,
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
@@ -196,7 +229,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 3,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Sensibilidade'))),
@@ -204,7 +237,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 3,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Tensão'))),
@@ -212,7 +245,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 3,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Temperatura'))),
@@ -220,7 +253,7 @@ headerPdf() {
               pw.Expanded(
                 flex: 3,
                 child: pw.Container(
-                    height: 25,
+                    height: heigthContainerTextHeader,
                     decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black)),
                     child: pw.Center(child: pw.Text('Umidade'))),
@@ -240,7 +273,7 @@ headerPdf() {
                   children: [
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -251,7 +284,7 @@ headerPdf() {
                     ),
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -269,7 +302,7 @@ headerPdf() {
                   children: [
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -280,7 +313,7 @@ headerPdf() {
                     ),
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -298,7 +331,7 @@ headerPdf() {
                   children: [
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -309,7 +342,7 @@ headerPdf() {
                     ),
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -327,7 +360,7 @@ headerPdf() {
                   children: [
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -338,7 +371,7 @@ headerPdf() {
                     ),
                     pw.Expanded(
                       child: pw.Container(
-                        height: 25,
+                        height: heigthContainerTextHeader,
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: PdfColors.black),
                         ),
@@ -363,7 +396,7 @@ headerPdf() {
                 children: [
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
@@ -374,7 +407,7 @@ headerPdf() {
                   ),
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
@@ -392,7 +425,7 @@ headerPdf() {
                 children: [
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
@@ -403,7 +436,7 @@ headerPdf() {
                   ),
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
@@ -421,7 +454,7 @@ headerPdf() {
                 children: [
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
@@ -433,7 +466,7 @@ headerPdf() {
                   ),
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
@@ -451,23 +484,23 @@ headerPdf() {
                 children: [
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(umidadeInicialController.text + ' %RH'),
+                        child: pw.Text(umidadeInicialController.text + ' %'),
                       ),
                     ),
                   ),
                   pw.Expanded(
                     child: pw.Container(
-                      height: 25,
+                      height: heigthContainerTextHeader,
                       decoration: pw.BoxDecoration(
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(umidadeFinalController.text + ' %RH'),
+                        child: pw.Text(umidadeFinalController.text + ' %'),
                       ),
                     ),
                   ),
@@ -505,14 +538,9 @@ _lines() {
             mainAxisAlignment: pw.MainAxisAlignment.end,
             children: [
               pw.Container(
-                height:
-                    angle == 0 || angle == 90 || angle == 180 || angle == 270
-                        ? 2
-                        : 1,
-                width: (lineSize / 2 - 10),
-                color: angle == 0 || angle == 90 || angle == 180 || angle == 270
-                    ? PdfColors.black
-                    : PdfColors.grey,
+                height: isAxis(angle) ? 2 : 1,
+                width: (lineSize / 2) - 10,
+                color: PdfColors.grey,
               ),
             ],
           ),
@@ -595,13 +623,10 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
             color: colors[angle].elementAt(meters).color == Colors.white
                 ? PdfColors.white
                 : PdfColors.red,
-            //PdfColors.white,
           ),
           child: (angle >= 0 && angle <= 80 || angle >= 280 && angle <= 350) &&
                   (meters != 0 && meters != 1)
-              ? //pw.RotatedBox(
-              //quarterTurns: 4,
-              /* child: */ pw.Center(
+              ? pw.Center(
                   child: pw.Text(
                     meters.toString(),
                     style: pw.TextStyle(
@@ -612,14 +637,8 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
                             : PdfColors.black),
                   ),
                 )
-              //)
-              : (angle == 90 || angle == 270) &&
-                      (meters != 0 &&
-                          meters != 1) /* meters != 0 && meters != 1 */
-                  ? /* RotatedBox(
-                              quarterTurns: 1,
-                              child:  */
-                  pw.Center(
+              : (angle == 90 || angle == 270) && (meters != 0 && meters != 1)
+                  ? pw.Center(
                       child: pw.Text(
                         meters.toString(),
                         style: pw.TextStyle(
@@ -629,13 +648,9 @@ _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
                                 ? PdfColors.grey
                                 : PdfColors.black),
                       ),
-                      //),
                     )
                   : meters != 0 && meters != 1
-                      ? /* RotatedBox(
-                                  quarterTurns: 2,
-                                  child:  */
-                      pw.Center(
+                      ? pw.Center(
                           child: pw.Text(
                             meters.toString(),
                             style: pw.TextStyle(

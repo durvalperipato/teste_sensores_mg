@@ -26,7 +26,6 @@ class _NewTestState extends State<NewTest> {
   @override
   void initState() {
     super.initState();
-    //products.add('MPX');
     sensibilitys.add('Max');
     sensibilitys.add('Min');
     voltages.add('127');
@@ -50,7 +49,6 @@ class _NewTestState extends State<NewTest> {
               ),
             )
             .toList(),
-
         onChanged: (value) {
           if (value == 'Min' || value == 'Max') {
             sensibilidadeMaximaController.text = '';
@@ -58,14 +56,12 @@ class _NewTestState extends State<NewTest> {
             value == 'Min'
                 ? sensibilidadeMinimaController.text = 'X'
                 : sensibilidadeMaximaController.text = 'X';
-            //  sensibility = items.elementAt(items.indexOf(value));
           } else if (value == '127' || value == '220') {
             tensao127Controller.text = '';
             tensao220Controller.text = '';
             value == '127'
                 ? tensao127Controller.text = 'X'
                 : tensao220Controller.text = 'X';
-            //    voltage = items.elementAt(items.indexOf(value));
           } else if (value == '180º' || value == '360º') {
             maxAngleController.text = '';
             value == '180º'
@@ -73,12 +69,10 @@ class _NewTestState extends State<NewTest> {
                 : maxAngleController.text = '350';
           } else {
             controller.text = value;
-            //     product = items.elementAt(items.indexOf(value));
           }
 
           setState(() {});
         },
-        //value: item,
       );
 
   @override

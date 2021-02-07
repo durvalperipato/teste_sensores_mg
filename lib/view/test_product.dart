@@ -233,7 +233,7 @@ class _TestSensorState extends State<TestSensor> {
                         Container(
                           height: isAxis(angle) ? 2 : 1,
                           width: lineSize,
-                          color: isAxis(angle) ? Colors.black : Colors.grey,
+                          color: Colors.grey,
                         ),
                       ],
                     ),
@@ -247,7 +247,7 @@ class _TestSensorState extends State<TestSensor> {
                       Container(
                         height: isAxis(angle) ? 2 : 1,
                         width: lineSize,
-                        color: isAxis(angle) ? Colors.black : Colors.grey,
+                        color: Colors.grey,
                       ),
                     ],
                   ),

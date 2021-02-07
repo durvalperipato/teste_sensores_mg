@@ -59,8 +59,7 @@ class _ProductsState extends State<Products> {
                                 topLeft: Radius.circular(10),
                                 bottomLeft: Radius.circular(10),
                               ),
-                              color: Color.fromRGBO(2, 19, 125,
-                                  1), //Color.fromRGBO(6, 58, 118, 1),
+                              color: Color.fromRGBO(2, 19, 125, 1),
                             ),
                             child: Image.asset('images/logo_white.jpg'),
                           ),
@@ -157,10 +156,8 @@ class _ProductsState extends State<Products> {
                                                 Expanded(
                                                   flex: 6,
                                                   child: Text(products
-                                                          .elementAt(index)
-                                                          .toString()
-                                                      //products.elementAt(index),
-                                                      ),
+                                                      .elementAt(index)
+                                                      .toString()),
                                                 ),
                                                 Expanded(
                                                   flex: 1,
