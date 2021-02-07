@@ -101,27 +101,10 @@ Container textFormField(BuildContext context, String labelText,
             ),
     );
 
-Container containerTitleAndFormFieldMaxSize(Widget child) => Container(
+Container containerTitleAndFormField(Widget child, {bool first = false}) =>
+    Container(
+      margin: first ? null : const EdgeInsets.only(left: 30),
       height: 100,
-      width: 350,
-      child: Column(
-        children: [
-          child,
-        ],
-      ),
-    );
-Container containerTitleAndFormFieldMedSize(Widget child) => Container(
-      height: 100,
-      width: 120,
-      child: Column(
-        children: [
-          child,
-        ],
-      ),
-    );
-Container containerTitleAndFormFieldMinSize(Widget child) => Container(
-      height: 100,
-      width: 90,
       child: Column(
         children: [
           child,

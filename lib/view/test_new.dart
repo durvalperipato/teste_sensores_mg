@@ -175,132 +175,182 @@ class _NewTestState extends State<NewTest> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      containerTitleAndFormFieldMedSize(
-                                        textFormField(
-                                          context,
-                                          'Nº da Amostra',
-                                          amostraController,
-                                          TextInputType.number,
+                                      Expanded(
+                                        flex: 1,
+                                        child: containerTitleAndFormField(
+                                          textFormField(
+                                            context,
+                                            'Nº da Amostra',
+                                            amostraController,
+                                            TextInputType.number,
+                                          ),
+                                          first: true,
                                         ),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          containerTitleAndFormFieldMaxSize(
-                                            dropDownButtonList(
-                                                'Produto',
-                                                products,
-                                                produtoController,
-                                                product),
+                                      Expanded(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                          textFormField(
+                                            context,
+                                            'RIA',
+                                            riaController,
+                                            TextInputType.number,
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 20),
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons.add_circle_outline,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 6,
+                                        child: Row(
+                                          /* mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                           */
+                                          children: [
+                                            Expanded(
+                                              flex: 6,
+                                              child: containerTitleAndFormField(
+                                                dropDownButtonList(
+                                                    'Produto',
+                                                    products,
+                                                    produtoController,
+                                                    product),
                                               ),
-                                              onPressed: () async {
-                                                String result =
-                                                    await showDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      AlertDialog(
-                                                    title: Text('Novo Produto'),
-                                                    content: TextField(
-                                                      controller:
-                                                          novoProdutoController,
-                                                    ),
-                                                    actions: [
-                                                      FlatButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context,
-                                                                  novoProdutoController
-                                                                      .text),
-                                                          child: Text(
-                                                              'Confirmar')),
-                                                      FlatButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                context,
-                                                              ),
-                                                          child:
-                                                              Text('Voltar')),
-                                                    ],
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 20),
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    Icons.add_circle_outline,
                                                   ),
-                                                );
-                                                if (result != null &&
-                                                    result.isNotEmpty) {
-                                                  insertProduct(ProductsModel(
-                                                      name:
-                                                          novoProdutoController
+                                                  onPressed: () async {
+                                                    String result =
+                                                        await showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        title: Text(
+                                                            'Novo Produto'),
+                                                        content: TextField(
+                                                          controller:
+                                                              novoProdutoController,
+                                                        ),
+                                                        actions: [
+                                                          FlatButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context,
+                                                                      novoProdutoController
+                                                                          .text),
+                                                              child: Text(
+                                                                  'Confirmar')),
+                                                          FlatButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                    context,
+                                                                  ),
+                                                              child: Text(
+                                                                  'Voltar')),
+                                                        ],
+                                                      ),
+                                                    );
+                                                    if (result != null &&
+                                                        result.isNotEmpty) {
+                                                      insertProduct(ProductsModel(
+                                                          name: novoProdutoController
                                                               .text
                                                               .toUpperCase()));
-                                                }
-                                                novoProdutoController.text = '';
-                                                setState(() {});
-                                              },
+                                                    }
+                                                    novoProdutoController.text =
+                                                        '';
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      containerTitleAndFormFieldMedSize(
-                                        textFormField(
-                                          context,
-                                          'Local',
-                                          localController,
-                                          TextInputType.text,
+                                          ],
                                         ),
                                       ),
-                                      containerTitleAndFormFieldMedSize(
-                                        textFormField(
-                                            context,
-                                            'Data',
-                                            dataController,
-                                            TextInputType.number,
-                                            date: true),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                            textFormField(
+                                              context,
+                                              'Local',
+                                              localController,
+                                              TextInputType.text,
+                                            ),
+                                            first: true),
                                       ),
-                                      containerTitleAndFormFieldMinSize(
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                          textFormField(
+                                              context,
+                                              'Data',
+                                              dataController,
+                                              TextInputType.number,
+                                              date: true),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                            dropDownButtonList(
+                                                'Sensibilidade',
+                                                sensibilitys,
+                                                sensibilidadeMaximaController,
+                                                sensibility)),
+                                      ),
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                          dropDownButtonList('Tensão', voltages,
+                                              tensao220Controller, voltage),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                            textFormField(
+                                                context,
+                                                'Temperatura Inicial',
+                                                temperaturaInicialController,
+                                                TextInputType.number),
+                                            first: true),
+                                      ),
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                          textFormField(
+                                              context,
+                                              'Umidade Inicial',
+                                              umidadeInicialController,
+                                              TextInputType.number),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
                                           dropDownButtonList(
-                                              'Sensibilidade',
-                                              sensibilitys,
-                                              sensibilidadeMaximaController,
-                                              sensibility)),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      containerTitleAndFormFieldMedSize(
-                                        textFormField(
-                                            context,
-                                            'Temperatura Inicial',
-                                            temperaturaInicialController,
-                                            TextInputType.number),
-                                      ),
-                                      /*  Row(
-                                        children: [ */
-                                      containerTitleAndFormFieldMedSize(
-                                        textFormField(
-                                            context,
-                                            'Umidade Inicial',
-                                            umidadeInicialController,
-                                            TextInputType.number),
-                                      ),
-                                      /* ], */
-                                      /*   ), */
-                                      containerTitleAndFormFieldMinSize(
-                                        dropDownButtonList('Tensão', voltages,
-                                            tensao220Controller, voltage),
+                                              'Ângulo',
+                                              typeOfTest,
+                                              maxAngleController,
+                                              voltage),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -308,34 +358,16 @@ class _NewTestState extends State<NewTest> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      containerTitleAndFormFieldMedSize(
-                                        dropDownButtonList('Ângulo', typeOfTest,
-                                            maxAngleController, voltage),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          containerTitleAndFormFieldMaxSize(
+                                      Flexible(
+                                        flex: 8,
+                                        child: containerTitleAndFormField(
                                             textFormField(
                                               context,
                                               'Observação',
                                               observacaoController,
                                               TextInputType.text,
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 20),
-                                            child: IconButton(
-                                              color: Colors.transparent,
-                                              icon: Icon(
-                                                Icons.add_circle_outline,
-                                              ),
-                                              onPressed: () => null,
-                                            ),
-                                          ),
-                                        ],
+                                            first: true),
                                       ),
                                     ],
                                   ),
