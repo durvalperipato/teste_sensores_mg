@@ -253,7 +253,8 @@ class _TestSensorState extends State<TestSensor> {
                   ),
                 ),
           angle,
-          containerSize);
+          containerSize,
+          maxAngle);
     }
   }
 
@@ -344,7 +345,8 @@ class _TestSensorState extends State<TestSensor> {
                   ],
                 ),
           angle,
-          containerSize);
+          containerSize,
+          maxAngle);
     }
   }
 }

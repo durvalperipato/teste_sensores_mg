@@ -181,8 +181,9 @@ Container containerAngleText(int angle, double pointSize) => Container(
     );
 
 Container containerGestureDetectorAndWidgetRotate(
-        Widget child, int angle, double lineSize) =>
+        Widget child, int angle, double lineSize, int maxAngle) =>
     Container(
+      margin: maxAngle == 180 ? const EdgeInsets.only(bottom: 15) : null,
       height: lineSize -
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       width: lineSize -
