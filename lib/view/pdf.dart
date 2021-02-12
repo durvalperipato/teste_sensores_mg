@@ -84,7 +84,7 @@ bottomPdf() {
           decoration:
               pw.BoxDecoration(border: pw.Border.all(color: PdfColors.black)),
           child: pw.Center(
-            child: pw.Text(observacaoController.text),
+            child: pw.Text(observacaoController.text.toUpperCase()),
           ),
         ),
       ],
@@ -122,7 +122,7 @@ headerPdf() {
                     color: PdfColors.white,
                   ),
                   child: pw.Center(
-                    child: pw.Text(riaController.text),
+                    child: pw.Text(riaController.text.toUpperCase()),
                   ),
                 ),
               ],
@@ -181,7 +181,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text(amostraController.text),
+                  child: pw.Text(amostraController.text.toUpperCase()),
                 ),
               ),
             ),
@@ -192,7 +192,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text(produtoController.text),
+                  child: pw.Text(produtoController.text.toUpperCase()),
                 ),
               ),
             ),
@@ -203,7 +203,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text(localController.text),
+                  child: pw.Text(localController.text.toUpperCase()),
                 ),
               ),
             ),
@@ -214,7 +214,7 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text(dataController.text),
+                  child: pw.Text(dataController.text.toUpperCase()),
                 ),
               ),
             ),
@@ -401,7 +401,8 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(sensibilidadeMinimaController.text),
+                        child: pw.Text(
+                            sensibilidadeMinimaController.text.toUpperCase()),
                       ),
                     ),
                   ),
@@ -412,36 +413,8 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(sensibilidadeMaximaController.text),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            pw.Expanded(
-              flex: 3,
-              child: pw.Row(
-                children: [
-                  pw.Expanded(
-                    child: pw.Container(
-                      height: heigthContainerTextHeader,
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(color: PdfColors.black),
-                      ),
-                      child: pw.Center(
-                        child: pw.Text(tensao127Controller.text),
-                      ),
-                    ),
-                  ),
-                  pw.Expanded(
-                    child: pw.Container(
-                      height: heigthContainerTextHeader,
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(color: PdfColors.black),
-                      ),
-                      child: pw.Center(
-                        child: pw.Text(tensao220Controller.text),
+                        child: pw.Text(
+                            sensibilidadeMaximaController.text.toUpperCase()),
                       ),
                     ),
                   ),
@@ -459,8 +432,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child:
-                            pw.Text(temperaturaInicialController.text + ' °C'),
+                        child: pw.Text(tensao127Controller.text.toUpperCase()),
                       ),
                     ),
                   ),
@@ -471,7 +443,7 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(temperaturaFinalController.text + ' °C'),
+                        child: pw.Text(tensao220Controller.text.toUpperCase()),
                       ),
                     ),
                   ),
@@ -489,7 +461,9 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(umidadeInicialController.text + ' %'),
+                        child: pw.Text(
+                            temperaturaInicialController.text.toUpperCase() +
+                                ' °C'),
                       ),
                     ),
                   ),
@@ -500,7 +474,40 @@ headerPdf() {
                         border: pw.Border.all(color: PdfColors.black),
                       ),
                       child: pw.Center(
-                        child: pw.Text(umidadeFinalController.text + ' %'),
+                        child: pw.Text(
+                            temperaturaFinalController.text.toUpperCase() +
+                                ' °C'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            pw.Expanded(
+              flex: 3,
+              child: pw.Row(
+                children: [
+                  pw.Expanded(
+                    child: pw.Container(
+                      height: heigthContainerTextHeader,
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(color: PdfColors.black),
+                      ),
+                      child: pw.Center(
+                        child: pw.Text(
+                            umidadeInicialController.text.toUpperCase() + ' %'),
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Container(
+                      height: heigthContainerTextHeader,
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(color: PdfColors.black),
+                      ),
+                      child: pw.Center(
+                        child: pw.Text(
+                            umidadeFinalController.text.toUpperCase() + ' %'),
                       ),
                     ),
                   ),
