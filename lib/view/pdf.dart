@@ -289,6 +289,17 @@ headerPdf() {
                           border: pw.Border.all(color: PdfColors.black),
                         ),
                         child: pw.Center(
+                          child: pw.Text('Med'),
+                        ),
+                      ),
+                    ),
+                    pw.Expanded(
+                      child: pw.Container(
+                        height: heigthContainerTextHeader,
+                        decoration: pw.BoxDecoration(
+                          border: pw.Border.all(color: PdfColors.black),
+                        ),
+                        child: pw.Center(
                           child: pw.Text('Max'),
                         ),
                       ),
@@ -403,6 +414,18 @@ headerPdf() {
                       child: pw.Center(
                         child: pw.Text(
                             sensibilidadeMinimaController.text.toUpperCase()),
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                    child: pw.Container(
+                      height: heigthContainerTextHeader,
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(color: PdfColors.black),
+                      ),
+                      child: pw.Center(
+                        child: pw.Text(
+                            sensibilidadeMediaController.text.toUpperCase()),
                       ),
                     ),
                   ),

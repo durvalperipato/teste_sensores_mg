@@ -27,6 +27,7 @@ class _NewTestState extends State<NewTest> {
   void initState() {
     super.initState();
     sensibilitys.add('Max');
+    sensibilitys.add('Med');
     sensibilitys.add('Min');
     voltages.add('127');
     voltages.add('220');
@@ -50,12 +51,15 @@ class _NewTestState extends State<NewTest> {
             )
             .toList(),
         onChanged: (value) {
-          if (value == 'Min' || value == 'Max') {
+          if (value == 'Min' || value == 'Med' || value == 'Max') {
             sensibilidadeMaximaController.text = '';
+            sensibilidadeMediaController.text = '';
             sensibilidadeMinimaController.text = '';
             value == 'Min'
                 ? sensibilidadeMinimaController.text = 'X'
-                : sensibilidadeMaximaController.text = 'X';
+                : value == 'Med'
+                    ? sensibilidadeMediaController.text = 'X'
+                    : sensibilidadeMaximaController.text = 'X';
           } else if (value == '127' || value == '220') {
             tensao127Controller.text = '';
             tensao220Controller.text = '';
