@@ -130,22 +130,32 @@ class _TestSensorState extends State<TestSensor> {
                 },
               ),
               ListTile(
-                title: Text(
-                  'Exportar PDF',
-                  style: TextStyle(fontSize: 18),
-                ),
-                onTap: () => Printing.layoutPdf(
-                    format: PdfPageFormat.a4,
-                    name: amostraController.text +
-                        '-' +
-                        produtoController.text +
-                        '-' +
-                        dataController.text.replaceAll('/', '-') +
-                        '-' +
-                        typeOfTestController.text,
-                    onLayout: (format) => generatePdf(format, colorsPoints,
-                        colorsPointsFrontalTest, maxAngle.toDouble())),
-              ),
+                  title: Text(
+                    'Exportar PDF',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    if (colorsPoints.isEmpty) {
+                      frontalTest = false;
+                      _points();
+                    }
+                    if (colorsPointsFrontalTest.isEmpty) {
+                      frontalTest = true;
+                      _points();
+                    }
+
+                    Printing.layoutPdf(
+                        format: PdfPageFormat.a4,
+                        name: amostraController.text +
+                            '-' +
+                            produtoController.text +
+                            '-' +
+                            dataController.text.replaceAll('/', '-') +
+                            '-' +
+                            typeOfTestController.text,
+                        onLayout: (format) => generatePdf(format, colorsPoints,
+                            colorsPointsFrontalTest, maxAngle.toDouble()));
+                  }),
             ],
           ),
         ),

@@ -17,6 +17,9 @@ double maxAngle;
 
 final double pointSize = 10;
 
+var imageFrontal;
+var imageAngular;
+
 Map<int, pw.Widget> lines = {};
 Map<int, pw.Widget> points = {};
 Map<int, List<BoxDecoration>> colors = {};
@@ -29,14 +32,6 @@ Future<Uint8List> generatePdf(
     Map<int, List<GestureDetector>> colorsPoints,
     Map<int, List<GestureDetector>> colorsPointsFrontalTest,
     double angle) async {
-  Uint8List data = (await rootBundle.load(typeOfTestController.text == "Angular"
-          ? 'images/seta_angular.png'
-          : 'images/seta_frontal.png'))
-      .buffer
-      .asUint8List();
-  final image = pw.MemoryImage(
-    data,
-  );
   maxAngle = angle;
   lines.clear();
   points.clear();
@@ -44,7 +39,17 @@ Future<Uint8List> generatePdf(
   colorsPointsFrontalTestPdf.clear();
   colors.clear();
   colorsFrontalTest.clear();
+  Uint8List data =
+      (await rootBundle.load('images/seta_frontal.png')).buffer.asUint8List();
+  imageFrontal = pw.MemoryImage(
+    data,
+  );
 
+  Uint8List data2 =
+      (await rootBundle.load('images/seta_angular.png')).buffer.asUint8List();
+  imageAngular = pw.MemoryImage(
+    data2,
+  );
   colorsPoints.forEach((key, value) {
     List<BoxDecoration> color = [];
     value.forEach((element) {
@@ -79,12 +84,12 @@ Future<Uint8List> generatePdf(
             child: pw.Column(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                //headerPdf(),
-                // imageTypeOfTest(image),
-                // result(),
+                headerPdf(),
+                result(),
+                if (typeOfTestController.text == 'Duplo') drawDivider(),
                 if (typeOfTestController.text == 'Duplo')
-                  result(frontalTest: true),
-                //   bottomPdf(),
+                  result(doubleTest: true),
+                bottomPdf(),
               ],
             ),
           ),
@@ -99,7 +104,7 @@ Future<Uint8List> generatePdf(
 imageTypeOfTest(var image) {
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 3),
-    child: pw.Image(image, height: 60, fit: pw.BoxFit.fitWidth),
+    child: pw.Image(image, height: 70, fit: pw.BoxFit.fitWidth),
   );
 }
 
@@ -585,34 +590,47 @@ headerPdf() {
   );
 }
 
-result({bool frontalTest = false}) {
-  if (frontalTest) {
+drawDivider() {
+  return pw.Container(
+      margin: pw.EdgeInsets.only(top: 1),
+      height: 1,
+      color: PdfColors.black,
+      width: lineSize);
+}
+
+result({bool doubleTest = false}) {
+  if (doubleTest) {
     _points(colorsFrontalTest);
   }
-  return pw.Stack(
-    children: [
-      pw.Container(
-        height: lineSize / 2,
-        width: lineSize,
-        child: pw.Stack(
-          alignment: pw.Alignment.bottomCenter,
-          children: [
-            for (pw.Widget line in lines.values) line,
-            for (pw.Widget point in points.values) point,
-          ],
-        ),
-      ),
-    ],
+  return pw.Container(
+    height: maxAngle == 180 ? lineSize / 2 + 20 : lineSize + 20,
+    width: lineSize - 10,
+    child: pw.Stack(
+      children: [
+        if (typeOfTestController.text == 'Angular' ||
+            typeOfTestController.text == 'Duplo')
+          if (doubleTest)
+            imageTypeOfTest(imageFrontal)
+          else
+            imageTypeOfTest(imageAngular),
+        if (typeOfTestController.text == 'Frontal')
+          imageTypeOfTest(imageFrontal),
+        for (pw.Widget line in lines.values)
+          pw.Positioned(bottom: 0, left: 0, right: 0, child: line),
+        for (pw.Widget point in points.values)
+          pw.Positioned(bottom: 0, left: 0, right: 0, child: point),
+      ],
+    ),
   );
 }
 
 _lines() {
   for (int angle = 0; angle <= maxAngle; angle += 10) {
     lines[angle] = pw.Container(
-      color: PdfColors.green,
-      height: lineSize / 2 - 10,
-      /* lineSize -
-          10,  */ // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
+      height: maxAngle == 180
+          ? null
+          : lineSize -
+              10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       width: lineSize -
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       child: pw.Transform.rotate(
@@ -640,9 +658,8 @@ _points(Map<int, List<BoxDecoration>> colors) {
     _buildPoint(angle, colors);
 
     points[angle] = pw.Container(
-      height: lineSize / 2 - 10 /* lineSize -
-          10 */
-      , // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
+      height: maxAngle == 180 ? null : lineSize - 10,
+      // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       width: lineSize -
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       child: pw.Transform.rotate(
