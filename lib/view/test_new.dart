@@ -24,6 +24,7 @@ class _NewTestState extends State<NewTest> {
   String sensibility;
   String voltage;
   String typeTest;
+  String angle;
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _NewTestState extends State<NewTest> {
     angleOfTest.add('360º');
     typeOfTest.add('Angular');
     typeOfTest.add('Frontal');
+    typeOfTest.add('Duplo');
   }
 
   DropdownButtonFormField dropDownButtonList(String labelText,
@@ -46,6 +48,7 @@ class _NewTestState extends State<NewTest> {
           labelText: labelText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
+        value: item,
         items: items
             .map(
               (value) => DropdownMenuItem(
@@ -70,11 +73,17 @@ class _NewTestState extends State<NewTest> {
             value == '127'
                 ? tensao127Controller.text = 'X'
                 : tensao220Controller.text = 'X';
+          } else if (value == 'Duplo') {
+            maxAngleController.text = '180';
+            typeOfTestController.text = 'Duplo';
+            angle = '180º';
           } else if (value == '180º' || value == '360º') {
             maxAngleController.text = '';
             value == '180º'
                 ? maxAngleController.text = '180'
-                : maxAngleController.text = '350';
+                : typeOfTestController.text != 'Duplo'
+                    ? maxAngleController.text = '350'
+                    : maxAngleController.text = '180';
           } else {
             controller.text = value;
           }
@@ -367,7 +376,7 @@ class _NewTestState extends State<NewTest> {
                                               'Ângulo',
                                               angleOfTest,
                                               maxAngleController,
-                                              voltage),
+                                              angle),
                                         ),
                                       ),
                                     ],

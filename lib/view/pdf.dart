@@ -1,6 +1,5 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'dart:math' as math;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,10 +19,16 @@ final double pointSize = 10;
 
 Map<int, pw.Widget> lines = {};
 Map<int, pw.Widget> points = {};
+Map<int, List<BoxDecoration>> colors = {};
+Map<int, List<BoxDecoration>> colorsFrontalTest = {};
 Map<int, List<pw.Widget>> colorsPointsPdf = {};
+Map<int, List<pw.Widget>> colorsPointsFrontalTestPdf = {};
 
-Future<Uint8List> generatePdf(PdfPageFormat format,
-    Map<int, List<GestureDetector>> colorsPoints, double angle) async {
+Future<Uint8List> generatePdf(
+    PdfPageFormat format,
+    Map<int, List<GestureDetector>> colorsPoints,
+    Map<int, List<GestureDetector>> colorsPointsFrontalTest,
+    double angle) async {
   Uint8List data = (await rootBundle.load(typeOfTestController.text == "Angular"
           ? 'images/seta_angular.png'
           : 'images/seta_frontal.png'))
@@ -36,8 +41,10 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
   lines.clear();
   points.clear();
   colorsPointsPdf.clear();
+  colorsPointsFrontalTestPdf.clear();
+  colors.clear();
+  colorsFrontalTest.clear();
 
-  Map<int, List<BoxDecoration>> colors = {};
   colorsPoints.forEach((key, value) {
     List<BoxDecoration> color = [];
     value.forEach((element) {
@@ -47,9 +54,19 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
     });
     colors[key] = color;
   });
+  colorsPointsFrontalTest.forEach((key, value) {
+    List<BoxDecoration> color = [];
+    value.forEach((element) {
+      Container container = element.child;
+      BoxDecoration boxDecoration = container.decoration;
+      color.add(boxDecoration);
+    });
+    colorsFrontalTest[key] = color;
+  });
 
   _lines();
   _points(colors);
+
   final pdf = pw.Document();
   pdf.addPage(
     pw.Page(
@@ -60,11 +77,14 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
           child: pw.Container(
             decoration: pw.BoxDecoration(border: pw.Border.all()),
             child: pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                headerPdf(),
-                imageTypeOfTest(image),
-                result(),
-                bottomPdf(),
+                //headerPdf(),
+                // imageTypeOfTest(image),
+                // result(),
+                if (typeOfTestController.text == 'Duplo')
+                  result(frontalTest: true),
+                //   bottomPdf(),
               ],
             ),
           ),
@@ -77,7 +97,10 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
 }
 
 imageTypeOfTest(var image) {
-  return pw.Image(image, height: 60, fit: pw.BoxFit.fitWidth);
+  return pw.Padding(
+    padding: pw.EdgeInsets.symmetric(horizontal: 3),
+    child: pw.Image(image, height: 60, fit: pw.BoxFit.fitWidth),
+  );
 }
 
 bottomPdf() {
@@ -562,11 +585,23 @@ headerPdf() {
   );
 }
 
-result() {
+result({bool frontalTest = false}) {
+  if (frontalTest) {
+    _points(colorsFrontalTest);
+  }
   return pw.Stack(
     children: [
-      for (pw.Widget line in lines.values) line,
-      for (pw.Widget point in points.values) point,
+      pw.Container(
+        height: lineSize / 2,
+        width: lineSize,
+        child: pw.Stack(
+          alignment: pw.Alignment.bottomCenter,
+          children: [
+            for (pw.Widget line in lines.values) line,
+            for (pw.Widget point in points.values) point,
+          ],
+        ),
+      ),
     ],
   );
 }
@@ -574,8 +609,10 @@ result() {
 _lines() {
   for (int angle = 0; angle <= maxAngle; angle += 10) {
     lines[angle] = pw.Container(
-      height: lineSize -
-          10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
+      color: PdfColors.green,
+      height: lineSize / 2 - 10,
+      /* lineSize -
+          10,  */ // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       width: lineSize -
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       child: pw.Transform.rotate(
@@ -603,8 +640,9 @@ _points(Map<int, List<BoxDecoration>> colors) {
     _buildPoint(angle, colors);
 
     points[angle] = pw.Container(
-      height: lineSize -
-          10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
+      height: lineSize / 2 - 10 /* lineSize -
+          10 */
+      , // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       width: lineSize -
           10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       child: pw.Transform.rotate(

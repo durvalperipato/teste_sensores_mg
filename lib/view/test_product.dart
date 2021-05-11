@@ -22,6 +22,7 @@ class _TestSensorState extends State<TestSensor> {
   Map<int, Widget> lines = {};
   Map<int, Widget> points = {};
   Map<int, List<GestureDetector>> colorsPoints = {};
+  Map<int, List<GestureDetector>> colorsPointsFrontalTest = {};
   double pointSize;
   double containerSize;
   double lineSize;
@@ -30,10 +31,15 @@ class _TestSensorState extends State<TestSensor> {
   int maxMeters;
   ScrollController scrollController = ScrollController();
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool frontalTest;
 
   @override
   void initState() {
     super.initState();
+    frontalTest = typeOfTestController.text == "Angular" ||
+            typeOfTestController.text == "Duplo"
+        ? false
+        : true;
     maxAngle = int.parse(maxAngleController.text);
     _containerSize();
 
@@ -137,8 +143,8 @@ class _TestSensorState extends State<TestSensor> {
                         dataController.text.replaceAll('/', '-') +
                         '-' +
                         typeOfTestController.text,
-                    onLayout: (format) =>
-                        generatePdf(format, colorsPoints, maxAngle.toDouble())),
+                    onLayout: (format) => generatePdf(format, colorsPoints,
+                        colorsPointsFrontalTest, maxAngle.toDouble())),
               ),
             ],
           ),
@@ -163,6 +169,7 @@ class _TestSensorState extends State<TestSensor> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
                       icon: Icon(
@@ -173,62 +180,123 @@ class _TestSensorState extends State<TestSensor> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Tipo do Teste: " + typeOfTestController.text,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                            bottom: 10,
-                            right: 30,
-                            left: 30,
-                          ),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.blue[200]),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                "Tipo do Teste: " + typeOfTestController.text,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                ),
+                              ),
                             ),
-                            child: Text('Reiniciar'),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: Text('Reiniciar Teste?'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: Text('Voltar'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              amostraController.clear();
-                                              produtoController.clear();
-                                              temperaturaInicialController
-                                                  .clear();
-                                              temperaturaFinalController
-                                                  .clear();
-                                              umidadeInicialController.clear();
-                                              umidadeFinalController.clear();
-                                              observacaoController.clear();
-                                              Navigator.pop(context);
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NewTest()));
-                                            },
-                                            child: Text('Confirmar'),
-                                          ),
-                                        ],
-                                      ));
-                            },
-                          ),
+                            if (typeOfTestController.text == "Duplo")
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  frontalTest ? "FRONTAL" : "ANGULAR",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            if (typeOfTestController.text == "Duplo")
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.green)),
+                                  onPressed: frontalTest
+                                      ? () {
+                                          frontalTest = false;
+                                          _lines();
+                                          if (colorsPoints.isEmpty) {
+                                            _points();
+                                          } else {
+                                            _points(picked: true);
+                                          }
+                                          setState(() {});
+                                        }
+                                      : () {
+                                          frontalTest = true;
+
+                                          _lines();
+
+                                          if (colorsPointsFrontalTest.isEmpty) {
+                                            _points();
+                                          } else {
+                                            _points(picked: true);
+                                          }
+                                          setState(() {});
+                                        },
+                                  child: Text(frontalTest
+                                      ? 'Angular ->'
+                                      : 'Frontal ->')),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                                right: 30,
+                                left: 30,
+                              ),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.red[200]),
+                                ),
+                                child: Text('Reiniciar'),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: Text('Reiniciar Teste?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text('Voltar'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  amostraController.clear();
+                                                  produtoController.clear();
+                                                  temperaturaInicialController
+                                                      .clear();
+                                                  temperaturaFinalController
+                                                      .clear();
+                                                  umidadeInicialController
+                                                      .clear();
+                                                  umidadeFinalController
+                                                      .clear();
+                                                  observacaoController.clear();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              NewTest()));
+                                                },
+                                                child: Text('Confirmar'),
+                                              ),
+                                            ],
+                                          ));
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -282,13 +350,23 @@ class _TestSensorState extends State<TestSensor> {
 
   _pointClicked(int angle, int meters, Color color) {
     color = color == Colors.white ? Colors.red : Colors.white;
-    colorsPoints[angle][meters] = containerPoint(() {
-      _pointClicked(angle, meters, color);
-    },
-        noPoint(meters) ? Colors.transparent : Colors.black,
-        noPoint(meters) ? Colors.transparent : color,
-        containerRotatedBox(meters, angle),
-        pointSize);
+    if (frontalTest) {
+      colorsPointsFrontalTest[angle][meters] = containerPoint(() {
+        _pointClicked(angle, meters, color);
+      },
+          noPoint(meters) ? Colors.transparent : Colors.black,
+          noPoint(meters) ? Colors.transparent : color,
+          containerRotatedBox(meters, angle),
+          pointSize);
+    } else {
+      colorsPoints[angle][meters] = containerPoint(() {
+        _pointClicked(angle, meters, color);
+      },
+          noPoint(meters) ? Colors.transparent : Colors.black,
+          noPoint(meters) ? Colors.transparent : color,
+          containerRotatedBox(meters, angle),
+          pointSize);
+    }
 
     _points(picked: true);
     setState(() {});
@@ -325,7 +403,9 @@ class _TestSensorState extends State<TestSensor> {
         );
       }
     }
-    colorsPoints[angle] = point;
+    frontalTest
+        ? colorsPointsFrontalTest[angle] = point
+        : colorsPoints[angle] = point;
   }
 
   _points({bool picked: false}) {
@@ -345,7 +425,9 @@ class _TestSensorState extends State<TestSensor> {
                         width: lineSize,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: colorsPoints[angle],
+                          children: frontalTest
+                              ? colorsPointsFrontalTest[angle]
+                              : colorsPoints[angle],
                         ),
                       ),
                       containerAngleText(angle, pointSize),
@@ -360,7 +442,9 @@ class _TestSensorState extends State<TestSensor> {
                       width: lineSize,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: colorsPoints[angle],
+                        children: frontalTest
+                            ? colorsPointsFrontalTest[angle]
+                            : colorsPoints[angle],
                       ),
                     ),
                     containerAngleText(angle, pointSize),
