@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lines/data/header_json.dart';
 import 'package:lines/widgets/widgets.dart';
 import 'package:pdf/pdf.dart';
@@ -22,6 +24,14 @@ Map<int, List<pw.Widget>> colorsPointsPdf = {};
 
 Future<Uint8List> generatePdf(PdfPageFormat format,
     Map<int, List<GestureDetector>> colorsPoints, double angle) async {
+  Uint8List data = (await rootBundle.load(typeOfTestController.text == "Angular"
+          ? 'images/seta_angular.png'
+          : 'images/seta_frontal.png'))
+      .buffer
+      .asUint8List();
+  final image = pw.MemoryImage(
+    data,
+  );
   maxAngle = angle;
   lines.clear();
   points.clear();
@@ -52,6 +62,7 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
             child: pw.Column(
               children: [
                 headerPdf(),
+                imageTypeOfTest(image),
                 result(),
                 bottomPdf(),
               ],
@@ -65,9 +76,13 @@ Future<Uint8List> generatePdf(PdfPageFormat format,
   return pdf.save();
 }
 
+imageTypeOfTest(var image) {
+  return pw.Image(image, height: 60, fit: pw.BoxFit.fitWidth);
+}
+
 bottomPdf() {
   return pw.Container(
-    padding: pw.EdgeInsets.all(10),
+    padding: pw.EdgeInsets.all(5),
     child: pw.Column(
       children: [
         pw.Container(
@@ -94,7 +109,7 @@ bottomPdf() {
 
 headerPdf() {
   return pw.Container(
-    padding: pw.EdgeInsets.all(10),
+    padding: pw.EdgeInsets.all(4),
     child: pw.Column(
       children: [
         pw.Align(
@@ -114,7 +129,7 @@ headerPdf() {
                   ),
                 ),
                 pw.Container(
-                  margin: pw.EdgeInsets.only(bottom: 10),
+                  margin: pw.EdgeInsets.only(bottom: 5),
                   height: 15,
                   width: 100,
                   decoration: pw.BoxDecoration(
@@ -192,7 +207,10 @@ headerPdf() {
                 decoration: pw.BoxDecoration(
                     border: pw.Border.all(color: PdfColors.black)),
                 child: pw.Center(
-                  child: pw.Text(produtoController.text.toUpperCase()),
+                  child: pw.Text(produtoController.text.toUpperCase(),
+                      style: pw.TextStyle(
+                          fontSize:
+                              produtoController.text.length > 20 ? 07 : 12)),
                 ),
               ),
             ),

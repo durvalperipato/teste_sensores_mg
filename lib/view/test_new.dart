@@ -18,10 +18,12 @@ class _NewTestState extends State<NewTest> {
   List<ProductsModel> products = [];
   List<String> sensibilitys = [];
   List<String> voltages = [];
+  List<String> angleOfTest = [];
   List<String> typeOfTest = [];
   String product;
   String sensibility;
   String voltage;
+  String typeTest;
 
   @override
   void initState() {
@@ -31,8 +33,10 @@ class _NewTestState extends State<NewTest> {
     sensibilitys.add('Min');
     voltages.add('127');
     voltages.add('220');
-    typeOfTest.add('180º');
-    typeOfTest.add('360º');
+    angleOfTest.add('180º');
+    angleOfTest.add('360º');
+    typeOfTest.add('Angular');
+    typeOfTest.add('Frontal');
   }
 
   DropdownButtonFormField dropDownButtonList(String labelText,
@@ -241,7 +245,7 @@ class _NewTestState extends State<NewTest> {
                                                               novoProdutoController,
                                                         ),
                                                         actions: [
-                                                          FlatButton(
+                                                          TextButton(
                                                               onPressed: () =>
                                                                   Navigator.pop(
                                                                       context,
@@ -249,7 +253,7 @@ class _NewTestState extends State<NewTest> {
                                                                           .text),
                                                               child: Text(
                                                                   'Confirmar')),
-                                                          FlatButton(
+                                                          TextButton(
                                                               onPressed: () =>
                                                                   Navigator.pop(
                                                                     context,
@@ -350,8 +354,18 @@ class _NewTestState extends State<NewTest> {
                                         flex: 2,
                                         child: containerTitleAndFormField(
                                           dropDownButtonList(
-                                              'Ângulo',
+                                              'Tipo de Teste',
                                               typeOfTest,
+                                              typeOfTestController,
+                                              typeTest),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 2,
+                                        child: containerTitleAndFormField(
+                                          dropDownButtonList(
+                                              'Ângulo',
+                                              angleOfTest,
                                               maxAngleController,
                                               voltage),
                                         ),
@@ -378,7 +392,7 @@ class _NewTestState extends State<NewTest> {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 10),
                                     width: 200,
-                                    child: RaisedButton(
+                                    child: ElevatedButton(
                                       onPressed: () async {
                                         _keyForm.currentState.save();
                                         Navigator.push(
@@ -394,8 +408,12 @@ class _NewTestState extends State<NewTest> {
                                         'Iniciar Teste',
                                         style: TextStyle(color: Colors.white),
                                       ),
-                                      elevation: 5,
-                                      color: Colors.blueAccent,
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.blueAccent),
+                                        elevation: MaterialStateProperty.all(5),
+                                      ),
                                     ),
                                   ),
                                 ],

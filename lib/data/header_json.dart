@@ -19,6 +19,8 @@ TextEditingController umidadeInicialController = TextEditingController();
 TextEditingController umidadeFinalController = TextEditingController();
 TextEditingController novoProdutoController = TextEditingController();
 TextEditingController maxAngleController = TextEditingController(text: '180');
+TextEditingController typeOfTestController =
+    TextEditingController(text: 'Angular');
 TextEditingController observacaoController = TextEditingController();
 
 final Map<String, dynamic> table = {
@@ -57,14 +59,18 @@ final Map<String, dynamic> table = {
     },
     'subtitles': {
       // index : {flex, title1, title2, ...}
-      0: {3, 'Max','Med','Min'},
+      0: {3, 'Max', 'Med', 'Min'},
       1: {3, '127', '220'},
       2: {3, 'Inicial', 'Final'},
       3: {3, 'Inicial', 'Final'},
     },
     'controllers': {
       // index : {TextEditingController1, TextEditingController2, ...}
-      0: {sensibilidadeMaximaController, sensibilidadeMediaController, sensibilidadeMinimaController},
+      0: {
+        sensibilidadeMaximaController,
+        sensibilidadeMediaController,
+        sensibilidadeMinimaController
+      },
       1: {tensao127Controller, tensao220Controller},
       2: {temperaturaInicialController, temperaturaFinalController},
       3: {umidadeInicialController, umidadeFinalController},

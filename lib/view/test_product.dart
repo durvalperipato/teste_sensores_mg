@@ -108,7 +108,7 @@ class _TestSensorState extends State<TestSensor> {
                       return AlertDialog(
                         content: header(context),
                         actions: [
-                          FlatButton(
+                          TextButton(
                             onPressed: () => Navigator.of(context).pop(),
                             child: Text(
                               'OK',
@@ -134,7 +134,9 @@ class _TestSensorState extends State<TestSensor> {
                         '-' +
                         produtoController.text +
                         '-' +
-                        dataController.text.replaceAll('/', '-'),
+                        dataController.text.replaceAll('/', '-') +
+                        '-' +
+                        typeOfTestController.text,
                     onLayout: (format) =>
                         generatePdf(format, colorsPoints, maxAngle.toDouble())),
               ),
@@ -169,46 +171,66 @@ class _TestSensorState extends State<TestSensor> {
                       ),
                       onPressed: () => _scaffoldKey.currentState.openDrawer(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 30,
-                      ),
-                      child: RaisedButton(
-                        color: Colors.blue[200],
-                        child: Text('Reiniciar'),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text('Reiniciar Teste?'),
-                                    actions: [
-                                      FlatButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('Voltar'),
-                                      ),
-                                      FlatButton(
-                                        onPressed: () {
-                                          amostraController.clear();
-                                          produtoController.clear();
-                                          temperaturaInicialController.clear();
-                                          temperaturaFinalController.clear();
-                                          umidadeInicialController.clear();
-                                          umidadeFinalController.clear();
-                                          observacaoController.clear();
-                                          Navigator.pop(context);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      NewTest()));
-                                        },
-                                        child: Text('Confirmar'),
-                                      ),
-                                    ],
-                                  ));
-                        },
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Tipo do Teste: " + typeOfTestController.text,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 10,
+                            bottom: 10,
+                            right: 30,
+                            left: 30,
+                          ),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.blue[200]),
+                            ),
+                            child: Text('Reiniciar'),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Text('Reiniciar Teste?'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text('Voltar'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              amostraController.clear();
+                                              produtoController.clear();
+                                              temperaturaInicialController
+                                                  .clear();
+                                              temperaturaFinalController
+                                                  .clear();
+                                              umidadeInicialController.clear();
+                                              umidadeFinalController.clear();
+                                              observacaoController.clear();
+                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NewTest()));
+                                            },
+                                            child: Text('Confirmar'),
+                                          ),
+                                        ],
+                                      ));
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

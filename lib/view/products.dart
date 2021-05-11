@@ -91,8 +91,12 @@ class _ProductsState extends State<Products> {
                                       ),
                                     ),
                                   ),
-                                  RaisedButton(
-                                    color: Colors.blue,
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.blue),
+                                    ),
                                     onPressed: () => showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
@@ -110,7 +114,7 @@ class _ProductsState extends State<Products> {
                                         ),
                                         elevation: 6,
                                         actions: [
-                                          FlatButton(
+                                          TextButton(
                                               onPressed: () {
                                                 if (newProductController
                                                         .text.length >
@@ -184,13 +188,13 @@ class _ProductsState extends State<Products> {
                                                                             Text('Produto: ' +
                                                                                 products.elementAt(index).toString()),
                                                                         actions: [
-                                                                          FlatButton(
+                                                                          TextButton(
                                                                             onPressed: () =>
                                                                                 Navigator.pop(context, false),
                                                                             child:
                                                                                 Text('Cancelar'),
                                                                           ),
-                                                                          FlatButton(
+                                                                          TextButton(
                                                                             onPressed:
                                                                                 () async {
                                                                               await deleteProduct(products.elementAt(index));
@@ -229,7 +233,7 @@ class _ProductsState extends State<Products> {
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  RaisedButton(
+                                  ElevatedButton(
                                     onPressed: () async {
                                       _keyForm.currentState.save();
                                     },
@@ -237,8 +241,12 @@ class _ProductsState extends State<Products> {
                                       'Voltar',
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    elevation: 5,
-                                    color: Colors.blueAccent,
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.blueAccent),
+                                        elevation:
+                                            MaterialStateProperty.all(5)),
                                   ),
                                 ],
                               ),
