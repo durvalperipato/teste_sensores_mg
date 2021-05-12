@@ -14,6 +14,7 @@ final double heigthContainerTextHeader = 15;
 final double lineSize = 577;
 
 double maxAngle;
+int maxMeters;
 
 final double pointSize = 10;
 
@@ -31,8 +32,10 @@ Future<Uint8List> generatePdf(
     PdfPageFormat format,
     Map<int, List<GestureDetector>> colorsPoints,
     Map<int, List<GestureDetector>> colorsPointsFrontalTest,
-    double angle) async {
+    double angle,
+    int meters) async {
   maxAngle = angle;
+  maxMeters = meters;
   lines.clear();
   points.clear();
   colorsPointsPdf.clear();
@@ -75,7 +78,7 @@ Future<Uint8List> generatePdf(
   final pdf = pw.Document();
   pdf.addPage(
     pw.Page(
-      margin: pw.EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      margin: pw.EdgeInsets.symmetric(vertical: 2, horizontal: 20),
       pageFormat: format,
       build: (context) {
         return pw.Center(
@@ -102,15 +105,17 @@ Future<Uint8List> generatePdf(
 }
 
 imageTypeOfTest(var image) {
+  double heightImage =
+      maxAngle == 350 && typeOfTestController.text == 'Duplo' ? 27 : 40;
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 3),
-    child: pw.Image(image, height: 70, fit: pw.BoxFit.fitWidth),
+    child: pw.Image(image, height: heightImage, fit: pw.BoxFit.fitWidth),
   );
 }
 
 bottomPdf() {
   return pw.Container(
-    padding: pw.EdgeInsets.all(5),
+    padding: pw.EdgeInsets.all(2),
     child: pw.Column(
       children: [
         pw.Container(
@@ -137,7 +142,7 @@ bottomPdf() {
 
 headerPdf() {
   return pw.Container(
-    padding: pw.EdgeInsets.all(4),
+    padding: pw.EdgeInsets.all(2),
     child: pw.Column(
       children: [
         pw.Align(
@@ -603,10 +608,25 @@ result({bool doubleTest = false}) {
     _points(colorsFrontalTest);
   }
   return pw.Container(
-    height: maxAngle == 180 ? lineSize / 2 + 20 : lineSize + 20,
-    width: lineSize - 10,
+    height: maxAngle == 180
+        ? lineSize / 2 + 20
+        : (maxAngle == 350 && typeOfTestController.text == 'Duplo')
+            ? lineSize / 2 + 50
+            : lineSize + 20,
+    width: (maxAngle == 350 && typeOfTestController.text == 'Duplo')
+        ? lineSize / 2 + 40
+        : lineSize - 10,
     child: pw.Stack(
       children: [
+        for (pw.Widget line in lines.values)
+          maxAngle == 350 && typeOfTestController.text == 'Duplo'
+              ? pw.Positioned(bottom: 0, left: 0, right: 0, top: 0, child: line)
+              : pw.Positioned(bottom: 0, left: 0, right: 0, child: line),
+        for (pw.Widget point in points.values)
+          maxAngle == 350 && typeOfTestController.text == 'Duplo'
+              ? pw.Positioned(
+                  bottom: 0, left: 0, right: 0, top: 0, child: point)
+              : pw.Positioned(bottom: 0, left: 0, right: 0, child: point),
         if (typeOfTestController.text == 'Angular' ||
             typeOfTestController.text == 'Duplo')
           if (doubleTest)
@@ -615,10 +635,6 @@ result({bool doubleTest = false}) {
             imageTypeOfTest(imageAngular),
         if (typeOfTestController.text == 'Frontal')
           imageTypeOfTest(imageFrontal),
-        for (pw.Widget line in lines.values)
-          pw.Positioned(bottom: 0, left: 0, right: 0, child: line),
-        for (pw.Widget point in points.values)
-          pw.Positioned(bottom: 0, left: 0, right: 0, child: point),
       ],
     ),
   );
@@ -629,10 +645,14 @@ _lines() {
     lines[angle] = pw.Container(
       height: maxAngle == 180
           ? null
+          : (maxAngle == 350 && typeOfTestController.text == 'Duplo')
+              ? null
+              : lineSize -
+                  10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
+      width: (maxAngle == 350 && typeOfTestController.text == 'Duplo')
+          ? lineSize / 2
           : lineSize -
               10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
-      width: lineSize -
-          10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       child: pw.Transform.rotate(
         angle: angle * (math.pi / 180),
         child: pw.Container(
@@ -642,7 +662,9 @@ _lines() {
             children: [
               pw.Container(
                 height: isAxis(angle) ? 2 : 1,
-                width: (lineSize / 2) - 10,
+                width: maxAngle == 350 && typeOfTestController.text == 'Duplo'
+                    ? (lineSize / 4) - widthTextAngle + 40
+                    : (lineSize / 2) - 10,
                 color: PdfColors.grey,
               ),
             ],
@@ -658,10 +680,16 @@ _points(Map<int, List<BoxDecoration>> colors) {
     _buildPoint(angle, colors);
 
     points[angle] = pw.Container(
-      height: maxAngle == 180 ? null : lineSize - 10,
+      height: maxAngle == 180
+          ? null
+          : (maxAngle == 350 && typeOfTestController.text == 'Duplo')
+              ? null
+              : lineSize - 10,
       // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
-      width: lineSize -
-          10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
+      width: (maxAngle == 350 && typeOfTestController.text == 'Duplo')
+          ? lineSize / 2
+          : lineSize -
+              10, // garantir que a area inteira da tela utilize o GestureDetector ao rotacionar, ou seja, o Pai tem que ser maior que o Filho
       child: pw.Transform.rotate(
         angle: angle * (math.pi / 180),
         child: pw.Row(
@@ -669,7 +697,9 @@ _points(Map<int, List<BoxDecoration>> colors) {
           children: [
             pw.Container(
               height: pointSize,
-              width: (lineSize / 2 - 10) - widthTextAngle,
+              width: maxAngle == 350 && typeOfTestController.text == 'Duplo'
+                  ? (lineSize / 4) - widthTextAngle + 40
+                  : (lineSize / 2 - 10) - widthTextAngle,
               child: pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: colorsPointsPdf[angle],
@@ -698,7 +728,6 @@ _points(Map<int, List<BoxDecoration>> colors) {
 
 _buildPoint(int angle, Map<int, List<BoxDecoration>> colors) {
   List<pw.Widget> point = [];
-  int maxMeters = maxAngle == 180 ? 12 : 10;
   for (int meters = 0; meters <= maxMeters; meters++) {
     if (meters == 2 &&
             (maxAngle == 180

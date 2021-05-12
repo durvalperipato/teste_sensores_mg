@@ -210,7 +210,11 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                   child: Text(
                     meters.toString(),
                     style: TextStyle(
-                        fontSize: maxAngleController.text == '180' ? 8 : 4),
+                        fontSize: maxAngleController.text == '180' ||
+                                maxAngleController.text == '350' &&
+                                    typeOfTestController.text == 'Duplo'
+                            ? 8
+                            : 4),
                   ),
                 )
               : (angle >= 0 && angle <= 90)
@@ -218,7 +222,11 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                       child: Text(
                         (90 - angle).toString() + '°',
                         style: TextStyle(
-                            fontSize: maxAngleController.text == '180' ? 4 : 2),
+                            fontSize: maxAngleController.text == '180' ||
+                                    maxAngleController.text == '350' &&
+                                        typeOfTestController.text == 'Duplo'
+                                ? 4
+                                : 2),
                       ),
                     )
                   : (angle > 90 && angle <= 180)
@@ -226,8 +234,11 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                           child: Text(
                             (angle - 90).toString() + '°',
                             style: TextStyle(
-                                fontSize:
-                                    maxAngleController.text == '180' ? 4 : 2),
+                                fontSize: maxAngleController.text == '180' ||
+                                        maxAngleController.text == '350' &&
+                                            typeOfTestController.text == 'Duplo'
+                                    ? 4
+                                    : 2),
                           ),
                         )
                       : (angle > 180 && angle <= 270)
@@ -235,7 +246,11 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                               child: Text(
                                 (270 - angle).toString() + '°',
                                 style: TextStyle(
-                                    fontSize: maxAngleController.text == '180'
+                                    fontSize: maxAngleController.text ==
+                                                '180' ||
+                                            maxAngleController.text == '350' &&
+                                                typeOfTestController.text ==
+                                                    'Duplo'
                                         ? 4
                                         : 2),
                               ),
@@ -244,7 +259,11 @@ RotatedBox containerRotatedBox(int meters, int angle) => RotatedBox(
                               child: Text(
                                 (angle - 270).toString() + '°',
                                 style: TextStyle(
-                                    fontSize: maxAngleController.text == '180'
+                                    fontSize: maxAngleController.text ==
+                                                '180' ||
+                                            maxAngleController.text == '350' &&
+                                                typeOfTestController.text ==
+                                                    'Duplo'
                                         ? 4
                                         : 2),
                               ),

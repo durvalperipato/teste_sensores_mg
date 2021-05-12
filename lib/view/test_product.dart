@@ -44,7 +44,13 @@ class _TestSensorState extends State<TestSensor> {
     _containerSize();
 
     angleInterval = 10;
-    maxMeters = maxAngle == 180 ? 12 : 10;
+    maxMeters = maxAngle == 180
+        ? 12
+        : typeOfTestController.text == 'Duplo' &&
+                maxAngleController.text == '350'
+            ? 7
+            : 10;
+
     _lines();
     _points();
   }
@@ -63,7 +69,7 @@ class _TestSensorState extends State<TestSensor> {
         ? 22
         : containerSize <= 1300 && containerSize >= 800
             ? 15
-            : 7;
+            : maxAngle == 350 && typeOfTestController.text == 'Duplo'?15:7;
     lineSize = containerSize / 2 - 10;
   }
 
@@ -153,8 +159,12 @@ class _TestSensorState extends State<TestSensor> {
                             dataController.text.replaceAll('/', '-') +
                             '-' +
                             typeOfTestController.text,
-                        onLayout: (format) => generatePdf(format, colorsPoints,
-                            colorsPointsFrontalTest, maxAngle.toDouble()));
+                        onLayout: (format) => generatePdf(
+                            format,
+                            colorsPoints,
+                            colorsPointsFrontalTest,
+                            maxAngle.toDouble(),
+                            maxMeters));
                   }),
             ],
           ),
@@ -199,25 +209,27 @@ class _TestSensorState extends State<TestSensor> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                "Tipo do Teste: " + typeOfTestController.text,
+                                typeOfTestController.text == "Duplo"
+                                    ? "Tipo do Teste: Duplo"
+                                    : "Tipo do Teste: Único",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
                                 ),
                               ),
                             ),
-                            if (typeOfTestController.text == "Duplo")
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  frontalTest ? "FRONTAL" : "ANGULAR",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red,
-                                  ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(
+                                frontalTest ? "FRONTAL" : "ANGULAR",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                  fontSize: 22,
                                 ),
                               ),
+                            ),
                           ],
                         ),
                         Column(
@@ -253,7 +265,7 @@ class _TestSensorState extends State<TestSensor> {
                                           setState(() {});
                                         },
                                   child: Text(frontalTest
-                                      ? 'Angular ->'
+                                      ? '<- Angular'
                                       : 'Frontal ->')),
                             Padding(
                               padding: const EdgeInsets.only(
