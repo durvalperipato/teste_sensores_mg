@@ -65,11 +65,20 @@ class _TestSensorState extends State<TestSensor> {
           ? widget.size.height
           : widget.size.width;
     }
+
     pointSize = containerSize > 1300
         ? 22
-        : containerSize <= 1300 && containerSize >= 800
+        : containerSize <= 1300 && containerSize >= 900
             ? 15
-            : maxAngle == 350 && typeOfTestController.text == 'Duplo'?15:7;
+            : maxAngle == 350 &&
+                    typeOfTestController.text == 'Duplo' &&
+                    isSmartphone
+                ? 7
+                : maxAngle == 350 && typeOfTestController.text == 'Duplo'
+                    ? 15
+                    : isSmartphone
+                        ? 10
+                        : 7;
     lineSize = containerSize / 2 - 10;
   }
 
@@ -213,9 +222,9 @@ class _TestSensorState extends State<TestSensor> {
                                     ? "Tipo do Teste: Duplo"
                                     : "Tipo do Teste: Único",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red,
-                                ),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red,
+                                    fontSize: isSmartphone ? 8 : 12),
                               ),
                             ),
                             Padding(
@@ -226,7 +235,7 @@ class _TestSensorState extends State<TestSensor> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
-                                  fontSize: 22,
+                                  fontSize: isSmartphone ? 8 : 22,
                                 ),
                               ),
                             ),
@@ -304,6 +313,7 @@ class _TestSensorState extends State<TestSensor> {
                                                   umidadeFinalController
                                                       .clear();
                                                   observacaoController.clear();
+
                                                   Navigator.pop(context);
                                                   Navigator.push(
                                                       context,

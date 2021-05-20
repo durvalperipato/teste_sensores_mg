@@ -23,6 +23,8 @@ TextEditingController typeOfTestController =
     TextEditingController(text: 'Angular');
 TextEditingController observacaoController = TextEditingController();
 
+bool isSmartphone = false;
+
 final Map<String, dynamic> table = {
   // blocoNumber
   'bloco0': {

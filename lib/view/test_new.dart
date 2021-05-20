@@ -397,32 +397,57 @@ class _NewTestState extends State<NewTest> {
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    width: 200,
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        _keyForm.currentState.save();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TestSensor(
-                                                        size: MediaQuery.of(
-                                                                context)
-                                                            .size)));
-                                      },
-                                      child: Text(
-                                        'Iniciar Teste',
-                                        style: TextStyle(color: Colors.white),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
+                                        width: 200,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            _keyForm.currentState.save();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        TestSensor(
+                                                            size: MediaQuery.of(
+                                                                    context)
+                                                                .size)));
+                                          },
+                                          child: Text(
+                                            'Iniciar Teste',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.blueAccent),
+                                            elevation:
+                                                MaterialStateProperty.all(5),
+                                          ),
+                                        ),
                                       ),
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.blueAccent),
-                                        elevation: MaterialStateProperty.all(5),
+                                      SizedBox(
+                                        width: 40,
                                       ),
-                                    ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Checkbox(
+                                              value: isSmartphone,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  isSmartphone = !isSmartphone;
+                                                });
+                                              }),
+                                          Text('Smartphone ?')
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 ],
                               ),
