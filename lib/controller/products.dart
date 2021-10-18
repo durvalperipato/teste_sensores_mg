@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lines/model/products.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<Database> _open() async {
   final Future<Database> database = openDatabase(
@@ -15,13 +17,17 @@ Future<Database> _open() async {
   return database;
 }
 
-Future<void> insertProduct(ProductsModel products) async {
+Future<void> insertProduct(ProductsModel products,
+    {bool refreshOnly = false}) async {
   final Database db = await _open();
-  await db.insert(
-    'products',
-    products.toMap(),
-    conflictAlgorithm: ConflictAlgorithm.replace,
-  );
+  try {
+    await db.insert(
+      'products',
+      products.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    if (!refreshOnly) insertCloudDatabase(products);
+  } catch (e) {}
 }
 
 Future<List<ProductsModel>> getProducts() async {
@@ -40,4 +46,43 @@ Future<void> deleteProduct(ProductsModel product) async {
   final Database db = await _open();
 
   await db.delete('products', where: 'name = ?', whereArgs: [product.name]);
+}
+
+Future<void> deleteDatabase() async {
+  final Database db = await _open();
+
+  await db.delete('products');
+}
+
+Future<void> fetchProducts() async {
+  try {
+    await Firebase.initializeApp();
+    DocumentSnapshot document = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('sensores')
+        .get();
+    List<dynamic> produtos = document.get('nomes');
+    await deleteDatabase();
+    produtos.forEach((element) async {
+      await insertProduct(ProductsModel(name: element.toString().toUpperCase()),
+          refreshOnly: true);
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+Future<void> insertCloudDatabase(ProductsModel product) async {
+  try {
+    DocumentSnapshot document = await FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('sensores')
+        .get();
+    List<dynamic> nomes = document.get('nomes');
+    nomes.add(product.name);
+    FirebaseFirestore.instance
+        .collection('produtos')
+        .doc('sensores')
+        .set({'nomes': nomes});
+  } catch (e) {}
 }

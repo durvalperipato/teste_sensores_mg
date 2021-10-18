@@ -68,16 +68,16 @@ class _TestSensorState extends State<TestSensor> {
 
     pointSize = containerSize > 1300
         ? 22
-        : containerSize <= 1300 && containerSize >= 900
-            ? 15
-            : maxAngle == 350 &&
-                    typeOfTestController.text == 'Duplo' &&
-                    isSmartphone
-                ? 7
-                : maxAngle == 350 && typeOfTestController.text == 'Duplo'
+        : maxAngle == 350 &&
+                typeOfTestController.text == 'Duplo' &&
+                isSmartphone
+            ? 7
+            : isSmartphone
+                ? 10
+                : containerSize <= 1300 && containerSize >= 900
                     ? 15
-                    : isSmartphone
-                        ? 10
+                    : maxAngle == 350 && typeOfTestController.text == 'Duplo'
+                        ? 15
                         : 7;
     lineSize = containerSize / 2 - 10;
   }

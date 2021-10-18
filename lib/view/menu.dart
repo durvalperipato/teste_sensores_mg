@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lines/controller/products.dart';
 import 'package:lines/view/products.dart';
 import 'package:lines/view/test_new.dart';
 import 'package:lines/widgets/widgets.dart';
@@ -19,6 +20,36 @@ class _DetailsSensorState extends State<DetailsSensor>
     return Scaffold(
       backgroundColor: Colors.lightBlue[100],
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.cloud_outlined),
+            onPressed: () async => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Acessar dados da nuvem?'),
+                content: Center(
+                  child: Text(
+                    'NECESSÁRIO CONEXÃO' + '\n' + 'COM A INTERNET',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Voltar'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      await fetchProducts();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Confirmar'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
         elevation: 5,
         title: Text(
           'Menu',
