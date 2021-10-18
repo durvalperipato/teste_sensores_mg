@@ -158,7 +158,6 @@ class _TestSensorState extends State<TestSensor> {
                       frontalTest = true;
                       _points();
                     }
-
                     Printing.layoutPdf(
                         format: PdfPageFormat.a4,
                         name: amostraController.text +

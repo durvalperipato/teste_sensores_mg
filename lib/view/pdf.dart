@@ -73,7 +73,11 @@ Future<Uint8List> generatePdf(
   });
 
   _lines();
-  _points(colors);
+  if (typeOfTestController.text == "Frontal") {
+    _points(colorsFrontalTest);
+  } else {
+    _points(colors);
+  }
 
   final pdf = pw.Document();
   pdf.addPage(
